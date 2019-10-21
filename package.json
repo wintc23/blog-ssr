@@ -1,0 +1,22 @@
+{
+  "name": "blog-ssr",
+  "version": "1.0.0",
+  "description": "My supreme Nuxt.js project",
+  "author": "Lushenggang",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "iview": "^3.1.5",
+    "nuxt-edge": "^2.10.2-26192170.a3f1957a"
+  },
+  "devDependencies": {
+    "stylus": "^0.54.7",
+    "stylus-loader": "^3.0.2"
+  }
+}
