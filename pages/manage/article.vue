@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { getPost, uploadFile, savePost, getFileUploadToken } from '@/api/posts'
+import { getPostsByType, uploadFile, savePost, getFileUploadToken } from '@/api/posts'
 import Editor from '@/components/Editor'
 
 export default {
@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     getPost () {
-      getPost(this.$route.query.postId).then(res => {
+      getPostsByType(this.$route.query.postId).then(res => {
         if (res.status == 200) {
           let attrList = ['title', 'hide', 'id', 'body', 'body_html', 'type_id', 'abstract', 'abstract_image']
           res.data.body = res.data.body || ''
