@@ -123,8 +123,6 @@ export default {
 @media screen and (min-width: 600px)
   .message-page
     .main-content
-      max-width 1000px
-      margin 0 auto
       padding-top 40px
       .add-msg
         padding-bottom 20px

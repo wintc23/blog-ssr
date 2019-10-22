@@ -1,5 +1,7 @@
 import Vue from 'vue'
 
+import Avatar from '@/components/Avatar'
+
 import { formatTime } from '@/tool'
 
 Vue.prototype.$bus = new Vue()
@@ -32,4 +34,5 @@ if (process.client) {
     }
     return flag
   })()
+  Vue.component('avatar', Avatar)
 }

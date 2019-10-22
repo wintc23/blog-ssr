@@ -30,8 +30,6 @@ export default {
 .about-me
   color #000
   .content
-    max-width 1000px
-    margin 0 auto
     font-size 1rem
     line-height 1.6
 

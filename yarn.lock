@@ -953,6 +953,11 @@
     mustache "^2.3.0"
     stack-trace "0.0.10"
 
+"@tinymce/tinymce-vue@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.npm.taobao.org/@tinymce/tinymce-vue/download/@tinymce/tinymce-vue-3.0.1.tgz#c606b5d6b0704a7fc1efdf96ef6080cdc23c88f3"
+  integrity sha1-xga11rBwSn/B79+W72CAzcI8iPM=
+
 "@types/q@^1.5.1":
   version "1.5.2"
   resolved "https://registry.npm.taobao.org/@types/q/download/@types/q-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
@@ -6704,6 +6709,11 @@ tinycolor2@^1.4.1:
   version "1.4.1"
   resolved "https://registry.npm.taobao.org/tinycolor2/download/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
   integrity sha1-9PrTM0R7wLB9TcjpIJ2POaisd+g=
+
+tinymce@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.npm.taobao.org/tinymce/download/tinymce-5.1.0.tgz?cache=0&sync_timestamp=1571292698007&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftinymce%2Fdownload%2Ftinymce-5.1.0.tgz#34eff28ada9b93305a0d08860cf82d2edff269ca"
+  integrity sha1-NO/yitqbkzBaDQiGDPgtLt/yaco=
 
 to-arraybuffer@^1.0.0:
   version "1.0.1"

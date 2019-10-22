@@ -13,7 +13,7 @@
               {{ typeInfo[post.type].name }}
             </span>
             <span class="post-date">
-              发布于：{{ $timeShow(post.timestamp) }}
+              发布于{{ $timeShow(post.timestamp) }}
             </span>
           </div>
           <div class="post-abstract-content" v-html="post.abstract"></div>
@@ -101,6 +101,7 @@ export default {
             // padding 6px 10px
           .post-date
             line-height 3
+            color #888
       .post-abstract-image
         display flex
         align-items center

@@ -94,10 +94,10 @@ export default {
           title: '首页',
           path: '/'
         },
-        {
-          title: '分类',
-          path: '/category'
-        },
+        // {
+        //   title: '分类',
+        //   path: '/category'
+        // },
         {
           title: '留言',
           path: '/message'
@@ -231,6 +231,8 @@ export default {
     flex auto
     .nuxt-container
       // overflow hidden
+    .modules
+      display none
   .layout-footer
     flex-shrink 0
     background #ECF5FD
@@ -317,6 +319,7 @@ export default {
       max-width 1100px
       margin 0 auto
       padding 20px 10px
+      width 100%
       .modules
         float left
         width 240px
