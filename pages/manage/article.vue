@@ -1,61 +1,63 @@
 <template>
-  <div class="post-edit-container">
-    <div class="header">
-      <Input v-model="postData.title" placeholder="请输入文章标题"/>
-      <Button 
-        size="small"
-        type="info" 
-        class="button" 
-        @click="showPostSetting">文章设置</Button>
-      <Button 
-        size="small"
-        type="success" 
-        class="button" 
-        @click="save">保存</Button>
-    </div>
-    <div class="post-content">
-      <editor
-        ref="editor"
-        v-model="postData.bodyHtml"
-        class="editor">
-      </editor>
-    </div>
-    <Modal
-      title="文章设置"
-      v-model="showSetting"
-      width="60">
-      <div class="post-setting">
-        <div class="post-hide">
-          <div class="title">是否隐藏</div>
-          <Checkbox v-model="postData.hide">隐藏</Checkbox>
-        </div>
-        <div class="post-abstract">
-          <div class="title">摘要</div>
-          <Input v-model="postData.abstract" type="textarea" autosize></Input>
-        </div>
-        <div class="post-type">
-          <div class="title">文章分类</div>
-          <Select v-model="postData.typeId">
-            <Option v-for="type of typeList" :key="type.id" :value="type.id">{{ type.name }}</Option>
-          </Select>
-        </div>
-        <div class="post-img">
-          <div class="title">文章缩略图</div>
-          <img
-            v-if="postData.abstractImage"
-            :src="postData.abstractImage"
-            @click.stop="clickAbstractImage"
-            alt="文章缩略图">
-          <input
-            v-show="!postData.abstractImage"
-            type="file"
-            accept="image/png,image/jpeg,image/gif"
-            @change="changeAbstractImage"
-            ref="abstractImageInput">
-        </div>
+  <client-only>
+    <div class="post-edit-container">
+      <div class="header">
+        <Input v-model="postData.title" placeholder="请输入文章标题"/>
+        <Button 
+          size="small"
+          type="info" 
+          class="button" 
+          @click="showPostSetting">文章设置</Button>
+        <Button 
+          size="small"
+          type="success" 
+          class="button" 
+          @click="save">保存</Button>
       </div>
-    </Modal>
-  </div>
+      <div class="post-content">
+        <editor
+          ref="editor"
+          v-model="postData.bodyHtml"
+          class="editor">
+        </editor>
+      </div>
+      <Modal
+        title="文章设置"
+        v-model="showSetting"
+        width="60">
+        <div class="post-setting">
+          <div class="post-hide">
+            <div class="title">是否隐藏</div>
+            <Checkbox v-model="postData.hide">隐藏</Checkbox>
+          </div>
+          <div class="post-abstract">
+            <div class="title">摘要</div>
+            <Input v-model="postData.abstract" type="textarea" autosize></Input>
+          </div>
+          <div class="post-type">
+            <div class="title">文章分类</div>
+            <Select v-model="postData.typeId">
+              <Option v-for="type of typeList" :key="type.id" :value="type.id">{{ type.name }}</Option>
+            </Select>
+          </div>
+          <div class="post-img">
+            <div class="title">文章缩略图</div>
+            <img
+              v-if="postData.abstractImage"
+              :src="postData.abstractImage"
+              @click.stop="clickAbstractImage"
+              alt="文章缩略图">
+            <input
+              v-show="!postData.abstractImage"
+              type="file"
+              accept="image/png,image/jpeg,image/gif"
+              @change="changeAbstractImage"
+              ref="abstractImageInput">
+          </div>
+        </div>
+      </Modal>
+    </div>
+  </client-only>
 </template>
 
 <script>
@@ -101,7 +103,7 @@ export default {
       }
     }
   },
-  created() {
+  mounted () {
     this.$store.dispatch('postType/getType')
   },
   methods: {
@@ -149,15 +151,11 @@ export default {
       this.$refs.abstractImageInput.click()
     },
     save () {
-      let params = this.$underlineCase(this.postData)
+      let { bodyHtml: body_html, typeId: type_id, abstractImage: abstract_image } = this.postData
+      let params = { ...this.postData, body_html, type_id, abstract_image }
       savePost(params).then(res => {
         if (res.status == 200) {
-          this.$router.push({
-            name: 'site-article',
-            query: {
-              postId: this.$route.query.postId
-            }
-          })
+          this.$router.push(`/article/${this.$route.query.postId}`)
         }
       })
     }
