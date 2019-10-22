@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { getPosts, deletePost, addPost } from '@/api/posts'
+import { getPostsByType, deletePost, addPost } from '@/api/posts'
 
 const PER_PAGE = 20
 
@@ -31,7 +31,7 @@ export default {
       post_type: +type,
       page: +page
     }
-    return getPosts(data).then(res => {
+    return getPostsByType(data).then(res => {
       if (res.status == 200) {
         let {
           list: postList,

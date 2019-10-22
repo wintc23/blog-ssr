@@ -2,7 +2,7 @@ import axios from '@/api'
 import uuidv4 from 'uuid/v4'
 
 export function getPostsByType(params) {
-  return axios.post('/get-posts/', params)
+  return axios.post('/get-type-posts/', params)
 }
 
 export function getPosts (params) {
