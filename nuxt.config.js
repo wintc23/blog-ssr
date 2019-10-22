@@ -55,5 +55,9 @@ export default {
     parallel: true,
     extend (config, ctx) {
     }
-  }
+  },
+  server: {
+    port: 8000,
+    host: '0.0.0.0',
+  },
 }
