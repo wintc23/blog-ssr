@@ -101,6 +101,20 @@ export default {
             // padding 6px 10px
           .post-date
             line-height 3
+      .post-abstract-image
+        display flex
+        align-items center
+        justify-content center
+        overflow hidden
+        box-shadow 0 0 1px 0 rgba(0, 0, 0, .05)
+        img
+          width 100%
+          height 100%
+      &:hover
+        .post-abstract-image img
+          width 110%
+          height 110%
+          transition all .5s ease-out
       .post-info-pc, .post-info-mobile
         display flex
         margin-top 1em
@@ -125,6 +139,7 @@ export default {
         width 4em
       .next
         text-align right
+
 @media screen and (min-width: 600px)
   .home-page
     .post-list
@@ -134,18 +149,21 @@ export default {
         padding 30px 40px
         box-shadow 0 0 3px 0 rgba(0, 0, 0, .3)
         display flex
-        &:hover
-          box-shadow 0 0 8px 0 rgba(0, 0, 0, .3)
         .post-abstract
           flex auto
           font-size 16px
           margin-right 10px
         .post-abstract-image
           align-self center
-          img
-            max-width 300px
+          width 30vw
+          height 20vw
+          max-height 200px
+          max-width 300px
+          flex-shrink 0
         .post-info-mobile
           display none
+        &:hover
+          box-shadow 0 0 8px 0 rgba(0, 0, 0, .3)
 
 @media screen and (max-width: 600px)
   .home-page
@@ -155,7 +173,7 @@ export default {
         .post-abstract
           .post-info-pc
             display none
-
+        
         .post-abstract-image
           img
             max-width 100%
