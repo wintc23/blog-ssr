@@ -8,7 +8,8 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "push": "sh ./push.sh"
   },
   "dependencies": {
     "@tinymce/tinymce-vue": "^3.0.1",
