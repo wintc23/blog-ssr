@@ -41,12 +41,7 @@
             </div>
             <div class="comment-title">评论(<span>{{ post.comment_times }}</span>)</div>
           </div>
-          <tree
-            :treeData="comments">
-            <template v-slot:default="{ data, level }">
-              {{ data.content }}
-            </template>
-          </tree>
+          <comment-tree @reply="addComment" :list="post.comments"></comment-tree>
         </client-only>
       </div>
     </div>
@@ -55,13 +50,16 @@
 
 <script>
 import * as api from '@/api/posts'
+import { addComment } from '@/api/comment'
 import CommentInput from '@/components/CommentInput'
 import tree from '@/components/tree'
+import CommentTree from '@/components/CommentTree'
 
 export default {
   components: {
     CommentInput,
-    tree
+    tree,
+    CommentTree
   },
   asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
     let path = params.pathMatch || ''
@@ -72,26 +70,7 @@ export default {
     let [id, type] = path.split('/')
     return api.getPost(id, type).then(res => {
       if (res.status === 200) {
-        let comments = res.data.comments
-        comments.sort((a, b) => a.timestamp - b.timestamp)
-        let info = {}, list = []
-        for (let comment of comments) {
-          if (comment.response_id) {
-            // 已经排序 response_id一定已经在info中
-            if (!info[comment.response_id]) continue
-            info[comment.response_id].push(comment)
-            info[comment.id] = info[comment.response_id]
-          } else {
-            comment.children = []
-            info[comment.id] = comment.children
-            list.push(comment)
-          }
-          list.reverse()
-        }
-        return {
-          post: res.data,
-          comments: list
-        }
+        return { post: res.data }
       } else {
         error(404, '找不到该页面')
       }
@@ -122,22 +101,7 @@ export default {
     }
   },
   methods: {
-    setComment (data) {
-      if (!this.currentUser.id) {
-        this.$bus.$emit('login-show')
-        this.$Message.info('请先登录后再操作')
-        return
-      }
-      console.log('hello', data.id)
-      this.$set(data, 'commentEdit', true)
-      if (!data.comment) {
-        this.$set(data, 'comment', '')
-      }
-    },
-    hideComment (data) {
-      this.$delete(data, 'commentEdit')
-    },
-    addComment (comment, response) {
+    addComment (comment, response, callback) {
       if (!comment) {
         this.$Message.info('操作失败，评论不能为空')
         return
@@ -154,16 +118,13 @@ export default {
       response && (params.response_id = response)
       addComment(params).then(res => {
         if (res.status == 200) {
-          this.refreshPage()
           this.comment = ''
+          Object.assign(this.post, res.data)
+          callback && callback()
         }
       }).catch(error => {
         this.$Message.error('网络请求失败')
       })
-    },
-    checkReply (data) {
-      if (this.$IsPC) return
-      this.setComment(data)
     },
     clickLike () {
       if (!this.currentUser.id) {
@@ -173,19 +134,9 @@ export default {
       }
       let func = this.post.like ? api.cancelLikePost : api.likePost
       func(this.post.id).then(res => {
-        res.status == 200 && this.refreshPage()
-      })
-    },
-    refreshPage () {
-      if (!this.currentUser.id) {
-        this.$bus.$emit('login-show')
-        return
-      }
-      let query = { ...this.$route.query }
-      query.refresh = +query.refresh ? 0 : 1
-      this.$router.push({
-        name: this.$route.name,
-        query
+        if (res.status === 200) {
+          Object.assign(this.post, res.data)
+        }
       })
     }
   }
@@ -240,6 +191,83 @@ export default {
           font-size 18px
           span
             color #888
+        .comment-tree
+          .comment-root
+            .avatar
+              float left
+              img
+                width 50px
+                height 50px
+                border-radius 50%
+            .text
+              padding-left 70px
+              line-height 22px
+              color #333
+              .title
+                margin-bottom 10px
+                .name, .date
+                  display inline
+                .date
+                  float right
+          .reply-comment
+            padding-left 54px
+            .title
+              line-height 30px
+              margin 4px 0
+              .author, .response-author
+                display inline
+                img
+                  width 30px
+                  height 30px
+                  border-radius 50%
+                  vertical-align middle
+                .author-name, .response-author-name
+                  color #6B6B6B
+                  font-weight bold
+              .reply-title
+                color #3361d8
+              .comment-time
+                color #6B6B6B
+            .comment-content
+              margin-left 30px
+            .text
+              background #ECF5FD
+              padding 5px
+              border-radius 4px
+          .comment-content
+            background #ECF5FD
+            padding 5px 10px
+            border-radius 4px
+            .check-waiting
+              color white
+              font-weight bold
+              border-radius 4px
+              padding 1px 2px
+              background #06B038
+              user-select none
+              cursor pointer
+            .comment-reply
+              overflow hidden
+              .reply-input
+                margin 4px 0
+              .reply-icon
+                display flex
+                align-items center
+                cursor pointer
+                user-select none
+                color #3361d8
+                width 3rem
+                opacity 0
+                transition all .2s
+                .icon
+                  font-size 1rem
+              .comment-button
+                margin 4px
+                float right
+            &:hover
+              .comment-reply .reply-icon
+                opacity 1
+
 @media screen and (min-width: 600px)
   .article-page
     .main-content

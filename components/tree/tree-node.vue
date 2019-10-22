@@ -1,6 +1,6 @@
 <template>
   <div class="tree-node-container">
-    <slot></slot>
+    <node-content></node-content>
     <div class="tree-node-children" v-if="nodeData.children && nodeData.children.length">
       <tree-node
         v-for="(child, idx) of nodeData.children"
@@ -24,12 +24,10 @@ export default {
   components: {
     'node-content': {
       render (h) {
-        let parent = this.$parent
-        let tree = parent.tree
-        let data = parent.nodeData
-        let level = parent.level
-        let slot = tree.$scopedSlots.default
-        return (slot ? slot({ data, level }) : '<div>未定义插槽内容</div>')
+        let slot = this.$parent.tree.$scopedSlots.default
+        let { nodeData, parentData, level } = this.$parent
+        console.log(nodeData.body, parentData)
+        return (slot ? slot({ parentData, data: nodeData, level }) : '<div>未定义插槽内容</div>')
       }
     }
   },
@@ -43,11 +41,18 @@ export default {
     return {
       tree: false,
       level: 0,
+      parentData: null
     }
   },
   created () {
     let parent = this.$parent
-    this.level = parent.level + 1
+    if (parent.isTree) {
+      this.level = 1
+      this.parentData = {}
+    } else {
+      this.level = parent.level + 1
+      this.parentData = parent.nodeData
+    }
     while (parent && !parent.isTree) {
       parent = parent.$parent
     }

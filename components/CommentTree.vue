@@ -1,0 +1,256 @@
+<template>
+  <div class="comment-list">
+    <div
+      class="comment"
+      v-for="comment of rootList"
+      :key="comment.id">
+      <avatar class="avatar" :class="currentUser.admin ? 'admin' : ''" title="站长" :userId="comment.author_id">
+        <template v-slot:default="{ userinfo }">
+          <img :src="userinfo.avatar" alt="用户头像">
+        </template>
+      </avatar>
+      <div class="comment-content">
+        <avatar class="userinfo" :userId="comment.author_id">
+          <template v-slot:default="{ userinfo }">
+            <div class="username">{{ userinfo.username }}</div>
+            <div class="comment-body" :ref="`comment${comment.id}`" @click.stop="checkReply(comment)">
+              <span class="text">{{ comment.body }}</span>
+              <span class="time">{{ $timeShow(comment.timestamp) }}</span>
+            </div>
+            <div class="reply-container">
+              <span class="reply-info">
+                <template v-if="comment.children && comment.children.length">
+                  共{{ comment.children.length }}条回复，
+                  <span class="fold-btn" @click="setExpand(comment)">{{ expandMap[comment.id] ? '折叠' : '查看' }}</span>
+                </template>
+              </span>
+              <span class="reply-btn" @click.stop="replyComment(comment)">回复</span>
+              <template v-if="comment.replyEdit">
+                <Input :ref="`reply${comment.id}`" :placeholder="`回复 ${userinfo.username} `" v-model="comment.reply" type="textarea" :autosize="{minRows: 2,maxRows: 6}"/>
+                <Button class="btn" size="small" type="warning" @click.stop="replyCancel(comment)">取消</Button>
+                <Button class="btn" size="small" type="primary" @click.stop="replyConfirm(comment)">确定</Button>
+              </template>
+            </div>
+          </template>
+        </avatar>
+        <div class="comment-children" v-if="comment.children && comment.children.length && expandMap[comment.id]">
+          <div
+            class="child-comment"
+            v-for="(child, idx) of comment.children"
+            :key="idx">
+            <avatar class="child-avatar" :class="currentUser.admin ? 'admin' : ''" title="站长" :userId="child.author_id">
+              <template v-slot:default="{ userinfo }">
+                <img :src="userinfo.avatar" alt="用户头像">
+              </template>
+            </avatar>
+            <div class="child-comment-content">
+              <avatar class="child-userinfo" :class="currentUser.admin ? 'admin' : ''" :userId="child.author_id">
+                <template v-slot:default="{ userinfo }">
+                  <div class="child-username">{{ userinfo.username }}</div>
+                  <div class="child-comment-body" :ref="`comment${child.id}`" @click.stop="checkReply(child)">
+                    <span class="reply-tips" v-if="child.response_id !== comment.id">
+                      回复
+                      <avatar class="reply-username" :userId="info[child.response_id].author_id">
+                        <template v-slot:default="{ userinfo: replyUserinfo }">{{ replyUserinfo.username }}</template>
+                      </avatar>
+                    </span>
+                    <span class="text">{{ child.body }}</span>
+                    <span class="time">{{ $timeShow(child.timestamp) }}</span>
+                  </div>
+                  <div class="reply-container">
+                    <span class="reply-btn" @click.stop="replyComment(child)">回复</span>
+                    <template v-if="child.replyEdit">
+                      <Input :ref="`reply${child.id}`" :placeholder="`回复 ${userinfo.username} `" v-model="child.reply" type="textarea" :autosize="{minRows: 2,maxRows: 6}"/>
+                      <Button class="btn" size="small" type="warning" @click.stop="replyCancel(child)">取消</Button>
+                      <Button class="btn" size="small" type="primary" @click.stop="replyConfirm(child)">确定</Button>
+                    </template>
+                  </div>
+                </template>
+              </avatar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import avatar from '@/components/Avatar'
+
+export default {
+  components: {
+    avatar
+  },
+  props: {
+    list: {
+      type: Array,
+      requied: true
+    }
+  },
+  data () {
+    return {
+      replyText: '',
+      expandMap: {}
+    }
+  },
+  computed: {
+    rootList () {
+      let list = [...this.list]
+      list.sort((a, b) => a.timestamp - b.timestamp)
+      let info = {}, results = []
+      list.forEach(comment => {
+        if (comment.response_id) {
+          if (!info[comment.response_id]) return
+          info[comment.response_id].push(comment)
+          info[comment.id] = info[comment.response_id]
+        } else {
+          comment.children = []
+          info[comment.id] = comment.children
+          results.push(comment)
+        }
+      })
+      results.forEach(result => result.children.length && result.children.reverse())
+      return results.reverse()
+    },
+    info () {
+      return this.list.reduce((info, comment) => (info[comment.id] = comment, info), {})
+    },
+    currentUser () {
+      return this.$store.getters['userInfo/info']
+    }
+  },
+  methods: {
+    replyComment (comment) {
+      this.$set(comment, 'replyEdit', true)
+      if (!comment.reply) {
+        this.$set(comment, 'reply', '')
+      }
+      this.$nextTick(() => {
+        let refs = this.$refs[`reply${comment.id}`]
+        refs && refs[0] && refs[0].focus()
+      })
+    },
+    replyCancel (comment) {
+      this.$set(comment, 'replyEdit', false)
+    },
+    replyConfirm (comment) {
+      this.$emit('reply', comment.reply, comment.id, () => {
+        this.$set(comment, 'reply', '')
+        if (!this.expandMap[comment.id]) this.setExpand(comment)
+        this.$nextTick(() => {
+          let refs = this.$refs[`comment${comment.id}`]
+          refs && refs[0] && refs[0].scrollIntoView()
+        })
+      })
+    },
+    checkReply (comment) {
+      if (!this.$IsPC) this.replyComment(comment)
+    },
+    setExpand (comment) {
+      this.$set(this.expandMap, comment.id, !this.expandMap[comment.id])
+    }
+  }
+}
+</script>
+
+<style lang="stylus" scoped>
+
+
+.comment, .child-comment
+  &+.comment, &+.child-comment
+    border-top 1px solid #ddd
+  .avatar, .child-avatar
+    float left
+    img
+      border-radius 50%
+  .comment-content, .child-comment-content
+    overflow hidden
+    .userinfo, .child-userinfo
+      .comment-body, .child-comment-body
+        font-size 14px
+        line-height 1.6
+        .text
+          margin-right 10px
+        .time
+          word-break keep-all
+          white-space pre
+          font-size 14px
+          color #888
+
+.username, .child-username, .reply-username
+  color #888
+  font-size 14px
+  line-height 1.5
+
+.reply-tips
+  .reply-username
+    margin 0 4px
+    display inline
+    &::after
+      content ':'
+      color #333
+      margin-left 2px
+
+
+.comment-children
+  background rgba(0, 0, 0, .05)
+  border-radius 2px
+
+.reply-container
+  .reply-info
+    color #666
+    margin-right 10px
+  .reply-btn, .fold-btn
+    user-select none
+    cursor pointer
+    color #3361d8
+    text-decoration underline
+
+@media screen and (min-width: 600px)
+  .comment
+    padding 15px 0
+    .avatar
+      margin-right 20px
+      img
+        width 60px
+  .child-comment
+    padding 10px
+    .child-avatar
+      margin-right 10px
+      img
+        width 50px
+  .reply-container
+    overflow hidden
+    margin 10px 0
+    .btn
+      float right
+      margin-top 10px
+      font-size 13px
+      &+.btn
+        margin-right 10px
+
+@media screen and (max-width: 600px)
+  .comment
+    padding 5px 0
+    .avatar
+      margin-right 5px
+      img
+        width 10vw
+  .child-comment
+    padding 5px
+    .child-avatar
+      margin-right 4px
+      img
+        width 6vw
+  .reply-container
+    overflow hidden
+    margin 5px 0
+    font-size 13px
+    .btn
+      float right
+      margin-top 5px
+      &+.btn
+        margin-right 10px
+
+</style>

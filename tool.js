@@ -1,5 +1,4 @@
 
-
 function getCookie (cookie, key) {
   let cookieList = cookie.split('; ')
   let keyInfo = cookieList.reduce((info, cookieItem) => {
