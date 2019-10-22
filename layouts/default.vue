@@ -3,7 +3,7 @@
     <div ref='header' class="layout-header" :class="headerClass">
       <div class="layout-header-main">
         <h1 class="site-title">
-          <nuxt-link to="/" class="title-content">木马.tc个人博客2</nuxt-link>
+          <nuxt-link to="/" class="title-content">木马.tc个人博客222</nuxt-link>
         </h1>
         <div class="nav-list">
           <nuxt-link
