@@ -5,14 +5,16 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: process.env.npm_package_name || '',
+    title: "木马.tc个人博客",
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { name: 'viewport', content: "width=device-width, initial-scale=1" },
+      { name: 'keywords', content: "木马.tc,技术博客,编程,JS,HTML,CSS,Python" },
+      { hid: 'description', name: 'description', content: "木马.tc个人博客" }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: "/favicon.ico" },
+      { rel: "stylesheet", type: "text/css", href: "/css/prism.css" }
     ]
   },
   /*
@@ -53,5 +55,9 @@ export default {
     parallel: true,
     extend (config, ctx) {
     }
-  }
+  },
+  server: {
+    port: 8000,
+    host: '0.0.0.0',
+  },
 }

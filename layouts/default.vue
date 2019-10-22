@@ -1,11 +1,9 @@
 <template>
   <div class="layout">
-    <link rel="stylesheet" type="text/css" href="/css/prism.css">
-    <script src="/js/prism.js"></script>
     <div ref='header' class="layout-header" :class="headerClass">
       <div class="layout-header-main">
         <h1 class="site-title">
-          <nuxt-link to="/" class="title-content">木马博客</nuxt-link>
+          <nuxt-link to="/" class="title-content">木马.tc个人博客</nuxt-link>
         </h1>
         <div class="nav-list">
           <nuxt-link
@@ -18,8 +16,24 @@
         </div>
       </div>
     </div>
-    <nuxt class="nuxt-container" />
-    <div class="layout-footer">
+    <div class="layout-main">
+      <div class="modules">
+        <div class="module">
+          个人信息
+        </div>
+        <div class="module">
+          分类导航
+        </div>
+        <div class="module">
+          热门文章
+        </div>
+        <div class="module">
+          文章标签
+        </div>
+      </div>
+      <nuxt class="nuxt-container" />
+    </div>
+    <!-- <div class="layout-footer">
       <div class="footer-container">
         <div class="get-in-touch">
           <img src="/img/contact.png" alt="">
@@ -37,7 +51,7 @@
         </div>
         <img class="wechat" src="/img/wechat.jpeg" alt="">
       </div>
-    </div>
+    </div> -->
     <client-only>
       <Modal
         class="login-modal"
@@ -207,13 +221,16 @@ export default {
       .site-title
         .title-content
           color #FAFBFC
+          font-weight 400
       .nav-list
         .nav
           font-weight bold
           color #FAFBFC
           font-size 16px
-  .nuxt-container
+  .layout-main
     flex auto
+    .nuxt-container
+      // overflow hidden
   .layout-footer
     flex-shrink 0
     background #ECF5FD
@@ -268,8 +285,8 @@ export default {
             color #FFBB21
             &+.nav
               margin-left 10px
-    .nuxt-container
-      padding 0
+      .nuxt-container
+        padding 0
     .layout-footer
       .footer-container
         padding-bottom 50px
@@ -296,8 +313,22 @@ export default {
           .nav
             &+.nav
               margin-left 15px
-    .nuxt-container
+    .layout-main
+      max-width 1100px
+      margin 0 auto
       padding 20px 10px
+      .modules
+        float left
+        width 240px
+        margin-right 10px
+        .module
+          background #FAFBFC
+          padding 20px
+          &+.module
+            margin-top 10px
+
+      .nuxt-container
+        overflow hidden
     .layout-footer
       .footer-container
         padding-bottom 100px
@@ -336,6 +367,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
+  word-break: break-all;
 }
 
 body {
