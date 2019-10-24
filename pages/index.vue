@@ -111,11 +111,11 @@ export default {
         img
           width 100%
           height 100%
+          transition all .5s ease-out
       &:hover
         .post-abstract-image img
           width 110%
           height 110%
-          transition all .5s ease-out
       .post-info-pc, .post-info-mobile
         display flex
         margin-top 1em

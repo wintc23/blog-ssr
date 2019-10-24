@@ -16,7 +16,7 @@ Vue.prototype.$timeShow = (timestamp) => {
   if (delta < 60) return '刚刚'
   if (delta < 60 * 60) return `${Math.floor(delta/60)}分钟前`
   if (delta < 24 * 60 * 60) return `${Math.floor(delta/60/60)}小时前`
-  if (delta < 3 * 24 * 60 * 60) return `${Math.floor(delta/60/60)/24}天前`
+  if (delta < 3 * 24 * 60 * 60) return `${Math.floor(delta/60/60/24)}天前`
   if (new Date(date).getFullYear() == new Date().getFullYear()) return formatTime(timestamp, 'MM-dd HH:mm')
   return formatTime(timestamp, 'yyyy-MM-dd')
 }

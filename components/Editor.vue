@@ -22,6 +22,8 @@ import 'tinymce/plugins/wordcount'
 import 'tinymce/plugins/media'
 import 'tinymce/plugins/fullscreen'
 import 'tinymce/plugins/codesample'
+import 'tinymce/plugins/advlist'
+
 
 export default {
   components: {
@@ -44,13 +46,14 @@ export default {
         body_class: 'post-body',
         content_style: ' body { max-width: 1100px; min-height: 100%; margin: 0 auto; padding: 40px !important; background: #fff } html { background: #eee; height: 100% }',
         // menubar: 'edit view insert format tool table',
-        plugins: 'link lists image code table wordcount fullscreen media codesample',
-        toolbar: 'bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | undo redo | link unlink image media table code codesample | fullscreen',
+        plugins: 'link lists image code table wordcount fullscreen media codesample advlist',
+        toolbar: 'bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | undo redo | bullist numlist link unlink image media table code codesample | fullscreen',
         menubar: false,
         file_picker_types: 'media',
         media_live_embeds: false,
         branding: false,
         autoresize_bottom_margin: 50,
+        lists_indent_on_tab: true,
         valid_elements: '*[*]',
         codesample_content_css: '/css/prism.css',
         images_upload_handler: (blobInfo, success, failure) => {
