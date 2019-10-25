@@ -1,6 +1,7 @@
 import Vue from 'vue'
 
 import Avatar from '@/components/Avatar'
+import { Modal } from 'iview'
 
 import { formatTime } from '@/tool'
 
@@ -22,6 +23,8 @@ Vue.prototype.$timeShow = (timestamp) => {
 }
 
 if (process.client) {
+  Vue.component('avatar', Avatar)
+
   Vue.prototype.$IsPC = (() => {
     let userAgentInfo = navigator.userAgent
     let Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"]
@@ -34,5 +37,23 @@ if (process.client) {
     }
     return flag
   })()
-  Vue.component('avatar', Avatar)
+
+  Vue.prototype.$confirm = function confirm (text, func, ...args) {
+    Modal.confirm({
+      render: (h) => {
+        return h('div', {
+          domProps: {
+            innerHTML: text
+          },
+          style: {
+            'word-wrap': 'break-word'
+          }
+        })
+      },
+      onOk: () => {
+        func(...args)
+      }
+    })
+  }
+
 }
