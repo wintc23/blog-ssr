@@ -24,7 +24,6 @@ import 'tinymce/plugins/fullscreen'
 import 'tinymce/plugins/codesample'
 import 'tinymce/plugins/advlist'
 
-
 export default {
   components: {
     'tiny-mce': TinyMCE,
