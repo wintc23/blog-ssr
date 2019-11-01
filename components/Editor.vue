@@ -46,7 +46,7 @@ export default {
         content_style: ' body { max-width: 1100px; min-height: 100%; margin: 0 auto; padding: 40px !important; background: #fff } html { background: #eee; height: 100% }',
         // menubar: 'edit view insert format tool table',
         plugins: 'link lists image code table wordcount fullscreen media codesample advlist',
-        toolbar: 'bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify | undo redo | bullist numlist link unlink image media table code codesample | fullscreen',
+        toolbar: 'bullist numlist link image media table code codesample fullscreen | bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify',
         menubar: false,
         file_picker_types: 'media',
         media_live_embeds: false,

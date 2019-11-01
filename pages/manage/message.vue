@@ -1,8 +1,10 @@
 <template>
   <div class="message-manage-container">
     <div class="container">
-      <div class="message-table">
-        <Table stripe border :columns="columns" :data="messageList"></Table>
+      <div class="message-table" ref="container">
+        <div class="table-container">
+          <Table :height="tableHeight" stripe border :columns="columns" :data="messageList"></Table>
+        </div>
       </div>
       <div class="pagination">
         <Page :total="messageTotal" :page-size="perPage" @on-change="getMessageList" show-elevator :current="currentPage"></Page>
@@ -24,6 +26,7 @@ export default {
       messageList: [],
       messageTotal: 0,
       currentPage: 1,
+      tableHeight: 0,
       columns:[{
         title: '评论内容',
         key: 'body'
@@ -98,8 +101,18 @@ export default {
   },
   mounted () {
     this.getMessageList()
+    this.calTableHeight()
+    window.addEventListener('resize', this.calTableHeight)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.calTableHeight)
   },
   methods: {
+    calTableHeight () {
+      if (!this.$refs.container) return
+      let rect = this.$refs.container.getBoundingClientRect()
+      this.tableHeight = rect.height
+    },
     getMessageList (page = 0) {
       page = page || this.currentPage
       api.getHideMessage({ page, per_page: PER_PAGE }).then(res => {
@@ -151,4 +164,12 @@ export default {
     overflow auto
     padding .5rem
     border-radius 4px
+    position relative
+    .table-container
+      position absolute
+      left 0
+      right 0
+      bottom 0
+      top 0
+
 </style>

@@ -1,7 +1,11 @@
 import axios from '@/api'
+import { camel } from '@/tool'
+
 
 export function addComment (params) {
-  return axios.post('/add-comment/', params)
+  return axios.post('/add-comment/', params).then(res => {
+    res.data = camel(res.data)
+  })
 }
 
 export function getComments (params) {

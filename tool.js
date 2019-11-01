@@ -42,3 +42,27 @@ export function formatTime (timestamp, format = 'yyyy-MM-dd HH:mm') {
     .replace(/ss/g, formatNum(date.getSeconds()))
     .replace(/SSS/g, formatNum(date.getMilliseconds()))
 }
+
+export const camel = (data) => {
+  if (typeof data === 'string') {
+    return data.replace(/_([a-z])/g, (_, $1) => $1.toUpperCase())
+  }
+  let newData = {}
+  for (let key in data) {
+    let newKey = key.replace(/_([a-z])/g, (_, $1) => $1.toUpperCase())
+    newData[newKey] = data[key]
+  }
+  return newData
+}
+
+export const underline = (data) => {
+  if (typeof data === 'string') {
+    return data.replace(/([A-Z])/g, (_, $1) => `_${$1.toLowerCase()}`)
+  }
+  let newData = {}
+  for (let key in data) {
+    let newKey = key.replace(/([A-Z])/g, (_, $1) => `_${$1.toLowerCase()}`)
+    newData[newKey] = data[key]
+  }
+  return newData
+}

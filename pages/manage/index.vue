@@ -7,8 +7,10 @@
           <Option v-for="type of typeList" :value="type.id" :key="type.id">{{ type.name }}</Option>
         </Select>
       </div>
-      <div class="article-table">
-        <Table border :columns="columns" :data="postList"></Table>
+      <div class="article-table" ref="container">
+        <div class="table-container">
+          <Table :height="tableHeight" border :columns="columns" :data="postList"></Table>
+        </div>
       </div>
       <div class="pagination">
         <Page :total="totalCount" :page-size="perPage" @on-change='choosePage' show-elevator :current="currentPage"></Page>
@@ -45,6 +47,7 @@ export default {
   data () {
     return {
       perPage: PER_PAGE,
+      tableHeight: 0,
       columns: [{
         title: '标题',
         key: 'title'
@@ -100,7 +103,19 @@ export default {
   created () {
     this.$store.dispatch('postType/getType')
   },
+  mounted () {
+    this.calTableHeight()
+    window.addEventListener('resize', this.calTableHeight)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.calTableHeight)
+  },
   methods: {
+    calTableHeight () {
+      if (!this.$refs.container) return
+      let rect = this.$refs.container.getBoundingClientRect()
+      this.tableHeight = rect.height
+    },
     editPost (idx) {
       let post = this.postList[idx]
       this.$router.push({
@@ -181,5 +196,12 @@ export default {
       flex auto
       padding .5rem
       overflow auto
+      position relative
+    .table-container
+      position absolute
+      left 0
+      right 0
+      bottom 0
+      top 0
 </style>
 

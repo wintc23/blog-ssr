@@ -1,11 +1,11 @@
 <template>
   <div class="layout">
-    <div ref='header' class="layout-header" :class="headerClass">
+    <header ref='header' class="layout-header" :class="headerClass">
       <div class="layout-header-main">
         <h1 class="site-title">
-          <nuxt-link to="/" class="title-content">木马.tc个人博客</nuxt-link>
+          <nuxt-link to="/" class="title-content">{{ $site.title }}</nuxt-link>
         </h1>
-        <div class="nav-list">
+        <nav class="nav-list">
           <nuxt-link
             class="nav"
             v-for="(nav, idx) of navList"
@@ -13,9 +13,9 @@
             :key="idx">
             {{ nav.title }}
           </nuxt-link>
-        </div>
+        </nav>
       </div>
-    </div>
+    </header>
     <div class="layout-main">
       <div class="modules">
         <div class="module">
@@ -33,25 +33,6 @@
       </div>
       <nuxt class="nuxt-container" />
     </div>
-    <!-- <div class="layout-footer">
-      <div class="footer-container">
-        <div class="get-in-touch">
-          <img src="/img/contact.png" alt="">
-          <div class="contact-info">
-            <div class="contact-message">我的联系方式</div>
-            <div class="contact-item">
-              <span class="title">QQ</span>
-              <span class="content">1401618872</span>
-            </div>
-            <div class="contact-item">
-              <span class="title">邮箱</span>
-              <span class="content">lushg-tcxg@qq.com</span>
-            </div>
-          </div>
-        </div>
-        <img class="wechat" src="/img/wechat.jpeg" alt="">
-      </div>
-    </div> -->
     <client-only>
       <Modal
         class="login-modal"

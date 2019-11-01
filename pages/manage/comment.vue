@@ -1,8 +1,10 @@
 <template>
   <div class="comment-manage-container">
     <div class="container">
-      <div class="comment-table">
-        <Table stripe border :columns="columns" :data="commentList"></Table>
+      <div class="comment-table" ref="container">
+        <div class="table-container">
+          <Table :height="tableHeight" stripe border :columns="columns" :data="commentList"></Table>
+        </div>
       </div>
       <div class="pagination">
         <Page :total="commentTotal" :page-size="perPage" @on-change="getCommentList" show-elevator :current="currentPage"></Page>
@@ -19,6 +21,7 @@ const PER_PAGE = 20
 export default {
   data () {
     return {
+      tableHeight: 0,
       perPage: PER_PAGE,
       commentList: [],
       commentTotal: 0,
@@ -97,8 +100,18 @@ export default {
   },
   mounted () {
     this.getCommentList()
+    this.calTableHeight()
+    window.addEventListener('resize', this.calTableHeight)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.calTableHeight)
   },
   methods: {
+    calTableHeight () {
+      if (!this.$refs.container) return
+      let rect = this.$refs.container.getBoundingClientRect()
+      this.tableHeight = rect.height
+    },
     getCommentList (page = 0) {
       page = page || this.currentPage
       api.getComments({ page, per_page: PER_PAGE }).then(res => {
@@ -150,4 +163,11 @@ export default {
     overflow auto
     padding .5rem
     border-radius 4px
+    position relative
+    .table-container
+      position absolute
+      left 0
+      right 0
+      bottom 0
+      top 0
 </style>

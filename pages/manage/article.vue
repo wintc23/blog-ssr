@@ -30,6 +30,40 @@
             <div class="title">是否隐藏</div>
             <Checkbox v-model="postData.hide">隐藏</Checkbox>
           </div>
+          <div class="post-topic">
+            <div class="title">专题</div>
+            <Select v-model="postData.topicId">
+              <Option
+                v-for="topic of topicList"
+                :value="topic.id"
+                :key="topic.id">
+                {{ topic.title }}
+              </Option>
+            </Select>
+          </div>
+          <div class="post-tags">
+            <div class="title">标签</div>
+            <div class="tag-container">
+              <template v-for="tag of tagList">
+                <Tag
+                  class="tag"
+                  @click.native.stop="setTag(tag.id)"
+                  v-if="tag.title"
+                  :color="postData.tags.includes(tag.id) ? 'primary' : 'blue'"
+                  :key="tag.id">
+                  {{ tag.title }}
+                </Tag>
+              </template>
+            </div>
+          </div>
+          <div class="post-abstract">
+            <div class="title">关键词</div>
+            <Input v-model="postData.keywords" type="textarea" autosize></Input>
+          </div>
+          <div class="post-abstract">
+            <div class="title">描述</div>
+            <Input v-model="postData.description" type="textarea" autosize></Input>
+          </div>
           <div class="post-abstract">
             <div class="title">摘要</div>
             <Input v-model="postData.abstract" type="textarea" autosize></Input>
@@ -62,27 +96,37 @@
 
 <script>
 import { getPost, uploadFile, savePost, getFileUploadToken } from '@/api/posts'
-import Editor from '@/components/Editor'
 
 export default {
   scrollToTop: true,
-  components: {
-    Editor
-  },
-  asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
+  components: (() => {
+    if (process.client) {
+      return {
+        Editor: require('@/components/Editor').default
+      }
+    }
     return {}
-  },
+  })(),
   data () {
     return {
       postData: {
         id: '',
         title: '',
-        body: '',
         bodyHtml: '',
         hide: false,
         abstract: '',
         abstractImage: '',
-        typeId: ''
+        typeId: '',
+        tags: [],
+        topicId: 0,
+        keywords: '',
+        description: ''
+      },
+      map: {
+        bodyHtml: 'body_html',
+        typeId: 'type',
+        abstractImage: 'abstract_image',
+        topicId: 'topic'
       },
       showSetting: false
     }
@@ -93,6 +137,12 @@ export default {
     },
     currentUser () {
       return this.$store.getters['userInfo/info'] || {}
+    },
+    tagList () {
+      return this.$store.getters['topic/tags']
+    },
+    topicList () {
+      return this.$store.getters['topic/topics']
     }
   },
   watch: {
@@ -110,28 +160,14 @@ export default {
     getPost () {
       getPost(this.$route.query.postId).then(res => {
         if (res.status == 200) {
-          let attrList = ['title', 'hide', 'id', 'body', 'body_html', 'type_id', 'abstract', 'abstract_image']
-          res.data.body = res.data.body || ''
-          let { title, hide, id, body, body_html:bodyHtml, type_id: typeId, abstract, abstract_image: abstractImage } = res.data
-          this.postData = { title, hide, id, body, bodyHtml, typeId, abstract, abstractImage }
+          this.postData = res.data
         }
       })
-    },
-    imgAdd (pos, file) {
-      uploadFile(file, (url) => {
-        this.$refs.editor.$img2Url(pos, url)
-      })
-    },
-    imgDel () {
-      // 
-    },
-    changeString (value, render) {
-      this.postData.bodyHtml = render
     },
     showPostSetting () {
       this.showSetting = true
       if (!this.postData.abstract) {
-        this.postData.abstract = this.postData.body.slice(0, 500)
+        this.postData.abstract = this.postData.bodyHtml.slice(0, 500)
       }
       if (!this.postData.typeId) {
         let type = this.typeList.find(item => item.default)
@@ -140,24 +176,28 @@ export default {
       }
     },
     changeAbstractImage (event) {
-      console.log(event)
       if (!event.target.files.length) return
       uploadFile(event.target.files[0], (url) => {
         this.postData.abstractImage = url
       })
     },
     clickAbstractImage () {
-      console.log(this.$refs.abstractImageInput, this.$refs)
       this.$refs.abstractImageInput.click()
     },
     save () {
-      let { bodyHtml: body_html, typeId: type_id, abstractImage: abstract_image } = this.postData
-      let params = { ...this.postData, body_html, type_id, abstract_image }
-      savePost(params).then(res => {
+      savePost(this.postData).then(res => {
         if (res.status == 200) {
           this.$router.push(`/article/${this.$route.query.postId}`)
         }
       })
+    },
+    setTag (tagId) {
+      let index = this.postData.tags.indexOf(tagId)
+      if (index !== -1) {
+        this.postData.tags.splice(index, 1)
+      } else {
+        this.postData.tags.push(tagId)
+      }
     }
   }
 }
@@ -193,7 +233,7 @@ export default {
     font-weight bold
   .post-img
     img
-      width 100%
+      width 300px
       height auto
 </style>
 

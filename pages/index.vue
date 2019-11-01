@@ -1,13 +1,16 @@
 <template>
   <div class="home-page">
     <div class="post-list">
-      <nuxt-link
+      <article
         class="post"
         v-for="post of list"
-        :to="`/article/${post.id}`"
         :key="post.id">
         <div class="post-abstract">
-          <h2 class="post-title">{{ post.title }}</h2>
+          <nuxt-link :to="`/article/${post.id}`">
+            <h2 class="post-title">
+              {{ post.title }}
+            </h2>
+          </nuxt-link>
           <div class="post-info-common">
             <span class="post-type" :title="`文章分类：${typeInfo[post.type].name}`" v-if="typeInfo[post.type]">
               {{ typeInfo[post.type].name }}
@@ -17,21 +20,21 @@
             </span>
           </div>
           <div class="post-abstract-content" v-html="post.abstract"></div>
-          <div class="post-info-pc">
-            <div class="read info-item">浏览(<span>{{ post.read_times }}</span>)</div>
+          <aside class="post-info-pc">
+            <div class="read info-item">浏览(<span>{{ post.readTimes }}</span>)</div>
             <div class="like info-item">赞(<span>{{ post.likes }}</span>)</div>
-            <div class="comment info-item">评论(<span>{{ post.comment_times }}</span>)</div>
-          </div>
+            <div class="comment info-item">评论(<span>{{ post.commentTimes }}</span>)</div>
+          </aside>
         </div>
-        <div class="post-abstract-image" v-if="post.abstract_image">
-          <img :src="post.abstract_image" alt="">
+        <div class="post-abstract-image" v-if="post.abstractImage">
+          <img :src="post.abstractImage" alt="">
         </div>
-        <div class="post-info-mobile">
-          <div class="read info-item">浏览(<span>{{ post.read_times }}</span>)</div>
+        <aside class="post-info-mobile">
+          <div class="read info-item">浏览(<span>{{ post.readTimes }}</span>)</div>
           <div class="like info-item">赞(<span>{{ post.likes }}</span>)</div>
-          <div class="comment info-item">评论(<span>{{ post.comment_times }}</span>)</div>
-        </div>
-      </nuxt-link>
+          <div class="comment info-item">评论(<span>{{ post.commentTimes }}</span>)</div>
+        </aside>
+      </article>
       <div class="pagination">
         <div class="last">
           <nuxt-link :to="`/?page=${page-1}`" v-if="page > 1">上一页</nuxt-link>
@@ -61,8 +64,18 @@ export default {
         error('404', '页面找不到了哦')
       }
     }).catch(e => {
+      console.log(e)
       error('501', '服务器错误')
     })
+  },
+  head () {
+    return {
+      title: `${this.$site.title} - ${this.$site.slogon}`,
+      meta: [
+        { hid: 'keywords', name: 'keywords', content: `${this.$site.keywords}` },
+        { hid: 'description', name: 'description', content: `${this.$site.description}` }
+      ]
+    }
   },
   fetch () {},
   computed: {
@@ -81,7 +94,6 @@ export default {
   .post-list
     margin 0 auto
     .post
-      display block
       color #333
       background #FAFBFC
       &+.post

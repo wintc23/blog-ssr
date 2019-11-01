@@ -35,6 +35,12 @@ export default {
         value: 'post'
       },
       {
+        title: '标签/分类',
+        name: 'manage-topic',
+        icon: 'md-bookmark',
+        value: 'topic'
+      },
+      {
         title: '评论管理',
         name: 'manage-comment',
         value: 'comment',

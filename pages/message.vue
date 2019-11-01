@@ -35,7 +35,7 @@ export default {
     }
     return getMessages(data).then(res => {
       if (res.status == 200) {
-        let { list, total, page, per_page: perPage }  = res.data
+        let { list, total, page, perPage }  = res.data
         return { list, total, page, perPage }
       } else {
         error({ statusCode: 404, message: '页面找不到了哦' })
@@ -75,7 +75,7 @@ export default {
       let params = {
         body: msg,
       }
-      response && (params.response_id = response)
+      response && (params.responseId = response)
       addMessage(params).then(res => {
         if (res.status == 200) {
           if (response) {

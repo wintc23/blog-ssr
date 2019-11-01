@@ -7,15 +7,15 @@
           <span class="post-date">
             {{ $timeShow(post.timestamp) }}
           </span>
-          <span class="post-type" v-if="typeInfo[post.type]">
-            {{ typeInfo[post.type].name }}
+          <span class="post-type" v-if="typeInfo[post.typeId]">
+            {{ typeInfo[post.typeId].name }}
           </span>
           <span class="read info-item">
-            <span>{{ post.read_times }}</span>次浏览
+            <span>{{ post.readTimes }}</span>次浏览
           </span>
         </div>
         <div class="post-body">
-          <div v-html="post.body_html"></div>
+          <div v-html="post.bodyHtml"></div>
         </div>
         <div class="post-like" @click.stop="clickLike">
           <span
@@ -39,7 +39,7 @@
               <CommentInput placeholder="既然来了，就说几句吧" v-model="comment"></CommentInput>
               <Button class="comment-button" type="success" size="small" @click.stop="addComment(comment)">确定</Button>
             </div>
-            <div class="comment-title">评论(<span>{{ post.comment_times }}</span>)</div>
+            <div class="comment-title">评论(<span>{{ post.commentTimes }}</span>)</div>
           </div>
           <comment-tree @reply="addComment" :list="post.comments"></comment-tree>
         </client-only>
@@ -79,6 +79,15 @@ export default {
       error(501, '服务器出错啦')
     })
   },
+  head () {
+    return {
+      title: `${this.post.title} - 木马tc个人博客`,
+      meta: [
+        { hid: 'keywords', name: 'keywords', content: `${this.post.keywords || ''}` },
+        { hid: 'description', name: 'description', content: `${this.post.description || ''} ${this.$site.description}` }
+      ]
+    }
+  },
   data () {
     return {
       comment: ''
@@ -113,9 +122,10 @@ export default {
       }
       let params = {
         body: comment,
-        post_id: this.post.id,
+        postId: this.post.id,
       }
-      response && (params.response_id = response)
+      response && (params.responseId = response)
+
       addComment(params).then(res => {
         if (res.status == 200) {
           this.comment = ''

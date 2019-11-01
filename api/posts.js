@@ -1,17 +1,26 @@
 import axios from '@/api'
 import uuidv4 from 'uuid/v4'
+import { camel, underline } from '@/tool'
 
 export function getPostsByType(params) {
   return axios.post('/get-type-posts/', params)
 }
 
 export function getPosts (params) {
-  return axios.post('/get-posts/', params)
+  return axios.post('/get-posts/', params).then(res => {
+    res.data = camel(res.data)
+    res.data.list = res.data.list.map(post => camel(post))
+    return res
+  })
 }
 
 export function getPost(id, type) {
   let typeSuffix = type ? `/${type}` : ''
-  return axios.get(`/get-post/${id}${typeSuffix}`)
+  return axios.get(`/get-post/${id}${typeSuffix}`).then(res => {
+    res.data = camel(res.data)
+    res.data.comments = res.data.comments.map(comment => camel(comment))
+    return res
+  })
 }
 
 export function getPostType() {
@@ -23,6 +32,7 @@ export function deletePost (postId) {
 }
 
 export function savePost (params) {
+  params = underline(params)
   return axios.post(`/save-post/`, params)
 }
 

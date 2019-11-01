@@ -4,13 +4,13 @@
       class="comment"
       v-for="comment of rootList"
       :key="comment.id">
-      <avatar class="avatar" :class="currentUser.admin ? 'admin' : ''" title="站长" :userId="comment.author_id">
+      <avatar class="avatar" :class="currentUser.admin ? 'admin' : ''" title="站长" :userId="comment.authorId">
         <template v-slot:default="{ userinfo }">
           <img :src="userinfo.avatar" alt="用户头像">
         </template>
       </avatar>
       <div class="comment-content">
-        <avatar class="userinfo" :userId="comment.author_id">
+        <avatar class="userinfo" :userId="comment.authorId">
           <template v-slot:default="{ userinfo }">
             <div class="username">{{ userinfo.username }}</div>
             <div class="comment-body" :ref="`comment${comment.id}`" @click.stop="checkReply(comment)">
@@ -38,19 +38,19 @@
             class="child-comment"
             v-for="(child, idx) of comment.children"
             :key="idx">
-            <avatar class="child-avatar" :class="currentUser.admin ? 'admin' : ''" title="站长" :userId="child.author_id">
+            <avatar class="child-avatar" :class="currentUser.admin ? 'admin' : ''" title="站长" :userId="child.authorId">
               <template v-slot:default="{ userinfo }">
                 <img :src="userinfo.avatar" alt="用户头像">
               </template>
             </avatar>
             <div class="child-comment-content">
-              <avatar class="child-userinfo" :class="currentUser.admin ? 'admin' : ''" :userId="child.author_id">
+              <avatar class="child-userinfo" :class="currentUser.admin ? 'admin' : ''" :userId="child.authorId">
                 <template v-slot:default="{ userinfo }">
                   <div class="child-username">{{ userinfo.username }}</div>
                   <div class="child-comment-body" :ref="`comment${child.id}`" @click.stop="checkReply(child)">
-                    <span class="reply-tips" v-if="child.response_id !== comment.id">
+                    <span class="reply-tips" v-if="child.responseId !== comment.id">
                       回复
-                      <avatar class="reply-username" :userId="info[child.response_id].author_id">
+                      <avatar class="reply-username" :userId="info[child.responseId].authorId">
                         <template v-slot:default="{ userinfo: replyUserinfo }">{{ replyUserinfo.username }}</template>
                       </avatar>
                     </span>
@@ -100,10 +100,10 @@ export default {
       list.sort((a, b) => a.timestamp - b.timestamp)
       let info = {}, results = []
       list.forEach(comment => {
-        if (comment.response_id) {
-          if (!info[comment.response_id]) return
-          info[comment.response_id].push(comment)
-          info[comment.id] = info[comment.response_id]
+        if (comment.responseId) {
+          if (!info[comment.responseId]) return
+          info[comment.responseId].push(comment)
+          info[comment.id] = info[comment.responseId]
         } else {
           comment.children = []
           info[comment.id] = comment.children
