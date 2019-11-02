@@ -126,7 +126,7 @@ export default {
           path: '/about'
         }
       ]
-      if (this.currentUser.admoinInfo) {
+      if (this.currentUser.admin) {
         list.push({
           title: '后台管理',
           path: '/manage'
