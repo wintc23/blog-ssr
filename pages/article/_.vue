@@ -1,8 +1,8 @@
 <template>
   <div class="article-page">
     <div class="main-content">
-      <div class="post-detail">
-        <h1 class="post-title">{{ post.title }}</h1>
+      <article class="post-detail">
+        <h2 class="post-title">{{ post.title }}</h2>
         <div class="post-info">
           <span class="post-date">
             {{ $timeShow(post.timestamp) }}
@@ -43,7 +43,7 @@
           </div>
           <comment-tree @reply="addComment" :list="post.comments"></comment-tree>
         </client-only>
-      </div>
+      </article>
     </div>
   </div>
 </template>

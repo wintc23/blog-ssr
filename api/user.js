@@ -16,6 +16,10 @@ export function checkAdmin () {
   return axios.get('/check-admin/')
 }
 
+export function getAdminInfo () {
+  return axios.get('/get-user-info/')
+}
+
 // export default {
   // register (params) {
     // return axios.post('/api/register/', params)

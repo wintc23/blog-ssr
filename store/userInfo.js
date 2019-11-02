@@ -25,13 +25,9 @@ export const getters = {
 
 export const actions = {
   getUserInfo (context, data = {}) {
-    console.log('get1')
     if (!data.force && this.loadingStatus) return
-    console.log('get2', getToken())
 
     if (getToken()) {
-      console.log('get3')
-
       this.loadingStatus = 1
       return getUserInfoByToken().then(res => {
         if (res.status === 200) {

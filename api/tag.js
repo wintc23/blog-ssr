@@ -14,4 +14,4 @@ export function getTagList () {
 
 export function updateTag (params) {
   return axios.post('/update-tag/', params)
-}  
+}

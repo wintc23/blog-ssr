@@ -1,5 +1,6 @@
 
 function getCookie (cookie, key) {
+  if (!cookie) return ''
   let cookieList = cookie.split('; ')
   let keyInfo = cookieList.reduce((info, cookieItem) => {
     let [key, value] = cookieItem.split('=')
@@ -43,26 +44,40 @@ export function formatTime (timestamp, format = 'yyyy-MM-dd HH:mm') {
     .replace(/SSS/g, formatNum(date.getMilliseconds()))
 }
 
-export const camel = (data) => {
+export function camel (data) {
+  if (!data) return data
   if (typeof data === 'string') {
     return data.replace(/_([a-z])/g, (_, $1) => $1.toUpperCase())
   }
-  let newData = {}
-  for (let key in data) {
-    let newKey = key.replace(/_([a-z])/g, (_, $1) => $1.toUpperCase())
-    newData[newKey] = data[key]
+  if (Array.isArray(data)) {
+    return data.map(item => camel(item))
   }
-  return newData
+  if (typeof data === 'object') {
+    let newData = {}
+    for (let key in data) {
+      let newKey = key.replace(/_([a-z])/g, (_, $1) => $1.toUpperCase())
+      newData[newKey] = camel(data[key])
+    }
+    return newData
+  }
+  return data
 }
 
-export const underline = (data) => {
+export function underline (data) {
+  if (!data) return data  
   if (typeof data === 'string') {
     return data.replace(/([A-Z])/g, (_, $1) => `_${$1.toLowerCase()}`)
   }
-  let newData = {}
-  for (let key in data) {
-    let newKey = key.replace(/([A-Z])/g, (_, $1) => `_${$1.toLowerCase()}`)
-    newData[newKey] = data[key]
+  if (Array.isArray(data)) {
+    return data.map(item => underline(item))
   }
-  return newData
+  if (typeof data === 'object') {
+    let newData = {}
+    for (let key in data) {
+      let newKey = key.replace(/([A-Z])/g, (_, $1) => `_${$1.toLowerCase()}`)
+      newData[newKey] = underline(data[key])
+    }
+    return newData
+  }
+  return data
 }

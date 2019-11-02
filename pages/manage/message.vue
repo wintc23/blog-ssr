@@ -38,10 +38,10 @@ export default {
         align: 'center',
         render: (h, params) => {
           let message = this.messageList[params.index]
-          let userId = message ? message.author_id : ''
+          let userId = message ? message.authorId : ''
           return h('avatar', {
             props: {
-              userId: params.row.author_id
+              userId: params.row.authorId
             },
             scopedSlots: {
               default: props => h('div', props.userinfo.username)
@@ -115,7 +115,7 @@ export default {
     },
     getMessageList (page = 0) {
       page = page || this.currentPage
-      api.getHideMessage({ page, per_page: PER_PAGE }).then(res => {
+      api.getHideMessage({ page }).then(res => {
         if (res.status == 200) {
           this.messageList = res.data.list
           this.messageTotal = res.data.total

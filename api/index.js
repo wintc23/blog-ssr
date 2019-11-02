@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getToken, clearToken } from '@/tool'
+import { getToken, clearToken, camel, underline } from '@/tool'
 import iView from 'iview'
 import { BASE_URL } from '@/config'
 
@@ -9,6 +9,7 @@ const beforeRequest = (config) => {
   if (token && !config.headers['Authorization']) {
     config.headers['Authorization'] = token
   }
+  config.data = underline(config.data)
   return config
 }
 
@@ -17,13 +18,17 @@ function requestError (error) {
 }
 
 function resPreHandle (response) {
+  response.data = camel(response.data)
   if (response.data && response.data.notify) {
-    iView.Message.success(response.data.message)
+    process.client && iView.Message.success(response.data.message)
   }
   return response
 }
 
 function responseError (error) {
+  if (error.response && error.response.data) {
+    error.response.data = camel(error.response.data)
+  }
   if (process.client) {
     if (error.response.data && error.response.data.notify) {
       iView.Message.error(error.response.data.message)

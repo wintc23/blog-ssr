@@ -122,12 +122,6 @@ export default {
         keywords: '',
         description: ''
       },
-      map: {
-        bodyHtml: 'body_html',
-        typeId: 'type',
-        abstractImage: 'abstract_image',
-        topicId: 'topic'
-      },
       showSetting: false
     }
   },

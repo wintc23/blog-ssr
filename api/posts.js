@@ -1,26 +1,17 @@
 import axios from '@/api'
 import uuidv4 from 'uuid/v4'
-import { camel, underline } from '@/tool'
 
 export function getPostsByType(params) {
   return axios.post('/get-type-posts/', params)
 }
 
 export function getPosts (params) {
-  return axios.post('/get-posts/', params).then(res => {
-    res.data = camel(res.data)
-    res.data.list = res.data.list.map(post => camel(post))
-    return res
-  })
+  return axios.post('/get-posts/', params)
 }
 
 export function getPost(id, type) {
   let typeSuffix = type ? `/${type}` : ''
-  return axios.get(`/get-post/${id}${typeSuffix}`).then(res => {
-    res.data = camel(res.data)
-    res.data.comments = res.data.comments.map(comment => camel(comment))
-    return res
-  })
+  return axios.get(`/get-post/${id}${typeSuffix}`)
 }
 
 export function getPostType() {
@@ -87,4 +78,8 @@ export function likePost (postId) {
 
 export function cancelLikePost (postId) {
   return axios.get(`/cancel-like-post/${postId}`)
+}
+
+export function getTopTen () {
+  return axios.get('/get-popu-posts/')
 }

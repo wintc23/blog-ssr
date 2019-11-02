@@ -54,7 +54,7 @@ export default {
         },
         {
           title: '相关文章',
-          key: 'post_count',
+          key: 'postCount',
           width: 100
         },
         {

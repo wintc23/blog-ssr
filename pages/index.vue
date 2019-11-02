@@ -16,10 +16,14 @@
               {{ typeInfo[post.type].name }}
             </span>
             <span class="post-date">
-              发布于{{ $timeShow(post.timestamp) }}
+              {{ $timeShow(post.timestamp) }}
             </span>
           </div>
-          <div class="post-abstract-content" v-html="post.abstract"></div>
+          <div
+            @click.stop="toArticle(post.id)"
+            class="post-abstract-content"
+            v-html="post.abstract">
+          </div>
           <aside class="post-info-pc">
             <div class="read info-item">浏览(<span>{{ post.readTimes }}</span>)</div>
             <div class="like info-item">赞(<span>{{ post.likes }}</span>)</div>
@@ -85,6 +89,11 @@ export default {
     typeInfo () {
       return this.$store.getters['postType/typeInfo']
     }
+  },
+  methods: {
+    toArticle (id) {
+      this.$router.push(`/article/${id}`)
+    }
   }
 }
 </script>
@@ -101,9 +110,12 @@ export default {
       .post-abstract
         .post-title
           color #2d8cf0
+          &:hover
+            text-decoration underline
         .post-abstract-content
           color #777
         .post-info-common
+          padding .5em 0 1em
           .post-type
             align-self center
             margin-right 20px
@@ -112,7 +124,6 @@ export default {
             border-radius 2px
             // padding 6px 10px
           .post-date
-            line-height 3
             color #888
       .post-abstract-image
         display flex
@@ -153,6 +164,7 @@ export default {
       .next
         text-align right
 
+
 @media screen and (min-width: 600px)
   .home-page
     .post-list
@@ -184,6 +196,7 @@ export default {
       .post
         padding 20px
         .post-abstract
+          pointer-events none
           .post-info-pc
             display none
         

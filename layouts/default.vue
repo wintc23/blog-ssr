@@ -17,20 +17,58 @@
       </div>
     </header>
     <div class="layout-main">
-      <div class="modules">
-        <div class="module">
-          个人信息
+      <aside class="modules">
+        <div class="module" v-if="adminInfo">
+          <div class="module-title">{{ $site.title }}</div>
+          <div class="module-content">
+            <div class="userinfo">
+              <img :src="adminInfo.avatar" alt="木马啊">
+              <div class="username">{{ adminInfo.username }}</div>
+              <div class="post-count">
+                共<span class="count">{{ adminInfo.postCount }}</span>篇博客
+              </div>
+            </div>
+            <div class="stat">
+              <div class="like">
+                <div class="label">喜欢</div>
+                {{ adminInfo.likeCount }}
+              </div>
+              <div class="comment">
+                <div class="label">评论</div>
+                {{ adminInfo.commentCount }}
+              </div>
+              <div class="message">
+                <div class="label">留言</div>
+                {{ adminInfo.messageCount }}
+              </div>
+            </div>
+            <div class="site">
+              <Icon type="ios-link-outline" />
+              <nuxt-link class="content" to="/">wintc.top</nuxt-link>
+            </div>
+            <div class="github">
+              <Icon type="logo-github" />
+              <nuxt-link class="content" to="https://github.com/Lushenggang">github</nuxt-link>
+            </div>
+            <div class="city">
+              <Icon type="md-pin" /> 
+              <div class="content">云南·昆明</div>
+            </div>
+            <div class="about-me">
+              {{ adminInfo.aboutMe }}
+            </div>
+          </div>
         </div>
-        <div class="module">
-          分类导航
+        <!-- <div class="module" v-if="topics.length">
+          <div class="module-title">专栏</div>
         </div>
-        <div class="module">
-          热门文章
+        <div class="module" v-if="topTen.length">
+          <div class="module-title">热门文章</div>
         </div>
-        <div class="module">
-          文章标签
-        </div>
-      </div>
+        <div class="module" v-if="tags.length">
+          <div class="module-title">文章标签</div>
+        </div> -->
+      </aside>
       <nuxt class="nuxt-container" />
     </div>
     <client-only>
@@ -88,7 +126,7 @@ export default {
           path: '/about'
         }
       ]
-      if (this.currentUser.admin) {
+      if (this.currentUser.admoinInfo) {
         list.push({
           title: '后台管理',
           path: '/manage'
@@ -102,12 +140,30 @@ export default {
     githubLoginUrl () {
       let scope = "user:email"
       return `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=${scope}`
+    },
+    adminInfo () {
+      return this.$store.getters['site/adminInfo']
+    },
+    tags () {
+      let list = this.$store.getters['site/tags'] || []
+      return list.filter(tag => !!tag.postCount)
+    },
+    topics () {
+      let list = this.$store.getters['site/topics'] || []
+      return list.filter(topic => !! topic.postCount)
+    },
+    topTen () {
+      return this.$store.getters['site/topTen'] || []
     }
   },
   mounted () {
     document.addEventListener('scroll', this.handleScroll)
     this.$store.dispatch('postType/getType')
     this.$store.dispatch('userInfo/getUserInfo')
+    // this.$store.dispatch('site/getAdminInfo'),
+    // this.$store.dispatch('site/getTagList'),
+    // this.$store.dispatch('site/getTopTen'),
+    // this.$store.dispatch('site/getTopicList')
     this.$bus.$on('login-show', this.showLogin)
   },
   beforeDestroy () {
@@ -213,7 +269,54 @@ export default {
     .nuxt-container
       // overflow hidden
     .modules
-      display none
+      // display none
+      .module
+        background #FAFBFC
+        &+.module
+          margin-top 10px
+        .module-title
+          color #666
+          padding 10px 15px
+          border-bottom 1px solid #eee
+        .module-content
+          padding 10px 15px 20px
+      .userinfo
+        overflow hidden
+        padding 10px 0
+        img
+          float left
+          width 50px
+          height 50px
+          border-radius 50%
+          margin-right 10px
+        .username
+          overflow hidden
+          color orange
+        .post-count
+          padding 5px 0
+          overflow hidden
+          .count
+            color #3361d8
+      .stat
+        border-top 1px solid #ddd
+        display flex
+        display none
+        .like, .comment, .message
+          flex auto
+          display flex
+          align-items center
+          justify-content center
+          flex-direction column
+      .city, .site, .github
+        display flex
+        align-items center
+        font-size 20px
+        padding 4px
+        padding-left 20px
+        .content
+          font-size 16px
+          margin-left 10px
+
   .layout-footer
     flex-shrink 0
     background #ECF5FD
@@ -256,6 +359,12 @@ export default {
         &:active
           background #DFDFDF
           transition all .3s
+
+@media screen and (max-width: 850px)
+  .layout
+    .layout-main
+      .modules
+        display none
 
 @media screen and (max-width: 600px)
   .layout
@@ -305,11 +414,6 @@ export default {
         float left
         width 240px
         margin-right 10px
-        .module
-          background #FAFBFC
-          padding 20px
-          &+.module
-            margin-top 10px
 
       .nuxt-container
         overflow hidden
