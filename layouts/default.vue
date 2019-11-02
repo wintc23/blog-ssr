@@ -25,7 +25,7 @@
               <img :src="adminInfo.avatar" alt="木马啊">
               <div class="username">{{ adminInfo.username }}</div>
               <div class="post-count">
-                共<span class="count">{{ adminInfo.postCount }}</span>篇博客
+                共<span class="count">{{ adminInfo.postCount }}</span>篇文章
               </div>
             </div>
             <div class="stat">
@@ -48,7 +48,7 @@
             </div>
             <div class="github">
               <Icon type="logo-github" />
-              <nuxt-link class="content" to="https://github.com/Lushenggang">github</nuxt-link>
+              <a target="_blank" class="content" href="https://github.com/Lushenggang">github</a>
             </div>
             <div class="city">
               <Icon type="md-pin" /> 
@@ -396,6 +396,7 @@ export default {
 
 @media screen and (min-width: 600px)
   .layout
+    padding-left calc(100vw - 100%)
     padding-top 4rem
     .layout-header
       .layout-header-main
