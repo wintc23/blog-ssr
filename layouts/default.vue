@@ -64,9 +64,13 @@
         </div>
         <div class="module" v-if="topTen.length">
           <div class="module-title">热门文章</div>
-        </div>
-        <div class="module" v-if="tags.length">
+        </div> -->
+        <!-- <div class="module" v-if="tags.length">
           <div class="module-title">文章标签</div>
+          <div class="module-content">
+            <Tag class="tag" v-for="tag of tags" :key="tag.id">
+            </Tag>
+          </div>
         </div> -->
       </aside>
       <nuxt class="nuxt-container" />

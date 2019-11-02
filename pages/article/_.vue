@@ -153,10 +153,6 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-@import 'static/css/github-markdown.css'
-</style>
-
 <style lang="stylus" scoped>
 .article-page
   .main-content

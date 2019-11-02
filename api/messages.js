@@ -5,7 +5,6 @@ export function getMessages (params) {
 }
 
 export function addMessage (params) {
-  params = underline(params)
   return axios.post('/add-message/', params)
 }
 

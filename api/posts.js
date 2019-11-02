@@ -23,7 +23,6 @@ export function deletePost (postId) {
 }
 
 export function savePost (params) {
-  params = underline(params)
   return axios.post(`/save-post/`, params)
 }
 

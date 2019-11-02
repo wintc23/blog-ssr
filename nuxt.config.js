@@ -11,7 +11,8 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: "/favicon.ico" },
-      { rel: "stylesheet", type: "text/css", href: "/css/prism.css" }
+      { rel: "stylesheet", type: "text/css", href: "/css/prism.css" },
+      { rel: "stylesheet", type: "text/css", href: "/css/github-markdown.css" },
     ]
   },
   /*
