@@ -178,6 +178,8 @@ export default {
           flex auto
           font-size 16px
           margin-right 10px
+          .post-abstract-content
+            pointer-events none
         .post-abstract-image
           align-self center
           width 30vw
@@ -196,7 +198,6 @@ export default {
       .post
         padding 20px
         .post-abstract
-          pointer-events none
           .post-info-pc
             display none
         
