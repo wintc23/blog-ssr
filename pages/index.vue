@@ -31,7 +31,7 @@
           </aside>
         </div>
         <div class="post-abstract-image" v-if="post.abstractImage">
-          <img :src="post.abstractImage" alt="">
+          <img :src="post.abstractImage" :alt="post.title">
         </div>
         <aside class="post-info-mobile">
           <div class="read info-item">浏览(<span>{{ post.readTimes }}</span>)</div>
