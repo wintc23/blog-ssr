@@ -6,11 +6,7 @@
         v-for="post of list"
         :key="post.id">
         <div class="post-abstract">
-          <nuxt-link :to="`/article/${post.id}`">
-            <h2 class="post-title">
-              {{ post.title }}
-            </h2>
-          </nuxt-link>
+          <nuxt-link class="post-title" :to="`/article/${post.id}`">{{ post.title }}</nuxt-link>
           <div class="post-info-common">
             <span class="post-type" :title="`文章分类：${typeInfo[post.type].name}`" v-if="typeInfo[post.type]">
               {{ typeInfo[post.type].name }}
@@ -101,7 +97,6 @@ export default {
 <style lang="stylus" scoped>
 .home-page
   .post-list
-    margin 0 auto
     .post
       color #333
       background #FAFBFC
@@ -109,7 +104,7 @@ export default {
         margin 10px 0
       .post-abstract
         .post-title
-          color #2d8cf0
+          font-size 20px
           &:hover
             text-decoration underline
         .post-abstract-content

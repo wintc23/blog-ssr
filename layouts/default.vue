@@ -271,6 +271,7 @@ export default {
   .layout-main
     flex auto
     .nuxt-container
+      // padding-left 10px
       // overflow hidden
     .modules
       // display none
@@ -418,10 +419,9 @@ export default {
       .modules
         float left
         width 240px
-        margin-right 10px
-
       .nuxt-container
         overflow hidden
+        padding 0 10px
     .layout-footer
       .footer-container
         padding-bottom 100px
