@@ -55,6 +55,19 @@ export default {
         autoresize_bottom_margin: 50,
         lists_indent_on_tab: true,
         valid_elements: '*[*]',
+        codesample_languages: [
+          {text: 'JavaScript', value: 'javascript'},
+          {text: 'HTML/XML', value: 'markup'},
+          {text: 'CSS', value: 'css'},
+          {text: 'Bash', value: 'bash'},
+          {text: 'Python', value: 'python'},
+          {text: 'Ruby', value: 'ruby'},
+          {text: 'C', value: 'c'},
+          {text: 'C++', value: 'cpp'},
+          {text: 'C#', value: 'csharp'},
+          {text: 'PHP', value: 'php'},
+          {text: 'Java', value: 'java'},
+        ],
         codesample_content_css: '/css/prism.css',
         images_upload_handler: (blobInfo, success, failure) => {
           uploadFile(blobInfo.blob(), url => {
