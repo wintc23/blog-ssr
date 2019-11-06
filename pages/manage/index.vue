@@ -29,8 +29,8 @@ export default {
   asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
     let { type, page = 1} = query
     let data = {
-      per_page: PER_PAGE,
-      post_type: +type,
+      perPage: PER_PAGE,
+      postType: +type,
       page: +page
     }
     return getPostsByType(data).then(res => {
@@ -141,11 +141,11 @@ export default {
     addPost () {
       addPost(this.currentType).then(res => {
         if (res.status == 200) {
-          let { post_id } = res.data
+          let { postId } = res.data
           this.$router.push({
             name: 'manage-article',
             query: {
-              postId: post_id
+              postId: postId
             }
           })
         }

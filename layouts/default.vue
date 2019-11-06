@@ -169,6 +169,9 @@ export default {
     // this.$store.dispatch('site/getTopTen'),
     // this.$store.dispatch('site/getTopicList')
     this.$bus.$on('login-show', this.showLogin)
+    this.$nextTick(() => {
+      Prism && Prism.highlightAll && Prism.highlightAll(true)
+    })
   },
   beforeDestroy () {
     document.removeEventListener('scroll', this.handleScroll)
