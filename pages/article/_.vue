@@ -2,6 +2,7 @@
   <div class="article-page">
     <div class="main-content">
       <article class="post-detail">
+        {{ JSON.stringify(post) }}
         <h2 class="post-title">{{ post.title }}</h2>
         <div class="post-info">
           <span class="post-date">
@@ -84,7 +85,7 @@ export default {
       title: `${this.post.title} - 木马tc个人博客`,
       meta: [
         { hid: 'keywords', name: 'keywords', content: `${this.post.keywords || ''}` },
-        { hid: 'description', name: 'description', content: `${this.post.description || ''} ${this.$site.description}` }
+        { hid: 'description', name: 'description', content: `${this.post.description || ''}${this.$site.description}` }
       ]
     }
   },

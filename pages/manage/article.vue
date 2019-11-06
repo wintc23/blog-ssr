@@ -58,11 +58,11 @@
           </div>
           <div class="post-abstract">
             <div class="title">关键词</div>
-            <Input v-model="postData.keywords" type="textarea" autosize></Input>
+            <Input :maxlength="64" v-model="postData.keywords" ></Input>
           </div>
           <div class="post-abstract">
             <div class="title">描述</div>
-            <Input v-model="postData.description" type="textarea" autosize></Input>
+            <Input :maxlength="128" v-model="postData.description" type="textarea" autosize></Input>
           </div>
           <div class="post-abstract">
             <div class="title">摘要</div>
@@ -160,9 +160,6 @@ export default {
     },
     showPostSetting () {
       this.showSetting = true
-      if (!this.postData.abstract) {
-        this.postData.abstract = this.postData.bodyHtml.slice(0, 500)
-      }
       if (!this.postData.typeId) {
         let type = this.typeList.find(item => item.default)
         console.log(this.typeList)
