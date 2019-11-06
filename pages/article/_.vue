@@ -2,7 +2,6 @@
   <div class="article-page">
     <div class="main-content">
       <article class="post-detail">
-        {{ JSON.stringify(post) }}
         <h2 class="post-title">{{ post.title }}</h2>
         <div class="post-info">
           <span class="post-date">
