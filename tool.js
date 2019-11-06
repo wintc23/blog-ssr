@@ -45,10 +45,7 @@ export function formatTime (timestamp, format = 'yyyy-MM-dd HH:mm') {
 }
 
 export function camel (data) {
-  if (!data) return data
-  if (typeof data === 'string') {
-    return data.replace(/_([a-z])/g, (_, $1) => $1.toUpperCase())
-  }
+  if (!data || typeof data === 'string') return data
   if (Array.isArray(data)) {
     return data.map(item => camel(item))
   }
@@ -64,7 +61,7 @@ export function camel (data) {
 }
 
 export function underline (data) {
-  if (!data) return data  
+  if (!data || typeof data === 'string') return data
   if (typeof data === 'string') {
     return data.replace(/([A-Z])/g, (_, $1) => `_${$1.toLowerCase()}`)
   }
