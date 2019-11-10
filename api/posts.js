@@ -1,5 +1,6 @@
 import axios from '@/api'
 import uuidv4 from 'uuid/v4'
+import request from 'axios'
 
 export function getPostsByType(params) {
   return axios.post('/get-type-posts/', params)
@@ -39,10 +40,10 @@ export function uploadFile (file, callback, failCallback) {
       formData.append('file', file)
       formData.append('token', token)
       formData.append('key', filename)
-      axios.post('http://up-z2.qiniup.com/', formData, {
+      request.post('http://up-z2.qiniup.com/', formData, {
         headers: {
           'Authorization': token,
-          'content-Type': 'multipart/form-data'
+          'content-Type': `multipart/form-data`
         }
       }).then(response => {
         console.log(response)

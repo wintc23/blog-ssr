@@ -13,8 +13,15 @@
         <avatar class="userinfo" :userId="comment.authorId">
           <template v-slot:default="{ userinfo }">
             <div class="username">{{ userinfo.username }}</div>
-            <div class="comment-body" :ref="`comment${comment.id}`" @click.stop="checkReply(comment)">
+            <div class="comment-body" @click.stop="checkReply(comment)">
               <span class="text">{{ comment.body }}</span>
+              <Tag
+                class="tag"
+                color="orange"
+                v-if="comment.hide"
+                title="管理员审核后公开，当前仅自己和管理员可见">
+                待审核
+              </Tag>
               <span class="time">{{ $timeShow(comment.timestamp) }}</span>
             </div>
             <div class="reply-container">
@@ -33,9 +40,13 @@
             </div>
           </template>
         </avatar>
-        <div class="comment-children" v-if="comment.children && comment.children.length && expandMap[comment.id]">
+        <div
+          :ref="`children${comment.id}`"
+          class="comment-children"
+          v-if="comment.children && comment.children.length && expandMap[comment.id]">
           <div
             class="child-comment"
+            :ref="`child${child.id}`"
             v-for="(child, idx) of comment.children"
             :key="idx">
             <avatar class="child-avatar" :class="currentUser.admin ? 'admin' : ''" title="站长" :userId="child.authorId">
@@ -47,7 +58,7 @@
               <avatar class="child-userinfo" :class="currentUser.admin ? 'admin' : ''" :userId="child.authorId">
                 <template v-slot:default="{ userinfo }">
                   <div class="child-username">{{ userinfo.username }}</div>
-                  <div class="child-comment-body" :ref="`comment${child.id}`" @click.stop="checkReply(child)">
+                  <div class="child-comment-body" @click.stop="checkReply(child)">
                     <span class="reply-tips" v-if="child.responseId !== comment.id">
                       回复
                       <avatar class="reply-username" :userId="info[child.responseId].authorId">
@@ -55,6 +66,13 @@
                       </avatar>
                     </span>
                     <span class="text">{{ child.body }}</span>
+                    <Tag
+                      class="tag"
+                      color="orange"
+                      v-if="child.hide"
+                      title="管理员审核后公开，当前仅自己和管理员可见">
+                      待审核
+                    </Tag>
                     <span class="time">{{ $timeShow(child.timestamp) }}</span>
                   </div>
                   <div class="reply-container">
@@ -110,7 +128,7 @@ export default {
           results.push(comment)
         }
       })
-      results.forEach(result => result.children.length && result.children.reverse())
+      // results.forEach(result => result.children.length && result.children.reverse())
       return results.reverse()
     },
     info () {
@@ -137,10 +155,23 @@ export default {
     replyConfirm (comment) {
       this.$emit('reply', comment.reply, comment.id, () => {
         this.$set(comment, 'reply', '')
+        this.$set(comment, 'replyEdit', false)
         if (!this.expandMap[comment.id]) this.setExpand(comment)
         this.$nextTick(() => {
-          let refs = this.$refs[`comment${comment.id}`]
-          refs && refs[0] && refs[0].scrollIntoView()
+          let node = null
+          if (!comment.responseId) {
+            let children = this.$refs[`children${comment.id}`]
+            if (children && children[0]) {
+              node = children[0].lastChild
+            }
+          } else {
+            let child =  this.$refs[`child${comment.id}`]
+            if (child && child[0]) {
+              node = child[0].parentNode.lastChild
+            }
+          }
+          console.log(node)
+          node && node.scrollIntoView()
         })
       })
     },
@@ -170,8 +201,6 @@ export default {
       .comment-body, .child-comment-body
         font-size 14px
         line-height 1.6
-        .text
-          margin-right 10px
         .time
           word-break keep-all
           white-space pre
@@ -199,12 +228,12 @@ export default {
 
 .reply-container
   .reply-info
-    color #666
+    color #888
     margin-right 10px
   .reply-btn, .fold-btn
     user-select none
     cursor pointer
-    color #3361d8
+    color rgb(64, 158, 254)
     text-decoration underline
 
 @media screen and (min-width: 600px)
