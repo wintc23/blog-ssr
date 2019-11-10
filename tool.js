@@ -78,3 +78,10 @@ export function underline (data) {
   }
   return data
 }
+
+export const SITE = {
+  title: '木马tc个人博客',
+  slogon: '分享编程与生活',
+  keywords: '木马tc个人博客,编程,JS,HTML,CSS,Python',
+  description: '木马tc个人博客，分享编程和生活。'
+}
