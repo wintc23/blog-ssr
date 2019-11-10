@@ -72,6 +72,7 @@ export default {
     return {
       title: `${this.$site.title} - ${this.$site.slogon}`,
       meta: [
+        { hid: 'baidu-verification', name="baidu-site-verification", content="tJ1mHUUqXb" },
         { hid: 'keywords', name: 'keywords', content: `${this.$site.keywords}` },
         { hid: 'description', name: 'description', content: `${this.$site.description}` }
       ]
