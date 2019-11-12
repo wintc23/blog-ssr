@@ -122,7 +122,8 @@ export default {
         keywords: '',
         description: ''
       },
-      showSetting: false
+      showSetting: false,
+      timer: 0
     }
   },
   computed: {
@@ -147,8 +148,14 @@ export default {
       }
     }
   },
+  created() {
+    this.timer = setInterval(this.savePerMin, 60 * 1000)
+  },
   mounted () {
     this.$store.dispatch('postType/getType')
+  },
+  beforeDestroy() {
+    this.timer && clearInterval(this.timer)
   },
   methods: {
     getPost () {
@@ -181,6 +188,9 @@ export default {
           this.$router.push(`/article/${this.$route.query.postId}`)
         }
       })
+    },
+    savePerMin () {
+      savePost(this.postData)
     },
     setTag (tagId) {
       let index = this.postData.tags.indexOf(tagId)
