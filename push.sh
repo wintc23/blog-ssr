@@ -6,9 +6,8 @@ cd /home/lushg/blog-ssr
 git pull origin master
 yarn
 yarn build
-lsof -i:8000 | grep 8000 | awk '{ print \$2 }' | xargs kill -9
-nohup yarn start &
-exit
+pm2 stop blog-ssr
+pm2 start npm --name blog-ssr -- run start
 autoscript
 
 echo 'done'
