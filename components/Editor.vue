@@ -83,6 +83,7 @@ export default {
         autoresize_bottom_margin: 50,
         lists_indent_on_tab: true,
         valid_elements: '*[*]',
+        convert_urls: false,
         codesample_languages: [
           {text: 'JavaScript', value: 'javascript'},
           {text: 'HTML/XML', value: 'markup'},
