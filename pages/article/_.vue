@@ -109,6 +109,9 @@ export default {
       return this.$store.getters['userInfo/info']
     }
   },
+  mounted () {
+    this.$bus.$emit('code-highlight')
+  },
   methods: {
     addComment (comment, response, callback) {
       if (!comment) {

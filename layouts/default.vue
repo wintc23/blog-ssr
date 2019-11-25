@@ -169,14 +169,12 @@ export default {
     // this.$store.dispatch('site/getTopTen'),
     // this.$store.dispatch('site/getTopicList')
     this.$bus.$on('login-show', this.showLogin)
-    this.$nextTick(() => {
-      console.log('prism', '~~~~~~', Prism && Prism.highlightAll)
-      Prism && Prism.highlightAll && Prism.highlightAll(true)
-    })
+    this.$bus.$on('code-highlight', this.highlightCode)
   },
   beforeDestroy () {
     document.removeEventListener('scroll', this.handleScroll)
     this.$bus.$off('login-show', this.showLogin)
+    this.$bus.$off('code-highlight', this.highlightCode)
   },
   methods: {
     handleScroll () {
@@ -193,6 +191,11 @@ export default {
         this.headerHeight = rect.headerHeight
         this.headerClass = 'show'
       }
+    },
+    highlightCode () {
+      this.$nextTick(() => {
+        Prism && Prism.highlightAll && Prism.highlightAll(true)
+      })
     },
     showLogin () {
       this.loginShow = true
