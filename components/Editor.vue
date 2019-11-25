@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import EditorLink from './EditorLink'
 import Vue from 'vue'
 import { uploadFile } from '@/api/posts'
 import TinyMCE from '@tinymce/tinymce-vue'
@@ -24,33 +23,34 @@ import 'tinymce/plugins/media'
 import 'tinymce/plugins/fullscreen'
 import 'tinymce/plugins/codesample'
 import 'tinymce/plugins/advlist'
+import 'tinymce/plugins/link'
 
-tinymce.PluginManager.add('link', function (editor, url) {
-  if (!editor.EditorLink) {
-    let Link = Vue.extend(EditorLink)
-    editor.EditorLink = new Link().$mount()
-    document.body.appendChild(editor.EditorLink.$el)
-  }
+// tinymce.PluginManager.add('link', function (editor, url) {
+//   if (!editor.EditorLink) {
+//     let Link = Vue.extend(EditorLink)
+//     editor.EditorLink = new Link().$mount()
+//     document.body.appendChild(editor.EditorLink.$el)
+//   }
 
-  editor.ui.registry.addButton('link', {
-    icon: 'link',
-    tooltip: '链接',
-    onAction: () => {
-      editor.EditorLink.showLink((link) => {
-        editor.insertContent(link)
-      })
-    }
-  })
-  editor.on('click', function () {
-    var node = editor.selection.getNode();
-    if (node && editor.dom.hasClass(node, 'insert-link')) {
-      let { href: link, title, textContent: content } = node
-      editor.EditorLink.showLink((link) => {
-        node.outerHTML = link
-      }, { link, title, content })
-    }
-  })
-})
+//   editor.ui.registry.addButton('link', {
+//     icon: 'link',
+//     tooltip: '链接',
+//     onAction: () => {
+//       editor.EditorLink.showLink((link) => {
+//         editor.insertContent(link)
+//       })
+//     }
+//   })
+//   editor.on('click', function () {
+//     var node = editor.selection.getNode();
+//     if (node && editor.dom.hasClass(node, 'insert-link')) {
+//       let { href: link, title, textContent: content } = node
+//       editor.EditorLink.showLink((link) => {
+//         node.outerHTML = link
+//       }, { link, title, content })
+//     }
+//   })
+// })
 
 export default {
   components: {

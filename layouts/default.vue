@@ -170,6 +170,7 @@ export default {
     // this.$store.dispatch('site/getTopicList')
     this.$bus.$on('login-show', this.showLogin)
     this.$nextTick(() => {
+      console.log('prism', '~~~~~~', Prism && Prism.highlightAll)
       Prism && Prism.highlightAll && Prism.highlightAll(true)
     })
   },
