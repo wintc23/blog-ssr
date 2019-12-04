@@ -65,13 +65,25 @@
         <div class="module" v-if="topTen.length">
           <div class="module-title">热门文章</div>
         </div> -->
-        <!-- <div class="module" v-if="tags.length">
+        <div class="module" v-if="tags.length">
           <div class="module-title">文章标签</div>
           <div class="module-content">
-            <Tag class="tag" v-for="tag of tags" :key="tag.id">
-            </Tag>
+            <div class="tag-list">
+              <Tag
+                class="tag"
+                v-for="(tag, idx) of tags"
+                :color="tagTypeList[idx]"
+                :title="`${tag.title}(${tag.postCount})`"
+                :key="idx">
+                <nuxt-link class="tag-content" :to="`/tag/${tag.id}`">
+                  <span class="tag-title">{{ tag.title }}</span>
+                  <span class="tag-post-count">({{ tag.postCount }})</span>
+                </nuxt-link>
+              </Tag>
+              <div class="tag blank"></div>
+            </div>
           </div>
-        </div> -->
+        </div>
       </aside>
       <nuxt class="nuxt-container" />
     </div>
@@ -98,6 +110,7 @@
 
 <script>
 import { CLIENT_ID } from '@/config'
+import { TAG_LIST, fibonacci } from '@/tool'
 
 export default {
   middleware: ['cookie'],
@@ -158,6 +171,15 @@ export default {
     },
     topTen () {
       return this.$store.getters['site/topTen'] || []
+    },
+    tagTypeList () {
+      let tagLength = TAG_LIST.length
+      let list = []
+      for (let typeIdx of fibonacci(this.tags.length)) {
+        let idx = typeIdx % tagLength
+        list.push(TAG_LIST[idx])
+      }
+      return list
     }
   },
   mounted () {
@@ -165,7 +187,7 @@ export default {
     this.$store.dispatch('postType/getType')
     this.$store.dispatch('userInfo/getUserInfo')
     // this.$store.dispatch('site/getAdminInfo'),
-    // this.$store.dispatch('site/getTagList'),
+    this.$store.dispatch('site/getTagList'),
     // this.$store.dispatch('site/getTopTen'),
     // this.$store.dispatch('site/getTopicList')
     this.$bus.$on('login-show', this.showLogin)
@@ -283,7 +305,7 @@ export default {
     .modules
       // display none
       .module
-        background #FAFBFC
+        background #fff
         &+.module
           margin-top 10px
         .module-title
@@ -328,7 +350,20 @@ export default {
         .content
           font-size 16px
           margin-left 10px
-
+      .tag-list
+        display flex
+        flex-wrap wrap
+        justify-content space-around
+        .tag
+          width 100px
+          .tag-content
+            display flex
+            justify-content center
+            .tag-post-count
+              flex-shrink 0
+              margin-left 2px
+            .tag-title
+              overflow hidden
   .layout-footer
     flex-shrink 0
     background #ECF5FD

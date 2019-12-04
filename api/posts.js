@@ -10,6 +10,10 @@ export function getPosts (params) {
   return axios.post('/get-posts/', params)
 }
 
+export function getPostsByTag (params) {
+  return axios.post('/get-tag-posts/', params)
+}
+
 export function getPost(id, type) {
   let typeSuffix = type ? `/${type}` : ''
   return axios.get(`/get-post/${id}${typeSuffix}`)

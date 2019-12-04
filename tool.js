@@ -85,3 +85,22 @@ export const SITE = {
   keywords: '木马tc个人博客,编程,JS,HTML,CSS,Python',
   description: '木马tc个人博客，分享编程和生活。'
 }
+
+export function* fibonacci (n) {
+  let a = 1, b = 1
+  for (let i = 0; i < n; i++) {
+    [a, b] = [b, a + b]
+    yield a
+  }
+}
+
+export const TAG_LIST = [
+  'orange',
+  'geekblue',
+  'cyan',
+  'green',
+  'purple',
+  'magenta',
+  'blue',
+  'volcano'
+]
