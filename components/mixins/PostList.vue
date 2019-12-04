@@ -72,6 +72,10 @@ export default {
     }).then(res => {
       if (res.status === 200) {
         let { list, total, page, perPage } = res.data
+        if (total === 0) {
+          redirect({ path: '/' })
+          return
+        }
         return { list, total, page, perPage }
       } else {
         error('404', '页面找不到了哦')
