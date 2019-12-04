@@ -121,9 +121,6 @@ export default {
     .tag-title, .tag-count
       color rgba(64, 158, 255, 1)
   .post-list
-    // padding 10px 0
-    position relative
-    z-index 2
     .post
       color #333
       background #fff
