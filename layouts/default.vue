@@ -163,7 +163,7 @@ export default {
     },
     tags () {
       let list = this.$store.getters['site/tags'] || []
-      return list.filter(tag => !!tag.postCount).sort((a, b) => a.postCount - b.postCount)
+      return list.filter(tag => !!tag.postCount).sort((a, b) => b.postCount - a.postCount)
     },
     topics () {
       let list = this.$store.getters['site/topics'] || []
