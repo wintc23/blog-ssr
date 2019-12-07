@@ -34,6 +34,8 @@ export function formatTime (timestamp, format = 'yyyy-MM-dd HH:mm') {
   const formatNum = num => {
     return String(num).padStart(2, '0')
   }
+  let now = new Date()
+  timestamp = timestamp - now.getTimezoneOffset() * 60
   const date = new Date(timestamp * 1000)
   return format.replace(/yyyy/g, date.getFullYear())
     .replace(/MM/g, formatNum(date.getMonth() + 1))

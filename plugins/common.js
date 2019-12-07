@@ -10,9 +10,9 @@ Vue.prototype.$bus = new Vue()
 Vue.prototype.$formatTime = formatTime
 
 Vue.prototype.$timeShow = (timestamp) => {
-  let date = timestamp * 1000
   let now = new Date()
-  now = +now + now.getTimezoneOffset() * 60 * 1000
+  let localTimestamp = timestamp - now.getTimezoneOffset() * 60
+  let date = localTimestamp * 1000
   let delta = Math.floor((now - date) / 1000)
   if (delta < 60) return '刚刚'
   if (delta < 60 * 60) return `${Math.floor(delta/60)}分钟前`
