@@ -93,13 +93,21 @@
         transfer
         v-model="loginShow"
         title="登录"
+        width="300px"
         footer-hide>
         <div slot='header' class="login-header">
-          <h3>github登录</h3>
+          <h3>欢迎登录-请选择登录方式</h3>
         </div>
         <div class="login-container">
           <div class="login-content">
-            <Icon type="logo-github" @click.stop="loginWithGithub" class="logo-github"></Icon>
+            <div class="login-qq" @click.stop="loginWithQQ">
+              <img draggable="false" src="http://file.wintc.top/qq.jpg" alt="qq登录">
+              <div class="title">QQ登录</div>
+            </div>
+            <div class="login-github" @click.stop="loginWithGithub">
+              <Icon type="logo-github" class="github-icon"></Icon>
+              <div class="title">github登录</div>
+            </div>
           </div>
           <div class="login-footer"></div>
         </div>
@@ -109,8 +117,9 @@
 </template>
 
 <script>
-import { CLIENT_ID } from '@/config'
+import { GITHUB_CLIENT_ID, QQ_CLIENT_ID } from '@/config'
 import { TAG_LIST, fibonacci } from '@/tool'
+import uuidv4 from 'uuid/v4'
 
 export default {
   middleware: ['cookie'],
@@ -156,7 +165,7 @@ export default {
     },
     githubLoginUrl () {
       let scope = "user:email"
-      return `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=${scope}`
+      return `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=${scope}`
     },
     adminInfo () {
       return this.$store.getters['site/adminInfo']
@@ -226,11 +235,21 @@ export default {
       this.loginShow = false
     },
     getUserInfo () {
-      this.$store.dispatch('userInfo/getUserInfo')
+      this.$store.dispatch('userInfo/getUserInfo', { force: true })
     },
     loginWithGithub () {
-      let scope = "user:email"
-      let loginWIndow = window.open(`https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=${scope}`, 'login', 'resizable=yes,scrollbars=yes,status=yes,height=600,width=800')
+      let url = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user:email`
+      this.openLoginWindow(url)
+    },
+    loginWithQQ () {
+      let redirect = encodeURI(`${window.location.origin}/qqtoken`)
+      let state = uuidv4()
+      localStorage.setItem('qqState', state)
+      let url = `https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=${QQ_CLIENT_ID}&redirect_uri=${redirect}&state=${state}`
+      this.openLoginWindow(url)
+    },
+    openLoginWindow (url) {
+      let loginWindow = window.open(url, 'login', 'resizable=yes,scrollbars=yes,status=yes,height=600,width=800')
       window._loginCallback = (success) => {
         if (success) {
           this.$Message.success('登录成功')
@@ -392,20 +411,41 @@ export default {
   .login-container
     .login-content
       text-align center
-      font-size 10rem
       display flex
       align-items center
-      justify-content center
-      padding 0
-      .logo-github
-        padding 1rem
+      justify-content space-around
+      padding 30px 10px
+      .login-github, .login-qq
+        width 120px
+        padding 10px 0
+        margin 0 10px
+        text-align center
+        user-select none
         cursor pointer
-        border-radius 8px
         &:hover
-          background #EEF0F0
-        &:active
-          background #DFDFDF
-          transition all .3s
+          background #f6f6f6
+          box-shadow 0 0 5px 0 rgba(0, 0, 0, .2)
+          border-radius 8px
+          .title
+            color rgba(64, 158, 255, 1)
+        .title
+          font-size 1rem
+          padding 5px 0
+      .login-qq
+        font-size 0
+        img
+          width 56px
+          height 56px
+          border-radius 50%
+        
+      .login-github
+        .github-icon
+          width 56px
+          height 56px
+          font-size 64px
+          display inline-flex
+          align-items center
+          justify-content center
 
 @media screen and (max-width: 850px)
   .layout

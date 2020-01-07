@@ -51,9 +51,6 @@ export const mutations = {
     for (let key in data) {
       state[key] = data[key]
     }
-    if (data.avatar) {
-      state.avatar = `${BASE_URL}/get-file/?filename=${data.avatar}&path=avatar`
-    }
   },
   clearInfo (state) {
     state.username = ''

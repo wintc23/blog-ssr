@@ -24,7 +24,6 @@ export const actions = {
 
 export const mutations = {
   setInfo (state, data) {
-    data.avatar = `${BASE_URL}/get-file/?filename=${data.avatar}&path=avatar`
     state.info = Object.assign({}, state.info, { [data.id]: data })
   },
   setLoading (state, data) {

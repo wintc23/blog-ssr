@@ -4,15 +4,13 @@
   </div>
 </template>
 
+
 <script>
-import { githubLogin } from '@/api/user'
+import { qqLogin } from '@/api/user'
 import { setToken } from '@/tool'
 
 export default {
   layout: '',
-  data () {
-    return {}
-  },
   mounted () {
     this.loginWithCode()
   },
@@ -21,7 +19,17 @@ export default {
       window.opener && window.opener._loginCallback && window.opener._loginCallback(state)
     },
     loginWithCode () {
-      githubLogin(this.$route.query.code).then(res => {
+      let { code, state } = this.$route.query
+      // ??QQ要求验证，不过此处验证并非严谨
+      let qqState = localStorage.getItem('qqState')
+      localStorage.removeItem('qqState')
+      if (qqState != state) {
+        this.$Message.error('QQ登录状态异常，请重试')
+        this.login(false)
+        return
+      }
+      let redirect = encodeURI(`${window.location.origin}/qqtoken`)
+      qqLogin({ code, redirect }).then(res => {
         if (res.status == 200) {
           setToken(res.data.token)
           this.login(true)

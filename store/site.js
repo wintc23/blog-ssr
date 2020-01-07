@@ -2,7 +2,6 @@ import { getTopTen } from '@/api/posts'
 import { getAdminInfo } from '@/api/user'
 import { getTagList } from '@/api/tag'
 import { getTopicList } from '@/api/topic'
-import { BASE_URL } from '@/config'
 
 export const state = () => ({
   admin: null,
@@ -48,9 +47,6 @@ export const actions = {
 
 export const mutations = {
   setAdmin (state, data) {
-    if (data.avatar) {
-      data.avatar = `${BASE_URL}/get-file/?filename=${data.avatar}&path=avatar`
-    }
     state.admin = data
   },
   setTagList (state, list) {
