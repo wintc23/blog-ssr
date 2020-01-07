@@ -254,7 +254,7 @@ export default {
         if (success) {
           this.$Message.success('登录成功')
           this.hideLogin()
-          loginWIndow.close()
+          loginWindow.close()
           this.getUserInfo()
         }
       }
