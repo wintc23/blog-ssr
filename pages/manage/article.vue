@@ -18,6 +18,7 @@
         <editor
           ref="editor"
           v-model="postData.bodyHtml"
+          :watermark="watermark"
           class="editor">
         </editor>
       </div>
@@ -138,6 +139,10 @@ export default {
     },
     topicList () {
       return this.$store.getters['topic/topics']
+    },
+    watermark () {
+      if (process.server) return ''
+      return `${window.origin}/article/${this.postData.id}`
     }
   },
   watch: {

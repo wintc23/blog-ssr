@@ -25,15 +25,16 @@ import 'tinymce/plugins/codesample'
 import 'tinymce/plugins/advlist'
 import 'tinymce/plugins/link'
 
-// tinymce.PluginManager.add('link', function (editor, url) {
+
+// tinymce.PluginManager.add('image', function (editor, url) {
 //   if (!editor.EditorLink) {
 //     let Link = Vue.extend(EditorLink)
 //     editor.EditorLink = new Link().$mount()
 //     document.body.appendChild(editor.EditorLink.$el)
 //   }
 
-//   editor.ui.registry.addButton('link', {
-//     icon: 'link',
+//   editor.ui.registry.addButton('image', {
+//     icon: 'image',
 //     tooltip: '链接',
 //     onAction: () => {
 //       editor.EditorLink.showLink((link) => {
@@ -60,6 +61,9 @@ export default {
     value: {
       type: String,
       default: ''
+    },
+    watermark: {
+      type: String
     }
   },
   data () {
@@ -99,11 +103,34 @@ export default {
         ],
         codesample_content_css: '/css/prism.css',
         images_upload_handler: (blobInfo, success, failure) => {
-          uploadFile(blobInfo.blob(), url => {
-            success(url)
-          }, () => {
-            failure('上传失败，请重试')
-          })
+          let blob = blobInfo.blob()
+          let reader = new FileReader()
+          reader.onload = e => {
+            let img = new Image()
+            img.src = e.target.result
+            img.onload = () => {
+              let canvas = document.createElement('canvas')
+              canvas.width = img.width
+              canvas.height = img.height
+              let ctx = canvas.getContext('2d')
+              ctx.drawImage(img, 0, 0)
+              let fontSize = Math.max(canvas.width / 60, 16)
+              ctx.font = `${fontSize}px`
+              ctx.fillStyle = '#FFC82C'
+              ctx.textAlign = 'right'
+              ctx.fillText('作者:木马啊', canvas.width - 10, canvas.height - fontSize - 10, canvas.width - 20)
+              this.watermark && ctx.fillText(this.watermark, canvas.width - 10, canvas.height - 10, canvas.width - 20)
+              canvas.toBlob(upload)
+            }
+          }
+          reader.readAsDataURL(blob)
+          function upload (blob) {
+            uploadFile(blob, url => {
+              success(url)
+            }, () => {
+              failure('上传失败，请重试')
+            })
+          }
         },
         file_picker_callback: (cb, value, meta) => {
           let input = document.createElement('input')
