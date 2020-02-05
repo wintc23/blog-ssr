@@ -17,8 +17,9 @@
         <div class="post-body">
           <div v-html="post.bodyHtml"></div>
         </div>
-        <div class="post-like" @click.stop="clickLike">
+        <div class="post-like">
           <span
+            @click.stop="clickLike"
             class="like-container"
             :title="!currentUser.id ? '需要登录才能点赞' : (post.like ? '您赞了该文章' : '赞一下')">
             <span>{{ post.like ? '已赞' : '赞' }}</span>

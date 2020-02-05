@@ -16,12 +16,20 @@ export function getUserInfoById (id) {
   return axios.get(`/get-user/${id}`)
 }
 
+export function getUserDetail (id) {
+  return axios.get(`/get-user-detail/${id}`)
+}
+
 export function checkAdmin () {
   return axios.get('/check-admin/')
 }
 
 export function getAdminInfo () {
   return axios.get('/get-user-info/')
+}
+
+export function setEmail (data) {
+  return axios.post('/set-email/', data)
 }
 
 // export default {

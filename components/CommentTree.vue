@@ -176,7 +176,7 @@ export default {
       })
     },
     checkReply (comment) {
-      if (!this.$IsPC) this.replyComment(comment)
+      if (!this.$isPC) this.replyComment(comment)
     },
     setExpand (comment) {
       this.$set(this.expandMap, comment.id, !this.expandMap[comment.id])

@@ -25,17 +25,18 @@ import 'tinymce/plugins/codesample'
 import 'tinymce/plugins/advlist'
 import 'tinymce/plugins/link'
 
+// import ImagePreview from './ImagePreview'
 
-// tinymce.PluginManager.add('image', function (editor, url) {
-//   if (!editor.EditorLink) {
-//     let Link = Vue.extend(EditorLink)
-//     editor.EditorLink = new Link().$mount()
-//     document.body.appendChild(editor.EditorLink.$el)
+// tinymce.PluginManager.add('imagepreview', function (editor, url) {
+//   if (!editor.ImagePreview) {
+//     let Preview = Vue.extend(ImagePreview)
+//     editor.ImagePreview = new Preview().$mount()
+//     document.body.appendChild(editor.ImagePreview.$el)
 //   }
 
-//   editor.ui.registry.addButton('image', {
+//   editor.ui.registry.addButton('imagepreview', {
 //     icon: 'image',
-//     tooltip: '链接',
+//     tooltip: '上传图片',
 //     onAction: () => {
 //       editor.EditorLink.showLink((link) => {
 //         editor.insertContent(link)
@@ -77,8 +78,8 @@ export default {
         body_class: 'post-body',
         content_style: ' body { max-width: 1100px; min-height: 100%; margin: 0 auto; padding: 40px !important; background: #fff } html { background: #eee; height: 100% }',
         // menubar: 'edit view insert format tool table',
-        plugins: 'link lists image code table wordcount fullscreen media codesample advlist',
-        toolbar: 'formatselect indent outdent bullist numlist link image media table code codesample fullscreen | bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify',
+        plugins: 'link lists image code table wordcount fullscreen media codesample advlist imagepreview',
+        toolbar: 'formatselect indent outdent bullist numlist link imagepreview image media table code codesample fullscreen | bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify',
         block_formats: 'H2=h2; H3=h3; H4=h4; P=p',
         menubar: false,
         file_picker_types: 'media',

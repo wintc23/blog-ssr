@@ -27,7 +27,7 @@ Vue.prototype.$site = SITE
 if (process.client) {
   Vue.component('avatar', Avatar)
 
-  Vue.prototype.$IsPC = (() => {
+  Vue.prototype.$isPC = (() => {
     let userAgentInfo = navigator.userAgent
     let Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"]
     let flag = true

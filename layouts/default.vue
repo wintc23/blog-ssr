@@ -113,6 +113,9 @@
         </div>
       </Modal>
     </client-only>
+    <client-only>
+      <userinfo></userinfo>
+    </client-only>
   </div>
 </template>
 
@@ -120,9 +123,13 @@
 import { GITHUB_CLIENT_ID, QQ_CLIENT_ID } from '@/config'
 import { TAG_LIST, fibonacci } from '@/tool'
 import uuidv4 from 'uuid/v4'
+import Userinfo from '@/components/Userinfo'
 
 export default {
   middleware: ['cookie'],
+  components: {
+    Userinfo
+  },
   data () {
     return {
       headerClass: '',
@@ -201,6 +208,7 @@ export default {
     // this.$store.dispatch('site/getTopicList')
     this.$bus.$on('login-show', this.showLogin)
     this.$bus.$on('code-highlight', this.highlightCode)
+    
   },
   beforeDestroy () {
     document.removeEventListener('scroll', this.handleScroll)
@@ -258,6 +266,9 @@ export default {
           this.getUserInfo()
         }
       }
+    },
+    showUserinfo () {
+
     }
   }
 }

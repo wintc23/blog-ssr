@@ -2,7 +2,6 @@
 import { getUserInfoByToken } from '@/api/user'
 
 import { getToken, clearToken } from '@/tool'
-import { BASE_URL } from '@/config'
 
 export const state = () => ({
   username: '',
