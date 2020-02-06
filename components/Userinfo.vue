@@ -1,68 +1,70 @@
 <template>
-  <Drawer v-if="!!detail" v-model="show" :width="$isPC ? 400 : 80">
-    <template v-slot:header>
-      <div class="header">
-        <img :src="detail.avatar" alt="头像">
-        {{ detail.username }}
-      </div>
-    </template>
-    <template>
-      <div class="email" v-if="showEmail">
-        <div class="label">
-          邮箱：{{ detail.email || '未设置' }}
+  <div v-if="!!detail">
+    <Drawer v-model="show" :width="$isPC ? 400 : 80">
+      <template v-slot:header>
+        <div class="header">
+          <img :src="detail.avatar" alt="头像">
+          {{ detail.username }}
         </div>
-        <template v-if="emailSetting">
-          <div class="email-setting">
-            <Input ref="email" type="email" v-model="email"/>
+      </template>
+      <template>
+        <div class="email" v-if="showEmail">
+          <div class="label">
+            邮箱：{{ detail.email || '未设置' }}
           </div>
-          <div class="email-setting-menu">
-            <Button type="info" @click="saveEmail">保存</Button>
-            <Button type="text" @click="hideEditing">取消</Button>
-          </div>
-        </template>
-        <template v-else>
-          <div class="notice">
-            <div>
-              <template v-if="!detail.email">您可以设置邮箱，以便及时收到关于您的消息。</template>
-              别人回复您的评论或者留言时，本站将通过邮箱通知您。
+          <template v-if="emailSetting">
+            <div class="email-setting">
+              <Input ref="email" type="email" v-model="email"/>
             </div>
-          </div>
-          <div class="content">
-            <Button @click="setEmail" type="info" v-if="detail.email">更改邮箱</Button>
-            <Button @click="setEmail" type="success" v-else>设置邮箱</Button>
-          </div>
-        </template>
-      </div>
-      <div class="activities">
-        <div class="label">相关动态</div>
-        <div class="activity-list">
-          <div
-            class="activity"
-            v-for="(activity, idx) of activityList"
-            :key="idx">
+            <div class="email-setting-menu">
+              <Button type="info" @click="saveEmail">保存</Button>
+              <Button type="text" @click="hideEditing">取消</Button>
+            </div>
+          </template>
+          <template v-else>
+            <div class="notice">
+              <div>
+                <template v-if="!detail.email">您可以设置邮箱，以便及时收到关于您的消息。</template>
+                别人回复您的评论或者留言时，本站将通过邮箱通知您。
+              </div>
+            </div>
             <div class="content">
-              <span class="time-show">
-                {{ $timeShow(activity.timestamp) }}
-              </span>
-              <template v-if="activity.type == 1">
-                赞了文章
-              </template>
-              <template v-else-if="activity.type == 2">
-                发表了留言
-              </template>
-              <template v-else-if="activity.type == 3">
-                评论了文章
-              </template>
-              <nuxt-link v-if="activity.postId" :to="`/article/${activity.postId}`">{{ activity.postTitle }}</nuxt-link>
+              <Button @click="setEmail" type="info" v-if="detail.email">更改邮箱</Button>
+              <Button @click="setEmail" type="success" v-else>设置邮箱</Button>
             </div>
-            <div class="content-extra" v-if="activity.body">
-              {{ activity.body }}
+          </template>
+        </div>
+        <div class="activities">
+          <div class="label">相关动态</div>
+          <div class="activity-list">
+            <div
+              class="activity"
+              v-for="(activity, idx) of activityList"
+              :key="idx">
+              <div class="content">
+                <span class="time-show">
+                  {{ $timeShow(activity.timestamp) }}
+                </span>
+                <template v-if="activity.type == 1">
+                  赞了文章
+                </template>
+                <template v-else-if="activity.type == 2">
+                  发表了留言
+                </template>
+                <template v-else-if="activity.type == 3">
+                  评论了文章
+                </template>
+                <nuxt-link v-if="activity.postId" :to="`/article/${activity.postId}`">{{ activity.postTitle }}</nuxt-link>
+              </div>
+              <div class="content-extra" v-if="activity.body">
+                {{ activity.body }}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </template>
-  </Drawer>
+      </template>
+    </Drawer>
+  </div>
 </template>
 
 <script>
@@ -98,7 +100,6 @@ export default {
   },
   created() {
     this.$bus.$on('click-avatar', this.getUserDetail)
-    this.$bus.$emit('click-avatar', 1)
   },
   beforeDestroy() {
     this.$bus.$off('click-avatar', this.getUserDetail)

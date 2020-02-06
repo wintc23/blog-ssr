@@ -22,7 +22,7 @@
           <div class="module-title">{{ $site.title }}</div>
           <div class="module-content">
             <div class="userinfo">
-              <img :src="adminInfo.avatar" alt="木马啊">
+              <img @click="clickAvatar" :src="adminInfo.avatar" alt="木马啊">
               <div class="username">{{ adminInfo.username }}</div>
               <div class="post-count">
                 共<span class="count">{{ adminInfo.postCount }}</span>篇文章
@@ -267,8 +267,8 @@ export default {
         }
       }
     },
-    showUserinfo () {
-
+    clickAvatar () {
+      this.$bus.$emit('click-avatar', this.adminInfo.id)
     }
   }
 }
@@ -353,6 +353,7 @@ export default {
           height 50px
           border-radius 50%
           margin-right 10px
+          cursor pointer
         .username
           overflow hidden
           color orange

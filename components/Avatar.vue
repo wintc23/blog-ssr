@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="clickAvatar" class="avatar-container">
     <client-only>
       <slot v-if="userinfo" :userinfo="userinfo"></slot>
     </client-only>
@@ -34,7 +34,19 @@ export default {
     }),
     refreshInfo () {
       process.client && this.userId && this.getInfo({ id: this.userId })
+    },
+    clickAvatar (event) {
+      if (event.target.tagName === 'IMG') {
+        this.$bus.$emit('click-avatar', this.userId)
+      }
     }
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+.avatar-container
+  >>>
+    img
+      cursor pointer
+</style>
