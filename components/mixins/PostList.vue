@@ -48,11 +48,11 @@
       </article>
       <div class="pagination" v-if="totalPage > 1">
         <div class="last">
-          <nuxt-link :to="`/?page=${page-1}`" v-if="page > 1">上一页</nuxt-link>
+          <nuxt-link :to="`${path}?page=${page-1}`" v-if="page > 1">上一页</nuxt-link>
         </div>
         <div class="page-no">{{ page }} / {{ totalPage }}</div>
         <div class="next">
-          <nuxt-link :to="`/?page=${page+1}`" v-if="page < totalPage">下一页</nuxt-link>
+          <nuxt-link :to="`${path}?page=${page+1}`" v-if="page < totalPage">下一页</nuxt-link>
         </div>
       </div>
     </div>
@@ -105,6 +105,9 @@ export default {
     tag () {
       let list = this.$store.getters['site/tags'] || []
       return list.find(item => item.id == this.$route.params.tagId)
+    },
+    path () {
+      return this.$route.path
     }
   },
   methods: {
@@ -153,15 +156,15 @@ export default {
         align-items center
         justify-content center
         overflow hidden
-        box-shadow 0 0 1px 0 rgba(0, 0, 0, .05)
+        font-size 0
         img
+          vertical-align middle
           width 100%
-          height 100%
+          height auto
           transition all .5s ease-out
       &:hover
         .post-abstract-image img
           width 110%
-          height 110%
       .post-info
         display flex
         margin-top 1em
@@ -215,8 +218,11 @@ export default {
             max-height 200px
             max-width 300px
             flex-shrink 0
+            box-shadow 0 0 10px 0 rgba(0, 0, 0, .1)
         &:hover
           background #fafbfc
+          .post-abstract-image
+            box-shadow 0 0 10px 0 rgba(0, 0, 0, .15)
 
 @media screen and (max-width: 600px)
   .page-post-list

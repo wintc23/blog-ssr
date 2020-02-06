@@ -16,7 +16,7 @@
         </nav>
       </div>
     </header>
-    <div class="layout-main">
+    <main class="layout-main">
       <aside class="modules">
         <div class="module" v-if="adminInfo">
           <div class="module-title">{{ $site.title }}</div>
@@ -86,7 +86,12 @@
         </div>
       </aside>
       <nuxt class="nuxt-container" />
-    </div>
+    </main>
+    <footer class="layout-footer">
+      Copyright © 2019-2020 Lushenggang
+      <br>
+      <a href="http://beian.miit.gov.cn" target="_blank" rel="nofollow">滇ICP备18002180号</a>
+    </footer>
     <client-only>
       <Modal
         class="login-modal"
@@ -397,25 +402,9 @@ export default {
               overflow hidden
   .layout-footer
     flex-shrink 0
-    background #ECF5FD
-    .footer-container
-      .get-in-touch
-        display flex
-        color #333
-        .contact-info
-          text-align left
-          margin-left 20px
-          display flex
-          flex-direction column
-          .contact-message
-            font-size 20px
-            margin 20px 0
-          .contact-item
-            font-size 1rem
-            display flex
-            .title
-              margin-right 20px
-              width 2rem
+    text-align center
+    font-size 14px
+    padding 10px 0 20px
 
 .login-modal
   .login-header 
@@ -479,15 +468,7 @@ export default {
       .nuxt-container
         padding 0
     .layout-footer
-      .footer-container
-        padding-bottom 50px
-        text-align center
-        .wechat
-          width 80vw
-          margin 10px 0
-        .get-in-touch
-          margin 20px 10vw
-          margin-top 30px
+      // 
 
 @media screen and (min-width: 600px)
   .layout
@@ -517,15 +498,7 @@ export default {
         overflow hidden
         padding 0 10px
     .layout-footer
-      .footer-container
-        padding-bottom 100px
-        max-width 1000px
-        margin 0 auto
-        padding 20px
-        display flex
-        justify-content space-between
-        .wechat
-          width 160px
+      //
 
 </style>
 
