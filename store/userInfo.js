@@ -8,6 +8,7 @@ export const state = () => ({
   avatar: '',
   admin: false,
   id: '',
+  email: '',
   loadingStatus: 0
 })
 
@@ -17,7 +18,8 @@ export const getters = {
       id: state.id,
       username: state.username,
       admin: state.admin,
-      avatar: state.avatar
+      avatar: state.avatar,
+      email: state.email
     }
   }
 }
@@ -56,5 +58,6 @@ export const mutations = {
     state.avatar = ''
     state.admin = false
     state.id = ''
+    state.email = ''
   }
 }

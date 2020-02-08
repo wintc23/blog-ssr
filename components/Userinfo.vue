@@ -153,10 +153,12 @@ export default {
 .header
   display flex
   align-items center
+  color #333
   img
     width 30px
     height 30px
     margin-right 10px
+    border-radius 50%
 .email, .activities
   .label
     font-size 18px
@@ -176,7 +178,7 @@ export default {
   .activity
     padding 10px
     &+.activity
-      border-top 1px solid #ccc 
+      border-top 1px solid #ccc
     .content
       .time-show
         color #FF8700

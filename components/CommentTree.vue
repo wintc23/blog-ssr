@@ -28,7 +28,7 @@
               <span class="reply-info">
                 <template v-if="comment.children && comment.children.length">
                   共{{ comment.children.length }}条回复，
-                  <span class="fold-btn" @click="setExpand(comment)">{{ expandMap[comment.id] ? '折叠' : '查看' }}</span>
+                  <span class="fold-btn" @click="setExpand(comment.id)">{{ expandMap[comment.id] ? '折叠' : '查看' }}</span>
                 </template>
               </span>
               <span class="reply-btn" @click.stop="replyComment(comment)">回复</span>
@@ -156,7 +156,7 @@ export default {
       this.$emit('reply', comment.reply, comment.id, () => {
         this.$set(comment, 'reply', '')
         this.$set(comment, 'replyEdit', false)
-        if (!this.expandMap[comment.id]) this.setExpand(comment)
+        if (!this.expandMap[comment.id]) this.setExpand(comment.id)
         this.$nextTick(() => {
           let node = null
           if (!comment.responseId) {
@@ -171,15 +171,15 @@ export default {
             }
           }
           console.log(node)
-          node && node.scrollIntoView()
+          node && node.scrollIntoView({ behavior: 'smooth' })
         })
       })
     },
     checkReply (comment) {
       if (!this.$isPC) this.replyComment(comment)
     },
-    setExpand (comment) {
-      this.$set(this.expandMap, comment.id, !this.expandMap[comment.id])
+    setExpand (id) {
+      this.$set(this.expandMap, id, !this.expandMap[id])
     }
   }
 }
@@ -240,15 +240,15 @@ export default {
   .comment
     padding 15px 0
     .avatar
-      margin-right 20px
+      margin-right 10px
       img
-        width 60px
+        width 40px
   .child-comment
     padding 10px
     .child-avatar
       margin-right 10px
       img
-        width 50px
+        width 30px
   .reply-container
     overflow hidden
     margin 10px 0

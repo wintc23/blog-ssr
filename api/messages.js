@@ -19,3 +19,7 @@ export function deleteMessage (msgId) {
 export function setMessageShow (msgId) {
   return axios.get(`/set-message-show/${msgId}`)
 }
+
+export function getMessageDetail (msgId) {
+  return axios.get(`/get-message-detail/${msgId}`)
+}

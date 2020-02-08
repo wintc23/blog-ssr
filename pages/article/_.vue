@@ -135,6 +135,8 @@ export default {
           this.comment = ''
           Object.assign(this.post, res.data)
           callback && callback()
+          let text = this.currentUser.email ? '评论回复将会通过邮件通知您' : '点击头像设置邮箱，以便及时收到回复'
+          this.$Message.success(`评论成功，${text}`)
         }
       }).catch(error => {
         this.$Message.error('网络请求失败')
@@ -201,83 +203,6 @@ export default {
           font-size 18px
           span
             color #888
-        .comment-tree
-          .comment-root
-            .avatar
-              float left
-              img
-                width 50px
-                height 50px
-                border-radius 50%
-            .text
-              padding-left 70px
-              line-height 22px
-              color #333
-              .title
-                margin-bottom 10px
-                .name, .date
-                  display inline
-                .date
-                  float right
-          .reply-comment
-            padding-left 54px
-            .title
-              line-height 30px
-              margin 4px 0
-              .author, .response-author
-                display inline
-                img
-                  width 30px
-                  height 30px
-                  border-radius 50%
-                  vertical-align middle
-                .author-name, .response-author-name
-                  color #6B6B6B
-                  font-weight bold
-              .reply-title
-                color #3361d8
-              .comment-time
-                color #6B6B6B
-            .comment-content
-              margin-left 30px
-            .text
-              background #ECF5FD
-              padding 5px
-              border-radius 4px
-          .comment-content
-            background #ECF5FD
-            padding 5px 10px
-            border-radius 4px
-            .check-waiting
-              color white
-              font-weight bold
-              border-radius 4px
-              padding 1px 2px
-              background #06B038
-              user-select none
-              cursor pointer
-            .comment-reply
-              overflow hidden
-              .reply-input
-                margin 4px 0
-              .reply-icon
-                display flex
-                align-items center
-                cursor pointer
-                user-select none
-                color #3361d8
-                width 3rem
-                opacity 0
-                transition all .2s
-                .icon
-                  font-size 1rem
-              .comment-button
-                margin 4px
-                float right
-            &:hover
-              .comment-reply .reply-icon
-                opacity 1
-
 @media screen and (min-width: 600px)
   .article-page
     .main-content
