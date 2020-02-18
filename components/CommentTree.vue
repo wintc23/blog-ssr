@@ -12,7 +12,10 @@
       <div class="comment-content">
         <avatar class="userinfo" :userId="comment.authorId">
           <template v-slot:default="{ userinfo }">
-            <div class="username">{{ userinfo.username }}</div>
+            <div class="username">
+              {{ userinfo.username }}
+              <notice class="notice" :userId="userinfo.id"></notice>
+            </div>
             <div class="comment-body" @click.stop="checkReply(comment)">
               <span class="text">{{ comment.body }}</span>
               <Tag
@@ -57,7 +60,10 @@
             <div class="child-comment-content">
               <avatar class="child-userinfo" :class="currentUser.admin ? 'admin' : ''" :userId="child.authorId">
                 <template v-slot:default="{ userinfo }">
-                  <div class="child-username">{{ userinfo.username }}</div>
+                  <div class="child-username">
+                    {{ userinfo.username }}
+                    <notice class="notice" :userId="userinfo.id"></notice>
+                  </div>
                   <div class="child-comment-body" @click.stop="checkReply(child)">
                     <span class="reply-tips" v-if="child.responseId !== comment.id">
                       回复
@@ -95,10 +101,12 @@
 
 <script>
 import avatar from '@/components/Avatar'
+import notice from '@/components/Notice'
 
 export default {
   components: {
-    avatar
+    avatar,
+    notice
   },
   props: {
     list: {
@@ -211,6 +219,12 @@ export default {
   color #888
   font-size 14px
   line-height 1.5
+
+.username, .child-username
+  display flex
+  align-items center
+  .notice
+    margin-left 5px
 
 .reply-tips
   .reply-username
