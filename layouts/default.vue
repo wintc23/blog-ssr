@@ -515,7 +515,6 @@ h4, h5, h6
 
 <style>
 html {
-  /* background: linear-gradient(0deg,#021048,#1e38a3); */
   background: linear-gradient(rgba(0, 135, 252, .3), rgba(0, 135, 252, .1));
   min-height: 100%;
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
