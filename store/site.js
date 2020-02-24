@@ -2,12 +2,14 @@ import { getTopTen } from '@/api/posts'
 import { getAdminInfo } from '@/api/user'
 import { getTagList } from '@/api/tag'
 import { getTopicList } from '@/api/topic'
+import { getBasicLinkList } from '@/api/link'
 
 export const state = () => ({
   admin: null,
   topTen: null,
   tagList: null,
   topicList: null,
+  linkList: null
 })
 
 export const actions = {
@@ -42,6 +44,12 @@ export const actions = {
         return true
       }
     })
+  },
+  getFrindLinkList ({ commit }) {
+    return getBasicLinkList().then(res => {
+      commit('setLinkList', res.data.list)
+      return true
+    })
   }
 }
 
@@ -57,6 +65,9 @@ export const mutations = {
   },
   setTopicList (state, list) {
     state.topicList = list
+  },
+  setLinkList (state, list) {
+    state.linkList = list
   }
 }
 
@@ -72,5 +83,8 @@ export const getters = {
   },
   topics (state) {
     return state.topicList
+  },
+  links (state) {
+    return state.linkList
   }
 }

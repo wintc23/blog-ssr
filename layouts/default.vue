@@ -84,6 +84,24 @@
             </div>
           </div>
         </div>
+        <div class="module link-module">
+          <div class="module-title">
+            友链
+            <nuxt-link class="detail" to="/link">[详情]</nuxt-link>
+          </div>
+          <div class="module-content">
+            <div class="link-list">
+              <template v-for="link of links">
+                <div
+                  class="link"
+                  :key="link.id">
+                  <a href="link.link">{{ link.title }}</a>
+                </div>
+                <div class="blank" :key="`blank${link.id}`"></div>
+              </template>
+            </div>
+          </div>
+        </div>
       </aside>
       <nuxt class="nuxt-container" />
     </main>
@@ -175,10 +193,6 @@ export default {
     currentUser () {
       return this.$store.getters['userInfo/info']
     },
-    githubLoginUrl () {
-      let scope = "user:email"
-      return `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=${scope}`
-    },
     adminInfo () {
       return this.$store.getters['site/adminInfo']
     },
@@ -192,6 +206,9 @@ export default {
     },
     topTen () {
       return this.$store.getters['site/topTen'] || []
+    },
+    links () {
+      return this.$store.getters['site/links'] || []
     },
     tagTypeList () {
       let tagLength = TAG_LIST.length
@@ -400,6 +417,27 @@ export default {
               margin-left 2px
             .tag-title
               overflow hidden
+      .link-module
+        .module-title
+          .detail
+            float right
+            font-size 13px
+        .link-list
+          display flex
+          flex-wrap wrap
+          .link
+            flex-shrink 0
+            padding 2px 8px
+            border-radius 4px
+            margin-bottom 5px
+            font-size 14px
+            cursor pointer
+            background rgba(0, 0, 0, .05)
+            &:hover
+              background rgba(0, 0, 0, .1)
+          .blank
+            flex auto
+            max-width 10px
   .layout-footer
     flex-shrink 0
     text-align center

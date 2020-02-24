@@ -4,7 +4,8 @@ export const actions = {
       dispatch('site/getAdminInfo'),
       dispatch('site/getTagList'),
       dispatch('site/getTopTen'),
-      dispatch('site/getTopicList')
+      dispatch('site/getTopicList'),
+      dispatch('site/getFrindLinkList')
     ]
     return Promise.all(promiseList)
   }

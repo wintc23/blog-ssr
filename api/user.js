@@ -32,6 +32,10 @@ export function setEmail (data) {
   return axios.post('/set-email/', data)
 }
 
+export function searchUsers (keyword) {
+  return axios.post('/search-user/', { keyword })
+}
+
 // export default {
   // register (params) {
     // return axios.post('/api/register/', params)
