@@ -95,7 +95,7 @@
                 <div
                   class="link"
                   :key="link.id">
-                  <a href="link.link">{{ link.title }}</a>
+                  <a :href="link.link">{{ link.title }}</a>
                 </div>
                 <div class="blank" :key="`blank${link.id}`"></div>
               </template>
