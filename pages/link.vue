@@ -2,11 +2,11 @@
   <div class="page-link-list">
     <div class="page-link-header">
       友情链接
-      <Button class="swap-link" type="primary" size="small" ghost @click.stop="showNotice=true">友链交换</Button>
+      <Button class="swap-link" type="primary" size="small" ghost @click.stop="showNotice=!showNotice">友链交换</Button>
     </div>
     <client-only>
       <transition name="link">
-        <div class="upload-link">
+        <div class="upload-link" v-show="showNotice">
           <div class="notice">
             您可以提交您的站点信息与本站交换友链，您的链接将会在本站首页侧边栏和本页展示。
             <span class="btn" @click.stop="createLink">提交友链</span>
@@ -31,7 +31,7 @@
             <div class="item">
               <div class="label">logo</div>
               <div class="content">
-                <img src="http://file.wintc.top/logo.jpeg" alt="">
+                <img src="http://file.wintc.top/logo.jpeg">
               </div>
             </div>
           </div>
@@ -470,4 +470,12 @@ export default {
         span
           flex-shrink 0
           
+.link-enter-active
+  transition transform 1s ease-out
+.link-enter
+  max-height 0
+  overflow hidden
+.link-enter-to
+  max-height 8em
+  overflow hidden
 </style>
