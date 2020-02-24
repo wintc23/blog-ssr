@@ -28,7 +28,7 @@
               <div class="label">简介</div>
               <div class="content">想把代码写成诗的未成名诗人</div>
             </div>
-            <div class="item">
+            <div class="item logo">
               <div class="label">logo</div>
               <div class="content">
                 <img src="http://file.wintc.top/logo.jpeg">
@@ -470,12 +470,14 @@ export default {
         span
           flex-shrink 0
           
-.link-enter-active
-  transition transform 1s ease-out
-.link-enter
-  max-height 0
-  overflow hidden
-.link-enter-to
-  max-height 8em
-  overflow hidden
+.link-enter-active, .link-leave-active
+  transition all .6s ease-out
+.link-enter, .link-leave-to
+  opacity 0
+  transform translateY(-10%)
+  // max-height 0
+.link-enter-to, .link-leave
+  opacity 1
+  transform translateY(0)
+  // max-height 12em
 </style>
