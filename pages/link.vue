@@ -193,7 +193,7 @@ export default {
       userList: [],
       timer: 0,
 
-      showNotice: true
+      showNotice: false
     }
   },
   beforeDestroy() {
