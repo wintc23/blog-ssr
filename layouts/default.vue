@@ -94,9 +94,8 @@
               <template v-for="link of links">
                 <div
                   class="link"
-                  target="_blank"
                   :key="link.id">
-                  <a :href="link.link">{{ link.title }}</a>
+                  <a target="_blank" :href="link.link">{{ link.title }}</a>
                 </div>
                 <div class="blank" :key="`blank${link.id}`"></div>
               </template>
