@@ -31,7 +31,7 @@
             <div class="item logo">
               <div class="label">logo</div>
               <div class="content">
-                <img src="http://file.wintc.top/logo.jpeg">
+                <img src="http://file.wintc.top/logo-aboy.jpeg">
               </div>
             </div>
           </div>
@@ -385,7 +385,7 @@ export default {
         margin-right 10px
         width 50px
         height 50px
-        box-shadow 0 0 10px 0 rgba(0, 0, 0, .3)
+        box-shadow 0 0 5px 0 rgba(0, 0, 0, .3)
         border-radius 50%
         overflow hidden
         img, .icon
