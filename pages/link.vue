@@ -21,7 +21,7 @@
             <div class="item">
               <div class="label">地址</div>
               <div class="content">
-                <a href="http://wintc.top">http://wintc.top</a>
+                <a href="http://wintc.top" target="_blank">http://wintc.top</a>
               </div>
             </div>
             <div class="item">
@@ -65,7 +65,7 @@
             'no-motto': !link.motto
           }">
           <div class="href">
-            <a class="title" :href="link.link">{{ link.title }}</a>
+            <a class="title" :href="link.link" target="_blank">{{ link.title }}</a>
             <Tag
               class="tag"
               color="orange"
