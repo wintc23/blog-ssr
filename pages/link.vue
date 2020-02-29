@@ -26,7 +26,7 @@
             </div>
             <div class="item">
               <div class="label">简介</div>
-              <div class="content">想把代码写成诗的未成名诗人</div>
+              <div class="content">想把代码写成诗的未知名作家</div>
             </div>
             <div class="item logo">
               <div class="label">logo</div>
