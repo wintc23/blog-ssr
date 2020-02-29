@@ -72,7 +72,12 @@
           <div class="post-type">
             <div class="title">文章分类</div>
             <Select v-model="postData.typeId">
-              <Option v-for="type of typeList" :key="type.id" :value="type.id">{{ type.name }}</Option>
+              <Option
+                v-for="t of typeList"
+                :key="t.id"
+                :value="t.id">
+                {{ t.name }}
+              </Option>
             </Select>
           </div>
           <div class="post-img">

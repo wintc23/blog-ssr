@@ -18,12 +18,12 @@
           <div v-html="post.bodyHtml"></div>
         </div>
         <div class="post-like">
-          <span
-            @click.stop="clickLike"
-            class="like-container"
-            :title="!currentUser.id ? '需要登录才能点赞' : (post.like ? '您赞了该文章' : '赞一下')">
-            <span>{{ post.like ? '已赞' : '赞' }}</span>
+          <span @click.stop="clickLike" class="like" :title="post.like ? '您赞了该文章' : '赞一下'">
+            <Icon :type="post.like ? 'md-heart' : 'md-heart-outline'" />
             <span class="like-num" v-if="post.likes">{{ post.likes }}</span>
+          </span>
+          <span class="reward">
+            <span @click.stop="reward=true">¥ 赞赏</span>
           </span>
         </div>
         <div class="related-posts">
@@ -46,6 +46,16 @@
         </client-only>
       </article>
     </div>
+    <client-only>
+      <Modal v-model="reward" footer-hide :width="350">
+        <div class="reward-title" slot="header">
+          如果文章对您有帮助，您可以赞赏给我的女朋友
+        </div>
+        <div class="reward-content">
+          <img src="http://file.wintc.top/reward.png" alt="陈小鱼的赞赏码">
+        </div>
+      </Modal>
+    </client-only>
   </div>
 </template>
 
@@ -91,7 +101,8 @@ export default {
   },
   data () {
     return {
-      comment: ''
+      comment: '',
+      reward: false
     }
   },
   computed: {
@@ -175,16 +186,29 @@ export default {
           color #FF7F21
       .post-like
         text-align center
-        .like-container
-          background #06B038
-          color #fff
-          font-weight bold
-          font-size 18px
+        .like, .reward
+          min-width 4em
+          font-size 14px
           border-radius 4px
           display inline-block
-          width 8em
-          line-height 2.5
+          line-height 2
           user-select none
+          cursor pointer
+        .like
+          background rgba(255, 32, 32, .2)
+          color rgba(255, 32, 32, 1)
+          border 1px solid rgba(255, 32, 32, .4)
+          &:hover
+            box-shadow 0 0 5px 0 rgba(255, 32, 32, .5)
+        .reward
+          margin-left 10px
+          color #06B038
+          border 1px solid currentColor
+          transition all .25s ease-out
+          &:hover
+            background #06B038
+            color #fff
+
       .related-posts
         .last, .next
           display block
@@ -203,6 +227,21 @@ export default {
           font-size 18px
           span
             color #888
+
+.reward-title, .reward-content
+  text-align center
+.reward-title
+  line-height 1.4
+  color #666
+  font-size 12px
+
+.reward-content
+  margin-bottom 20px
+  img
+    width 300px
+    max-width 80vw
+    height auto
+
 @media screen and (min-width: 600px)
   .article-page
     .main-content
@@ -218,9 +257,7 @@ export default {
           text-align center
           color #666
         .post-like
-          margin 60px 0
-          .like-container
-            cursor pointer
+          margin 40px 0
 
 @media screen and (max-width: 600px)
   .article-page
