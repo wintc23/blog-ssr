@@ -49,7 +49,7 @@
     <client-only>
       <Modal v-model="reward" footer-hide :width="350">
         <div class="reward-title" slot="header">
-          如果我的文章对您有帮助，您可以赞赏给我的女朋友
+          如果本文对您有帮助，您可以赞赏给我的女朋~,~
         </div>
         <div class="reward-content">
           <img src="http://file.wintc.top/reward.png" alt="陈小鱼的赞赏码">
@@ -176,6 +176,10 @@ export default {
     color #333
     background #fff
     .post-detail
+      .post-body
+        >>>
+          img
+            height auto !important
       .post-title
         // 
       .post-info
