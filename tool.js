@@ -82,10 +82,10 @@ export function underline (data) {
 }
 
 export const SITE = {
-  title: '木马tc个人博客',
+  title: '木马小站',
   slogon: '分享编程与生活',
-  keywords: '木马tc个人博客,编程,JS,HTML,CSS,Python',
-  description: '木马tc个人博客，分享编程和生活。'
+  keywords: '木马小站,编程,JS,HTML,CSS,Python',
+  description: '木马小站，分享编程和生活。'
 }
 
 export function* fibonacci (n) {

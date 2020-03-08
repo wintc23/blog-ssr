@@ -92,7 +92,7 @@ export default {
   },
   head () {
     return {
-      title: `${this.post.title} - 木马tc个人博客`,
+      title: `${this.post.title} - 木马小站`,
       meta: [
         { hid: 'keywords', name: 'keywords', content: `${this.post.keywords || ''}` },
         { hid: 'description', name: 'description', content: `${this.post.description || ''}${this.$site.description}` }

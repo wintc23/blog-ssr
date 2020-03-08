@@ -4,12 +4,12 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: `木马tc个人博客 - 分享编程与生活`,
+    title: `木马小站 - 分享编程与生活`,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: "width=device-width, initial-scale=1, user-scalable=no" },
-      { hid: 'keywords', name: 'keywords', content: `木马tc个人博客,编程,JS,HTML,CSS,Python` },
-      { hid: 'description', name: 'description', content: `木马tc个人博客，分享编程和生活。` }
+      { hid: 'keywords', name: 'keywords', content: `木马小站,编程,JS,HTML,CSS,Python` },
+      { hid: 'description', name: 'description', content: `木马小站，分享编程和生活。` }
     ],
     script: [
       { src: '/js/prism.js' },
