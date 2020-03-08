@@ -208,6 +208,9 @@ export default {
       return this.$store.getters['userInfo/info']
     }
   },
+  mounted () {
+    this.$bus.$emit('baidu-push')
+  },
   methods: {
     showEdit () {
       this.modalShow = true

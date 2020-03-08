@@ -21,6 +21,9 @@ export default {
     }).catch(e => {
       error({ statusCode: 501, message: '服务器出错啦' })
     })
+  },
+  mounted() {
+    this.$bus.$emit('baidu-push')
   }
 }
 </script>

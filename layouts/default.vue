@@ -143,7 +143,7 @@
 </template>
 
 <script>
-import { GITHUB_CLIENT_ID, QQ_CLIENT_ID } from '@/config'
+import { GITHUB_CLIENT_ID, QQ_CLIENT_ID, IS_DEV } from '@/config'
 import { TAG_LIST, fibonacci } from '@/tool'
 import uuidv4 from 'uuid/v4'
 import Userinfo from '@/components/Userinfo'
@@ -230,12 +230,14 @@ export default {
     // this.$store.dispatch('site/getTopicList')
     this.$bus.$on('login-show', this.showLogin)
     this.$bus.$on('code-highlight', this.highlightCode)
-    
+    this.$bus.$on('baidu-push', this.pushPage)
+    this.highlightCode()
   },
   beforeDestroy () {
     document.removeEventListener('scroll', this.handleScroll)
     this.$bus.$off('login-show', this.showLogin)
     this.$bus.$off('code-highlight', this.highlightCode)
+    this.$bus.$off('baidu-push', this.pushPage)
   },
   methods: {
     handleScroll () {
@@ -291,6 +293,24 @@ export default {
     },
     clickAvatar () {
       this.$bus.$emit('click-avatar', this.adminInfo.id)
+    },
+    pushPage () {
+      let node = document.querySelector("script[baidu-seo]")
+      node && node.parentNode.removeChild(node)
+
+      //开发环境和管理员看到的特殊页面不推送
+      if (this.currentUser.admin || IS_DEV) return
+      
+      node = document.createElement('script')
+      node.setAttribute('baidu-seo', 1)
+      var curProtocol = window.location.protocol.split(':')[0]
+      if (curProtocol === 'https') {
+        node.src = 'https://zz.bdstatic.com/linksubmit/push.js'
+      }
+      else {
+        node.src = 'http://push.zhanzhang.baidu.com/push.js'
+      }
+      document.body.appendChild(node)
     }
   }
 }

@@ -123,6 +123,7 @@ export default {
   },
   mounted () {
     this.$bus.$emit('code-highlight')
+    this.$bus.$emit('baidu-push')
   },
   methods: {
     addComment (comment, response, callback) {

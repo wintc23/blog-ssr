@@ -12,7 +12,7 @@ export default {
       { hid: 'description', name: 'description', content: `木马tc个人博客，分享编程和生活。` }
     ],
     script: [
-      { src: '/js/prism.js' }
+      { src: '/js/prism.js' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: "/favicon.ico" },

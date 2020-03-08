@@ -110,6 +110,9 @@ export default {
       return this.$route.path
     }
   },
+  mounted () {
+    this.$bus.$emit('baidu-push')
+  },
   methods: {
     toArticle (id) {
       this.$router.push(`/article/${id}`)
