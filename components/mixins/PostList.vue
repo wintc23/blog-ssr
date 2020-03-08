@@ -206,6 +206,7 @@ export default {
       margin 0 auto
       .post
         padding 30px 40px
+        border-radius 4px
         .post-abstract-main
           display flex
           .post-abstract

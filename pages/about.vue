@@ -1,6 +1,8 @@
 <template>
-  <div class="about-me post-body">
-    <div class="content" v-html="aboutMe.bodyHtml">
+  <div class="about-page">
+    <div class="about-me post-body">
+      <div class="content" v-html="aboutMe.bodyHtml">
+      </div>
     </div>
   </div>
 </template>
@@ -31,8 +33,11 @@ export default {
 <style lang="stylus" scoped>
 
 .about-me
-  color #000
+  color #333
+  background #fff
+  border-radius 4px
   .content
+    padding 2rem
     font-size 1rem
     line-height 1.6
 

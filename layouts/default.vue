@@ -371,11 +371,7 @@ export default {
           font-size 16px
   .layout-main
     flex auto
-    .nuxt-container
-      // padding-left 10px
-      // overflow hidden
     .modules
-      // display none
       .module
         background #fff
         &+.module
@@ -552,9 +548,10 @@ export default {
       .modules
         float left
         width 240px
+        padding 10px 0
       .nuxt-container
         overflow hidden
-        padding 0 10px
+        padding 10px
     .layout-footer
       //
 
