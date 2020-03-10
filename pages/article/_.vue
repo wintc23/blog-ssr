@@ -49,7 +49,7 @@
     <client-only>
       <Modal v-model="reward" footer-hide :width="350">
         <div class="reward-title" slot="header">
-          如果本文对您有帮助，您可以赞赏给我的女朋~,~
+          如果本文对您有帮助，可以赞赏给我的女朋友~,~
         </div>
         <div class="reward-content">
           <img src="http://file.wintc.top/reward.png" alt="陈小鱼的赞赏码">
@@ -250,6 +250,7 @@ export default {
 @media screen and (min-width: 600px)
   .article-page
     .main-content
+      border-radius 4px
       box-shadow 0 0 5px 0 rgba(0, 0, 0, .3)
       max-width 1000px
       margin 0 auto
