@@ -299,7 +299,7 @@ export default {
           }
         }
       } else {
-        window.open(url, target='_self')
+        window.open(url, '_self')
       }
     },
     clickAvatar () {
