@@ -18,7 +18,8 @@ export default {
       if (this.$isPC) {
         window.opener && window.opener._loginCallback && window.opener._loginCallback(state)
       } else {
-        history.go(-2)
+        this.$store.dispatch('userInfo/getUserInfo', { force: true })
+        this.$router.replace(localStorage.getItem('loginRedirect') || '/')
       }
     },
     loginWithCode () {
