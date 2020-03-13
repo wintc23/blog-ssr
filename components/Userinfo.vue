@@ -107,14 +107,19 @@ export default {
     this.$bus.$off('click-avatar', this.getUserDetail)
   },
   methods: {
-    getUserDetail (id) {
+    getUserDetail (id, setEmail = false) {
       this.emailSetting = false
       this.show = true
-      if (this.detail && this.detail.id === id) return
-      this.refreshUserDetail(id)
+      if (this.detail && this.detail.id === id) {
+        setEmail && this.setEmail()
+        return
+      }
+      this.refreshUserDetail(id).then(() => {
+        setEmail && this.setEmail()
+      })
     },
     refreshUserDetail (id) {
-      getUserDetail(id).then(res => {
+      return getUserDetail(id).then(res => {
         if (res.status === 200) {
           this.detail = res.data
           for (let key in this.detail) {

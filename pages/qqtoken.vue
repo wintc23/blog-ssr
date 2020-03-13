@@ -1,30 +1,10 @@
-<template>
-  <div class="login-page">
-    正在进行第三方登录，请稍候
-  </div>
-</template>
-
 <script>
+import LoginCommon from '@/components/mixins/LoginCommon'
 import { qqLogin } from '@/api/user'
-import { setToken } from '@/tool'
 
 export default {
-  layout: '',
-  mounted () {
-    this.loginWithCode()
-  },
+  mixins: [LoginCommon],
   methods: {
-    login (state) {
-      if (this.$isPC) {
-        window.opener && window.opener._loginCallback && window.opener._loginCallback(state)
-      } else {
-        this.$store.dispatch('userInfo/getUserInfo', { force: true })
-        let redirect = localStorage.getItem('loginRedirect') || '/'
-        this.$Message.success(redirect)
-        this.$router.replace(redirect)
-        localStorage.removeItem('loginRedirect')
-      }
-    },
     loginWithCode () {
       let { code, state } = this.$route.query
       // ??QQ要求验证，不过此处验证并非严谨
@@ -36,15 +16,7 @@ export default {
         return
       }
       let redirect = encodeURI(`${window.location.origin}/qqtoken`)
-      qqLogin({ code, redirect }).then(res => {
-        if (res.status == 200) {
-          setToken(res.data.token)
-          this.$Message.success('登录成功')
-          this.login(true)
-        } else {
-          this.login(false)
-        }
-      })
+      qqLogin({ code, redirect }).then(this.loginCallback)
     }
   }
 }
