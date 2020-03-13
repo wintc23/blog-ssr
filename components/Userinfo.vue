@@ -159,6 +159,7 @@ export default {
   display flex
   align-items center
   color #333
+  padding-right 2rem
   .blank
     flex auto
   img

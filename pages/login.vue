@@ -18,8 +18,11 @@ export default {
   },
   methods: {
     login (state) {
-      window.opener && window.opener._loginCallback && window.opener._loginCallback(state)
-      window.close()
+      if (this.$isPC) {
+        window.opener && window.opener._loginCallback && window.opener._loginCallback(state)
+      } else {
+        history.go(-2)
+      }
     },
     loginWithCode () {
       githubLogin(this.$route.query.code).then(res => {

@@ -288,14 +288,18 @@ export default {
       this.openLoginWindow(url)
     },
     openLoginWindow (url) {
-      let loginWindow = window.open(url, 'login', 'resizable=yes,scrollbars=yes,status=yes,height=600,width=800')
-      window._loginCallback = (success) => {
-        if (success) {
-          this.$Message.success('登录成功')
-          this.hideLogin()
-          loginWindow.close()
-          this.getUserInfo()
+      if (this.$isPC) {
+        let loginWindow = window.open(url, 'login', 'resizable=yes,scrollbars=yes,status=yes,height=600,width=800')
+        window._loginCallback = (success) => {
+          if (success) {
+            this.$Message.success('登录成功')
+            this.hideLogin()
+            loginWindow.close()
+            this.getUserInfo()
+          }
         }
+      } else {
+        window.open(url, target='_self')
       }
     },
     clickAvatar () {

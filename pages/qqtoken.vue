@@ -15,7 +15,11 @@ export default {
   },
   methods: {
     login (state) {
-      window.opener && window.opener._loginCallback && window.opener._loginCallback(state)
+      if (this.$isPC) {
+        window.opener && window.opener._loginCallback && window.opener._loginCallback(state)
+      } else {
+        history.go(-2)
+      }
     },
     loginWithCode () {
       let { code, state } = this.$route.query
