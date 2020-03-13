@@ -4,7 +4,6 @@
   </div>
 </template>
 
-
 <script>
 import { qqLogin } from '@/api/user'
 import { setToken } from '@/tool'
@@ -32,6 +31,7 @@ export default {
       qqLogin({ code, redirect }).then(res => {
         if (res.status == 200) {
           setToken(res.data.token)
+          this.$Message.success('登录成功')
           this.login(true)
         } else {
           this.login(false)

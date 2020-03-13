@@ -5,6 +5,8 @@
         <div class="header">
           <img :src="detail.avatar" alt="头像">
           {{ detail.username }}
+          <div class="blank"></div>
+          <Button size="small" type="info" @click.stop="logout" v-if="currentUser.id == detail.id">退出</Button>
         </div>
       </template>
       <template>
@@ -144,6 +146,9 @@ export default {
           this.$store.dispatch('userInfo/getUserInfo', { force: true })
         }
       })
+    },
+    logout () {
+      this.$bus.$emit('logout')
     }
   }
 }
@@ -154,6 +159,8 @@ export default {
   display flex
   align-items center
   color #333
+  .blank
+    flex auto
   img
     width 30px
     height 30px

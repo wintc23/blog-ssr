@@ -19,6 +19,7 @@ export default {
   methods: {
     login (state) {
       window.opener && window.opener._loginCallback && window.opener._loginCallback(state)
+      window.close()
     },
     loginWithCode () {
       githubLogin(this.$route.query.code).then(res => {

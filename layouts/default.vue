@@ -144,7 +144,7 @@
 
 <script>
 import { GITHUB_CLIENT_ID, QQ_CLIENT_ID, IS_DEV } from '@/config'
-import { TAG_LIST, fibonacci } from '@/tool'
+import { TAG_LIST, fibonacci, clearToken } from '@/tool'
 import uuidv4 from 'uuid/v4'
 import Userinfo from '@/components/Userinfo'
 
@@ -229,13 +229,16 @@ export default {
     // this.$store.dispatch('site/getTopTen'),
     // this.$store.dispatch('site/getTopicList')
     this.$bus.$on('login-show', this.showLogin)
+    this.$bus.$on('logout', this.logout)
     this.$bus.$on('code-highlight', this.highlightCode)
     this.$bus.$on('baidu-push', this.pushPage)
     this.highlightCode()
+
   },
   beforeDestroy () {
     document.removeEventListener('scroll', this.handleScroll)
     this.$bus.$off('login-show', this.showLogin)
+    this.$bus.$off('logout', this.logout)
     this.$bus.$off('code-highlight', this.highlightCode)
     this.$bus.$off('baidu-push', this.pushPage)
   },
@@ -265,6 +268,10 @@ export default {
     },
     hideLogin () {
       this.loginShow = false
+    },
+    logout () {
+      clearToken()
+      this.$store.commit('userInfo/clearInfo')
     },
     getUserInfo () {
       this.$store.dispatch('userInfo/getUserInfo', { force: true })
@@ -311,7 +318,8 @@ export default {
         node.src = 'http://push.zhanzhang.baidu.com/push.js'
       }
       document.body.appendChild(node)
-    }
+    },
+
   }
 }
 </script>
