@@ -21,8 +21,8 @@ export default {
         this.$store.dispatch('userInfo/getUserInfo', { force: true })
         let redirect = localStorage.getItem('loginRedirect') || '/'
         this.$Message.success(redirect)
-        localStorage.clearItem('loginRedirect')
         this.$router.replace(redirect)
+        localStorage.removeItem('loginRedirect')
       }
     },
     loginWithCode () {
