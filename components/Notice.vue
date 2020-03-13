@@ -1,6 +1,9 @@
 <template>
   <Tooltip v-show="show" class="tip" placement="top" max-width="300px" content="您可以点击头像设置您的邮箱，以便及时收到关于您的回复。">
-    <Icon class="icon" type="ios-alert-outline" />
+    <span class="container">
+      <Icon class="icon" type="ios-alert-outline" />
+      <span class="content">请设置邮箱</span>
+    </span>
   </Tooltip>
 </template>
 
@@ -29,11 +32,17 @@ export default {
   display flex
   align-items center
   height 1em
-  .icon
-    color #FFA710
-    display flex
+  .container
+    display inline-flex
     align-items center
-    justify-content center
-    height 1em
-    font-size 20px
+    color #FFA710
+    align-items flex-end
+    .icon
+      display flex
+      align-items center
+      justify-content center
+      height 1em
+      font-size 20px
+    .content
+      font-size 12px
 </style>

@@ -19,7 +19,7 @@
               <Input ref="email" type="email" v-model="email"/>
             </div>
             <div class="email-setting-menu">
-              <Button type="info" @click="saveEmail">保存</Button>
+              <Button type="success" @click="saveEmail">保存</Button>
               <Button type="text" @click="hideEditing">取消</Button>
             </div>
           </template>
@@ -31,7 +31,7 @@
               </div>
             </div>
             <div class="content">
-              <Button @click="setEmail" type="info" v-if="detail.email">更改邮箱</Button>
+              <Button @click="setEmail" type="success" v-if="detail.email">更改邮箱</Button>
               <Button @click="setEmail" type="success" v-else>设置邮箱</Button>
             </div>
           </template>
