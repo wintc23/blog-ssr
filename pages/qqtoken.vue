@@ -19,7 +19,10 @@ export default {
         window.opener && window.opener._loginCallback && window.opener._loginCallback(state)
       } else {
         this.$store.dispatch('userInfo/getUserInfo', { force: true })
-        this.$router.replace(localStorage.getItem('loginRedirect') || '/')
+        let redirect = localStorage.getItem('loginRedirect') || '/'
+        this.$Message.success(redirect)
+        localStorage.clearItem()
+        this.$router.replace(redirect)
       }
     },
     loginWithCode () {

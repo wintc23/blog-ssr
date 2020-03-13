@@ -300,6 +300,7 @@ export default {
         }
       } else {
         localStorage.setItem('loginRedirect', this.$route.fullPath)
+        this.$Message.success(this.$route.fullPath)
         window.open(url, '_self')
       }
     },
