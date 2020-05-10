@@ -84,6 +84,11 @@
             </div>
           </div>
         </div>
+        <div class="module aliyun-module">
+          <a :href="aliyun.href" target="_blank" rel="nofollow">
+            <img :src="aliyun.img" alt="阿里云服务器" :title="aliyun.title">
+          </a>
+        </div>
         <div class="module link-module">
           <div class="module-title">
             友链
@@ -102,6 +107,7 @@
             </div>
           </div>
         </div>
+        
       </aside>
       <nuxt class="nuxt-container" />
     </main>
@@ -159,7 +165,11 @@ export default {
       oldScrollTop: 0,
       headerHeight: 0,
       loginShow: false,
-      iFrameShow: false
+      aliyun: {
+        href: 'https://www.aliyun.com/minisite/goods?userCode=h55rc1yh',
+        img: 'https://file.wintc.top/lisa/aliyun.jpg',
+        title: '阿里云服务器'
+      }
     }
   },
   computed: {
@@ -467,6 +477,10 @@ export default {
           .blank
             flex auto
             max-width 10px
+      .aliyun-module
+        img
+          max-width 100%
+          vertical-align middle
   .layout-footer
     flex-shrink 0
     text-align center
