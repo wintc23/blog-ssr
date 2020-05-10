@@ -15,6 +15,7 @@ import TinyMCE from '@tinymce/tinymce-vue'
 import tinymce from 'tinymce/tinymce'
 import 'tinymce/themes/silver/theme'
 import 'tinymce/plugins/image'
+import 'tinymce/plugins/paste'
 import 'tinymce/plugins/code'
 import 'tinymce/plugins/table'
 import 'tinymce/plugins/lists'
@@ -78,7 +79,7 @@ export default {
         body_class: 'post-body',
         content_style: ' body { max-width: 1100px; min-height: 100%; margin: 0 auto; padding: 40px !important; background: #fff } html { background: #eee; height: 100% }',
         // menubar: 'edit view insert format tool table',
-        plugins: 'link lists image code table wordcount fullscreen media codesample advlist ',
+        plugins: 'link lists image code table wordcount fullscreen media codesample advlist paste',
         toolbar: 'formatselect indent outdent bullist numlist link image media table code codesample fullscreen | bold italic underline strikethrough | fontsizeselect | forecolor backcolor | alignleft aligncenter alignright alignjustify',
         block_formats: 'H2=h2; H3=h3; H4=h4; P=p',
         menubar: false,
@@ -103,6 +104,7 @@ export default {
           {text: 'Java', value: 'java'},
         ],
         codesample_content_css: '/css/prism.css',
+        paste_data_images: true,
         images_upload_handler: (blobInfo, success, failure) => {
           let blob = blobInfo.blob()
           let reader = new FileReader()
