@@ -44,7 +44,7 @@ export function uploadFile (file, callback, failCallback) {
       formData.append('file', file)
       formData.append('token', token)
       formData.append('key', filename)
-      request.post('http://up-z2.qiniup.com/', formData, {
+      request.post('https://up-z2.qiniup.com/', formData, {
         headers: {
           'Authorization': token,
           'content-Type': `multipart/form-data`
