@@ -130,7 +130,7 @@
         <div class="login-container">
           <div class="login-content">
             <div class="login-qq" @click.stop="loginWithQQ">
-              <img draggable="false" src="http://file.wintc.top/qq.jpg" alt="qq登录">
+              <img draggable="false" src="https://file.wintc.top/qq.jpg" alt="qq登录">
               <div class="title">QQ登录</div>
             </div>
             <div class="login-github" @click.stop="loginWithGithub">

@@ -52,7 +52,7 @@
           如果本文对您有帮助，可以赞赏给我的女朋友~,~
         </div>
         <div class="reward-content">
-          <img src="http://file.wintc.top/reward.png" alt="陈小鱼的赞赏码">
+          <img src="https://file.wintc.top/reward.png" alt="陈小鱼的赞赏码">
         </div>
       </Modal>
     </client-only>
