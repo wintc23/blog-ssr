@@ -375,6 +375,7 @@ export default {
     right 0
     top 0
     z-index 2
+    padding-left calc(100vw - 100%)
     &.hide
       transform translateY(-100%)
       animation hide-header .5s
