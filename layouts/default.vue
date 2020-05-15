@@ -284,7 +284,7 @@ export default {
       this.$store.commit('userInfo/clearInfo')
     },
     getUserInfo () {
-      this.$store.dispatch('userInfo/getUserInfo', { force: true })
+      return this.$store.dispatch('userInfo/getUserInfo', { force: true })
     },
     loginWithGithub () {
       let url = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user:email`
@@ -305,7 +305,13 @@ export default {
           if (success) {
             this.$Message.success('登录成功')
             this.hideLogin()
-            this.getUserInfo()
+            let promise = this.getUserInfo()
+            promise && promise.then(() => {
+              if (this.currentUser.id && !this.currentUser.email) {
+                this.$bus.$emit('click-avatar', this.currentUser.id)
+                this.$Message.info('请设置邮箱，以便及时收到关于您的消息')
+              }
+            })
           } else {
             this.$Message.error('登录失败，请重试')
           }
