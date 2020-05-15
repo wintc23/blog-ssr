@@ -38,7 +38,7 @@ export default {
       }
     },
     loginFail () {
-      this.$Message.success('登录失败，请重试')
+      this.$Message.error('登录失败，请重试')
       this.login(false)
     }
   },
