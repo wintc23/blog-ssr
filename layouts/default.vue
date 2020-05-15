@@ -306,6 +306,8 @@ export default {
             this.$Message.success('登录成功')
             this.hideLogin()
             this.getUserInfo()
+          } else {
+            this.$Message.error('登录失败，请重试')
           }
           loginWindow.close()
         }
