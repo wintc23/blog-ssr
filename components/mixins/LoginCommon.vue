@@ -10,7 +10,8 @@ import { setToken } from '@/tool'
 export default {
   layout: '',
   mounted () {
-    this.loginWithCode()
+    let promise = this.loginWithCode()
+    promise && promise.then(this.loginCallback).catch(this.loginFail)
   },
   methods: {
     login (state) {
@@ -35,6 +36,10 @@ export default {
       } else {
         this.login(false)
       }
+    },
+    loginFail () {
+      this.$Message.success('登录失败，请重试')
+      this.login(false)
     }
   },
 }

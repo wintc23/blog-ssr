@@ -301,12 +301,13 @@ export default {
       if (this.$isPC) {
         let loginWindow = window.open(url, 'login', 'resizable=yes,scrollbars=yes,status=yes,height=600,width=800')
         window._loginCallback = (success) => {
+          delete window._loginCallback
           if (success) {
             this.$Message.success('登录成功')
             this.hideLogin()
-            loginWindow.close()
             this.getUserInfo()
           }
+          loginWindow.close()
         }
       } else {
         localStorage.setItem('loginRedirect', this.$route.fullPath)

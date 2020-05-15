@@ -6,7 +6,7 @@ export default {
   mixins: [LoginCommon],
   methods: {
     loginWithCode () {
-      githubLogin(this.$route.query.code).then(this.loginCallback)
+      return githubLogin(this.$route.query.code)
     }
   }
 }

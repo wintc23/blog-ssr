@@ -16,7 +16,7 @@ export default {
         return
       }
       let redirect = encodeURI(`${window.location.origin}/qqtoken`)
-      qqLogin({ code, redirect }).then(this.loginCallback)
+      return qqLogin({ code, redirect })
     }
   }
 }
