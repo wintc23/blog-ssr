@@ -250,8 +250,6 @@ export default {
 @media screen and (min-width: 600px)
   .article-page
     .main-content
-      border-radius 4px
-      box-shadow 0 0 5px 0 rgba(0, 0, 0, .3)
       max-width 1000px
       margin 0 auto
       padding 40px
