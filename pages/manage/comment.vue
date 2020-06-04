@@ -37,10 +37,10 @@ export default {
         align: 'center',
         render: (h, params) => {
           let comment = this.commentList[params.index]
-          let userId = comment ? comment.author_id : ''
+          let userId = comment ? comment.authorId : ''
           return h('avatar', {
             props: {
-              userId: params.row.author_id
+              userId
             },
             scopedSlots: {
               default: props => h('div', props.userinfo.username)
