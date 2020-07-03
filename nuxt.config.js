@@ -13,6 +13,7 @@ export default {
     ],
     script: [
       { src: '/js/prism.js' },
+      { src: 'https://hm.baidu.com/hm.js?f6c6b936d6426488699d7da96706aaad' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: "/favicon.ico" },
