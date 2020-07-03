@@ -5,6 +5,9 @@ export default {
   */
   head: {
     title: `木马小站 - 分享编程与生活`,
+    htmlAttrs: {
+      lang: 'zh-CN',
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: "width=device-width, initial-scale=1, user-scalable=no" },
