@@ -85,9 +85,25 @@
           </div>
         </div>
         <div class="module aliyun-module">
-          <a :href="aliyun.href" target="_blank" rel="nofollow">
-            <img :src="aliyun.img" alt="阿里云服务器" :title="aliyun.title">
-          </a>
+          <div class="module-title">
+            {{ aliyun.title }}
+            <a class="detail" target="_blank" :href="aliyun.href">[了解详情]</a>
+          </div>
+          <div class="module-content">
+            <a target="_blank" :href="aliyun.href" class="content">
+              <div class="text">{{ aliyun.text }}</div>
+              <div class="tag-list">
+                <Tag
+                  class="tag"
+                  v-for="(tag, idx) of aliyun.tags"
+                  type="border"
+                  color="error"
+                  :key="idx">
+                  {{ tag }}
+                </Tag>
+              </div>
+            </a>
+          </div>
         </div>
         <div class="module link-module">
           <div class="module-title">
@@ -168,7 +184,12 @@ export default {
       aliyun: {
         href: 'https://www.aliyun.com/minisite/goods?userCode=h55rc1yh',
         img: 'https://file.wintc.top/lisa/aliyun.jpg',
-        title: '阿里云服务器'
+        title: '阿里云推广',
+        text: '云服务器 精选特惠',
+        tags: [
+          '新用户享好礼',
+          '云服务器1折起',
+        ]
       }
     }
   },
@@ -470,7 +491,7 @@ export default {
         .module-title
           .detail
             float right
-            font-size 13px
+            font-size 14px
         .link-list
           display flex
           flex-wrap wrap
@@ -488,6 +509,18 @@ export default {
             flex auto
             max-width 10px
       .aliyun-module
+        .module-title
+          .detail
+            float right
+            font-size 14px
+            &:hover
+              text-decoration underline
+        .module-content
+          .content
+            color #333
+            .text
+              margin 5px 0 15px
+              font-size 15px
         img
           max-width 100%
           vertical-align middle
