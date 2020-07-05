@@ -1,6 +1,12 @@
 <template>
   <div class="layout">
-    <header ref='header' class="layout-header" :class="headerClass">
+    <header
+      ref='header'
+      :style="{
+        backgroundPosition
+      }"
+      class="layout-header"
+      :class="headerClass">
       <div class="layout-header-main">
         <h1 class="site-title">
           <nuxt-link to="/" class="title-content">{{ $site.title }}</nuxt-link>
@@ -181,6 +187,7 @@ export default {
       oldScrollTop: 0,
       headerHeight: 0,
       loginShow: false,
+      scrollPercent: 0,
       aliyun: {
         href: 'https://www.aliyun.com/minisite/goods?userCode=h55rc1yh',
         img: 'https://file.wintc.top/lisa/aliyun.jpg',
@@ -220,6 +227,9 @@ export default {
         })
       }
       return list
+    },
+    backgroundPosition () {
+      return `center ${ this.scrollPercent }%`
     },
     currentUser () {
       return this.$store.getters['userInfo/info']
@@ -279,6 +289,8 @@ export default {
       let el = document.documentElement
       let deltaY = el.scrollTop - this.oldScrollTop
       this.oldScrollTop = el.scrollTop
+      const scrollHeight = el.scrollHeight - el.clientHeight
+      this.scrollPercent = Math.floor(el.scrollTop / scrollHeight * 100)
       if (el.scrollTop <= rect.height) {
         this.headerClass = ''
         this.headerHeight = 0
@@ -398,13 +410,14 @@ export default {
   flex-direction column
   min-height 100vh
   .layout-header
-    // background rgb(0, 135, 252)
-    background #3361d8
     position fixed
     left 0
     right 0
     top 0
     z-index 2
+    background-image linear-gradient(#3361d8, #3361d8)
+    background-image url(https://file.wintc.top/amazing/bg.jpg)
+    background-size 100% auto
     padding-left calc(100vw - 100%)
     &.hide
       transform translateY(-100%)
