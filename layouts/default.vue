@@ -285,21 +285,23 @@ export default {
   },
   methods: {
     handleScroll () {
-      let rect = this.$refs.header.getBoundingClientRect()
-      let el = document.documentElement
-      let deltaY = el.scrollTop - this.oldScrollTop
-      this.oldScrollTop = el.scrollTop
-      const scrollHeight = el.scrollHeight - el.clientHeight
-      this.scrollPercent = Math.floor(el.scrollTop / scrollHeight * 100)
-      if (el.scrollTop <= rect.height) {
-        this.headerClass = ''
-        this.headerHeight = 0
-      } else if (deltaY > 0) {
-        this.headerClass = 'hide'
-      } else {
-        this.headerHeight = rect.headerHeight
-        this.headerClass = 'show'
-      }
+      window.requestAnimationFrame(() => {
+        let rect = this.$refs.header.getBoundingClientRect()
+        let el = document.scrollingElement || document.documentElement
+        let deltaY = el.scrollTop - this.oldScrollTop
+        this.oldScrollTop = el.scrollTop
+        const scrollHeight = el.scrollHeight - el.clientHeight
+        this.scrollPercent = Math.floor(el.scrollTop / scrollHeight * 100)
+        if (el.scrollTop <= rect.height) {
+          this.headerClass = ''
+          this.headerHeight = 0
+        } else if (deltaY > 0) {
+          this.headerClass = 'hide'
+        } else {
+          this.headerHeight = rect.headerHeight
+          this.headerClass = 'show'
+        }
+      })
     },
     highlightCode () {
       this.$nextTick(() => {
@@ -415,7 +417,7 @@ export default {
     right 0
     top 0
     z-index 2
-    background-image linear-gradient(#3361d8, #3361d8)
+    background-color #3361d8
     background-image url(https://file.wintc.top/amazing/bg.jpg)
     background-size 100% auto
     padding-left calc(100vw - 100%)
