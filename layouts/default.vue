@@ -290,7 +290,8 @@ export default {
         let el = document.scrollingElement || document.documentElement
         let deltaY = el.scrollTop - this.oldScrollTop
         this.oldScrollTop = el.scrollTop
-        const scrollHeight = el.scrollHeight - el.clientHeight
+        let scrollHeight = el.scrollHeight - el.clientHeight
+        scrollHeight = scrollHeight || el.scrollHeight
         this.scrollPercent = Math.floor(el.scrollTop / scrollHeight * 100)
         if (el.scrollTop <= rect.height) {
           this.headerClass = ''
