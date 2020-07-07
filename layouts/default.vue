@@ -31,7 +31,9 @@
               <img @click="clickAvatar" :src="adminInfo.avatar" alt="木马啊">
               <div class="username">{{ adminInfo.username }}</div>
               <div class="post-count">
-                共<span class="count">{{ adminInfo.postCount }}</span>篇文章
+                <template>
+                  共<span class="count">{{ adminInfo.postCount }}</span>篇文章
+                </template>
               </div>
             </div>
             <div class="stat">
@@ -48,10 +50,10 @@
                 {{ adminInfo.messageCount }}
               </div>
             </div>
-            <div class="site">
+            <!-- <div class="site">
               <Icon type="ios-link-outline" />
               <nuxt-link class="content" to="/">wintc.top</nuxt-link>
-            </div>
+            </div> -->
             <div class="github">
               <Icon type="logo-github" />
               <a target="_blank" class="content" href="https://github.com/Lushenggang">github</a>
@@ -166,6 +168,9 @@
     </client-only>
     <client-only>
       <userinfo></userinfo>
+    </client-only>
+    <client-only>
+      <div class="background"></div>
     </client-only>
   </div>
 </template>
@@ -545,6 +550,16 @@ export default {
     text-align center
     font-size 14px
     padding 10px 0 20px
+    color #fff
+  .background
+    background url(https://file.wintc.top/amazing/sunset.jpeg)
+    position fixed
+    left 0
+    right 0
+    bottom 0
+    top 0
+    background-size cover
+    z-index -1
 
 .login-modal
   .login-header 
@@ -640,7 +655,6 @@ export default {
         padding 10px
     .layout-footer
       //
-
 </style>
 
 <style lang="stylus">
@@ -652,11 +666,13 @@ h3
   font-size 18px
 h4, h5, h6
   font-size 16px
+
+html
+  background linear-gradient(rgba(0, 135, 252, .3), rgba(0, 135, 252, .1))
 </style>
 
 <style>
 html {
-  background: linear-gradient(rgba(0, 135, 252, .3), rgba(0, 135, 252, .1));
   min-height: 100%;
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
