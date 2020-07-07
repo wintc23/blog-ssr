@@ -620,8 +620,9 @@ export default {
             color #FFBB21
             &+.nav
               margin-left 10px
+    .layout-main
       .nuxt-container
-        padding 0
+        padding 5px
     .layout-footer
       // 
 

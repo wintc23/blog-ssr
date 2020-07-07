@@ -110,17 +110,17 @@ export default {
       background #fff
       border-radius 4px
     .pagination
-        display flex
-        justify-content space-between
-        font-weight bold
-        padding 20px 10px
-        color #333
-        font-size 14px
-        .last, .next
-          text-decoration underline
-          width 4em
-        .next
-          text-align right
+      display flex
+      justify-content space-between
+      font-weight bold
+      padding 20px 10px
+      color #333
+      font-size 14px
+      .last, .next
+        text-decoration underline
+        width 4em
+      .next
+        text-align right
 
 @media screen and (min-width: 600px)
   .message-page
@@ -135,9 +135,8 @@ export default {
 @media screen and (max-width: 600px)
   .message-page
     .main-content
-      padding 0 5px
       .add-msg
-        padding 10px 10px 5px
+        // padding 10px 10px 5px
       .msg-tree
         margin 20px 0
         padding 20px 10px
