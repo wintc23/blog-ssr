@@ -2,8 +2,10 @@ import Vue from 'vue'
 
 import Avatar from '@/components/Avatar'
 import { Modal } from 'iview'
-
 import { formatTime, SITE } from '@/tool'
+import outline from 'vue-outline'
+
+Vue.use(outline)
 
 Vue.prototype.$bus = new Vue()
 

@@ -1,6 +1,5 @@
 // 用户信息集，避免重复获取
 import { getUserInfoById } from '@/api/user'
-import { BASE_URL } from '@/config'
 
 export const state = () => ({
   info: {},

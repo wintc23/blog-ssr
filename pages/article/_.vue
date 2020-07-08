@@ -1,7 +1,12 @@
 <template>
   <div class="article-page">
     <div class="main-content">
-      <article class="post-detail">
+      <article
+        class="post-detail"
+        v-outline="{
+          callback: refreshNavTree,
+          selectors: ['h1', 'h2', 'h3,h4']
+        }">
         <h2 class="post-title">{{ post.title }}</h2>
         <div class="post-info">
           <span class="post-date">
@@ -125,6 +130,9 @@ export default {
     this.$bus.$emit('code-highlight')
     this.$bus.$emit('baidu-push')
   },
+  beforeDestroy() {
+    this.refreshNavTree(null)
+  },
   methods: {
     addComment (comment, response, callback) {
       if (!comment) {
@@ -166,6 +174,9 @@ export default {
           Object.assign(this.post, res.data)
         }
       })
+    },
+    refreshNavTree (treeData) {
+      this.$store.commit('outline/setNavList', treeData)
     }
   }
 }
@@ -174,6 +185,7 @@ export default {
 <style lang="stylus" scoped>
 .article-page
   .main-content
+    overflow hidden
     color #333
     background #fff
     .post-detail

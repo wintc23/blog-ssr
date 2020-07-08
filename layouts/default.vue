@@ -73,7 +73,7 @@
         <div class="module" v-if="topTen.length">
           <div class="module-title">热门文章</div>
         </div> -->
-        <div class="module" v-if="tags.length">
+        <div class="module" v-if="tags.length" v-show="!outlineShow">
           <div class="module-title">文章标签</div>
           <div class="module-content">
             <div class="tag-list">
@@ -92,28 +92,8 @@
             </div>
           </div>
         </div>
-        <div class="module aliyun-module">
-          <div class="module-title">
-            {{ aliyun.title }}
-            <a class="detail" target="_blank" :href="aliyun.href">[了解详情]</a>
-          </div>
-          <div class="module-content">
-            <a target="_blank" :href="aliyun.href" class="content">
-              <div class="text">{{ aliyun.text }}</div>
-              <div class="tag-list">
-                <Tag
-                  class="tag"
-                  v-for="(tag, idx) of aliyun.tags"
-                  type="border"
-                  color="error"
-                  :key="idx">
-                  {{ tag }}
-                </Tag>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="module link-module">
+        
+        <div class="module link-module" v-show="!outlineShow">
           <div class="module-title">
             友链
             <nuxt-link class="detail" to="/link">[详情]</nuxt-link>
@@ -131,7 +111,40 @@
             </div>
           </div>
         </div>
-        
+        <client-only>
+          <div class="module aliyun-module" v-show="!outlineShow">
+            <div class="module-title">
+              {{ aliyun.title }}
+              <a class="detail" target="_blank" :href="aliyun.href">[了解详情]</a>
+            </div>
+            <div class="module-content">
+              <a target="_blank" :href="aliyun.href" class="content">
+                <div class="text">{{ aliyun.text }}</div>
+                <div class="tag-list">
+                  <Tag
+                    class="tag"
+                    v-for="(tag, idx) of aliyun.tags"
+                    type="border"
+                    color="error"
+                    :key="idx">
+                    {{ tag }}
+                  </Tag>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div
+            :style="{
+              top: `${ headerHeight + 5 }px`
+            }"
+            class="module outline-module"
+            v-show="outlineShow">
+            <div class="module-title">目录</div>
+            <div class="module-content">
+              <article-outline></article-outline>
+            </div>
+          </div>
+        </client-only>
       </aside>
       <nuxt class="nuxt-container" />
     </main>
@@ -180,11 +193,13 @@ import { GITHUB_CLIENT_ID, QQ_CLIENT_ID, IS_DEV } from '@/config'
 import { TAG_LIST, fibonacci, clearToken } from '@/tool'
 import uuidv4 from 'uuid/v4'
 import Userinfo from '@/components/Userinfo'
+import ArticleOutline from '@/components/ArticleOutline'
 
 export default {
   middleware: ['cookie'],
   components: {
-    Userinfo
+    Userinfo,
+    ArticleOutline
   },
   data () {
     return {
@@ -264,6 +279,10 @@ export default {
         list.push(TAG_LIST[idx])
       }
       return list
+    },
+    outlineShow () {
+      const navList = this.$store.getters['outline/list']
+      return navList && navList.length
     }
   },
   mounted () {
@@ -303,8 +322,9 @@ export default {
           this.headerHeight = 0
         } else if (deltaY > 0) {
           this.headerClass = 'hide'
+          this.headerHeight = 0
         } else {
-          this.headerHeight = rect.headerHeight
+          this.headerHeight = rect.height
           this.headerClass = 'show'
         }
       })
@@ -494,6 +514,10 @@ export default {
         .content
           font-size 16px
           margin-left 10px
+      .outline-module
+        position sticky
+        transition top .5s
+
       .tag-list
         display flex
         flex-wrap wrap
@@ -643,17 +667,19 @@ export default {
             &+.nav
               margin-left 15px
     .layout-main
-      max-width 1100px
+      max-width 1200px
       margin 0 auto
       padding 20px 10px
       width 100%
+      display flex
       .modules
-        float left
         width 240px
         padding 10px 0
       .nuxt-container
         overflow hidden
         padding 10px
+        padding-right 0
+        flex auto
     .layout-footer
       //
 </style>
