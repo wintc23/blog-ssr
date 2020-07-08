@@ -316,7 +316,7 @@ export default {
         this.oldScrollTop = el.scrollTop
         let scrollHeight = el.scrollHeight - el.clientHeight
         scrollHeight = scrollHeight || el.scrollHeight
-        this.scrollPercent = Math.floor(el.scrollTop / scrollHeight * 100)
+        this.scrollPercent = el.scrollTop / scrollHeight * 100
         if (el.scrollTop <= rect.height) {
           this.headerClass = ''
           this.headerHeight = 0

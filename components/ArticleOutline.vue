@@ -27,6 +27,7 @@ export default {
 
 <style lang="stylus">
 .node-render-content
+  user-select none
   span
     cursor pointer
     &:hover
