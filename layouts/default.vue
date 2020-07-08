@@ -675,6 +675,7 @@ export default {
       .modules
         width 240px
         padding 10px 0
+        flex-shrink 0
       .nuxt-container
         overflow hidden
         padding 10px
