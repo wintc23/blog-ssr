@@ -17,7 +17,7 @@
     "axios": "^0.19.0",
     "iview": "^3.5.2",
     "nuxt-edge": "2.10.2-26192170.a3f1957a",
-    "tinymce": "^5.1.0",
+    "tinymce": "^5.2.2",
     "vue-outline": "^4.0.0"
   },
   "devDependencies": {
