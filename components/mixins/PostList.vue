@@ -40,6 +40,17 @@
         </div>
         <aside class="post-info">
           <nuxt-link class="look-all" :to="`/article/${post.id}`">阅读全文</nuxt-link>
+          <client-only>
+            <nuxt-link
+              v-if="currentUser.admin"
+              class="edit"
+              :to="{
+                name: 'manage-article',
+                query: { postId: post.id }
+              }">
+              编辑
+            </nuxt-link>
+          </client-only>
           <div class="placeholder"></div>
           <div class="read info-item">浏览(<span>{{ post.readTimes }}</span>)</div>
           <div class="like info-item">赞(<span>{{ post.likes }}</span>)</div>
@@ -108,6 +119,9 @@ export default {
     },
     path () {
       return this.$route.path
+    },
+    currentUser () {
+      return this.$store.getters['userInfo/info']
     }
   },
   mounted () {
@@ -172,8 +186,10 @@ export default {
         display flex
         margin-top 1em
         font-size 14px
-        .look-all
+        .look-all, .edit
           text-decoration underline
+        .edit
+          margin-left 5px
         .placeholder
           flex auto
         .info-item

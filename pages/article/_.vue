@@ -18,6 +18,17 @@
           <span class="read info-item">
             <span>{{ post.readTimes }}</span>次浏览
           </span>
+          <client-only>
+            <nuxt-link
+              v-if="currentUser.admin"
+              class="edit"
+              :to="{
+                name: 'manage-article',
+                query: { postId: post.id }
+              }">
+              编辑
+            </nuxt-link>
+          </client-only>
         </div>
         <div class="post-body">
           <div v-html="post.bodyHtml"></div>
@@ -201,6 +212,9 @@ export default {
           margin-left 20px
         .post-type
           color #FF7F21
+        .edit
+          text-decoration underline
+          margin-left 5px
       .post-like
         text-align center
         .like, .reward
