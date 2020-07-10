@@ -3,8 +3,8 @@ import Vue from 'vue'
 import Avatar from '@/components/Avatar'
 import { Modal } from 'iview'
 import { formatTime, SITE } from '@/tool'
+import '@/directives'
 import outline from 'vue-outline'
-
 Vue.use(outline)
 
 Vue.prototype.$bus = new Vue()
@@ -28,7 +28,6 @@ Vue.prototype.$site = SITE
 
 if (process.client) {
   Vue.component('avatar', Avatar)
-
   Vue.prototype.$isPC = (() => {
     let userAgentInfo = navigator.userAgent
     let Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"]

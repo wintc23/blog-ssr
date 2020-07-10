@@ -20,6 +20,9 @@
             {{ nav.title }}
           </nuxt-link>
         </nav>
+        <client-only>
+          <global-search class="global-search"></global-search>
+        </client-only>
       </div>
     </header>
     <main class="layout-main">
@@ -194,12 +197,14 @@ import { TAG_LIST, fibonacci, clearToken } from '@/tool'
 import uuidv4 from 'uuid/v4'
 import Userinfo from '@/components/Userinfo'
 import ArticleOutline from '@/components/ArticleOutline'
+import globalSearch from '@/components/globalSearch'
 
 export default {
   middleware: ['cookie'],
   components: {
     Userinfo,
-    ArticleOutline
+    ArticleOutline,
+    globalSearch
   },
   data () {
     return {
@@ -644,6 +649,8 @@ export default {
             color #FFBB21
             &+.nav
               margin-left 10px
+        .global-search
+          display none
     .layout-main
       .nuxt-container
         padding 5px
