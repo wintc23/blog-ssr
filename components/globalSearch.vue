@@ -94,8 +94,9 @@ export default {
     line-height 1.5
     opacity .95
     .result
-      border-bottom 1px solid #e2e2e3
       padding 10px 20px
+      &+.result
+        border-bottom 1px solid #e2e2e3
       .link
         user-select none
         &:hover
