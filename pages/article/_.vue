@@ -108,7 +108,7 @@ export default {
   },
   head () {
     return {
-      title: `${this.post.title} - 木马小站`,
+      title: `${this.post.title} - 沐码小站`,
       meta: [
         { hid: 'keywords', name: 'keywords', content: `${this.post.keywords || ''}` },
         { hid: 'description', name: 'description', content: `${this.post.description || ''}${this.$site.description}` }

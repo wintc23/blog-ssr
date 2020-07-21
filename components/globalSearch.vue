@@ -101,5 +101,4 @@ export default {
         user-select none
         &:hover
           text-decoration underline
-
 </style>
