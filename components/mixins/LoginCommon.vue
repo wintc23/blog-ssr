@@ -15,14 +15,19 @@ export default {
   },
   methods: {
     login (state) {
-      if (this.$isPC) {
-        window.opener && window.opener._loginCallback && window.opener._loginCallback(state)
-      } else {
-        this.$store.dispatch('userInfo/getUserInfo', { force: true })
-        let redirect = localStorage.getItem('loginRedirect') || '/'
-        this.$router.replace(redirect)
-        localStorage.removeItem('loginRedirect')
-      }
+      const data = { state, type: 'login-state' }
+      window.opener && window.opener.postMessage(data)
+      window.close()
+      // if (this.$isPC) {
+      //   console.log('hello2', state)
+      //   console.log(window.opener, '~~~~~~')
+      //   // window.opener && window.opener._loginCallback && window.opener._loginCallback(state)
+      // } else {
+      //   this.$store.dispatch('userInfo/getUserInfo', { force: true })
+      //   let redirect = localStorage.getItem('loginRedirect') || '/'
+      //   this.$router.replace(redirect)
+      //   localStorage.removeItem('loginRedirect')
+      // }
     },
     // 由组件实现
     loginWithCode () {},
@@ -31,7 +36,6 @@ export default {
     loginCallback (res) {
       if (res.status == 200) {
         setToken(res.data.token)
-        this.$Message.success('登录成功')
         this.login(true)
       } else {
         this.login(false)

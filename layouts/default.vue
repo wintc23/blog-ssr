@@ -290,6 +290,16 @@ export default {
       return navList && navList.length
     }
   },
+  watch: {
+    loginShow: {
+      immediate: true,
+      handler () {
+        if (process.server) return
+        this.removeLoginListener()
+        this.loginShow && this.addLoginListener()
+      }
+    }
+  },
   mounted () {
     document.addEventListener('scroll', this.handleScroll)
     this.$store.dispatch('postType/getType')
@@ -311,6 +321,7 @@ export default {
     this.$bus.$off('logout', this.logout)
     this.$bus.$off('code-highlight', this.highlightCode)
     this.$bus.$off('baidu-push', this.pushPage)
+    this.removeLoginListener()
   },
   methods: {
     handleScroll () {
@@ -364,30 +375,54 @@ export default {
       this.openLoginWindow(url)
     },
     openLoginWindow (url) {
-      if (this.$isPC) {
-        let loginWindow = window.open(url, 'login', 'resizable=yes,scrollbars=yes,status=yes,height=600,width=800')
-        window._loginCallback = (success) => {
-          delete window._loginCallback
-          if (success) {
-            this.$Message.success('登录成功')
-            this.hideLogin()
-            let promise = this.getUserInfo()
-            promise && promise.then(() => {
-              if (this.currentUser.id && !this.currentUser.email) {
-                this.$bus.$emit('click-avatar', this.currentUser.id)
-                this.$Message.info('请设置邮箱，以便及时收到关于您的消息')
-              }
-            })
-          } else {
-            this.$Message.error('登录失败，请重试')
-          }
-          loginWindow.close()
-        }
+      window.open(url, 'login', 'resizable=yes,scrollbars=yes,status=yes,height=600,width=800')
+      // if (this.$isPC) {
+      //   window._loginCallback = (success) => {
+      //     delete window._loginCallback
+      //     if (success) {
+      //       this.$Message.success('登录成功')
+      //       this.hideLogin()
+      //       let promise = this.getUserInfo()
+      //       promise && promise.then(() => {
+      //         if (this.currentUser.id && !this.currentUser.email) {
+      //           this.$bus.$emit('click-avatar', this.currentUser.id)
+      //           this.$Message.info('请设置邮箱，以便及时收到关于您的消息')
+      //         }
+      //       })
+      //     } else {
+      //       this.$Message.error('登录失败，请重试')
+      //     }
+      //     loginWindow.close()
+      //   }
+      // } else {
+      //   localStorage.setItem('loginRedirect', this.$route.fullPath)
+      //   window.open(url, '_self')
+      // }
+    },
+
+    addLoginListener () {
+      window.addEventListener('message', this.loginCallback)
+    },
+
+    removeLoginListener () {
+      window.removeEventListener('message', this.loginCallback)
+    },
+
+    loginCallback ({ data: { state, type } }) {
+      if (type !== 'login-state') return
+      if (state) {
+        this.$Message.success('登录成功')
+        this.hideLogin()
+        let promise = this.getUserInfo()
+        promise && promise.then(() => {
+          this.$bus.$emit('click-avatar', this.currentUser.id)
+          this.$Message.info('请设置邮箱，以便及时收到关于您的消息')
+        })
       } else {
-        localStorage.setItem('loginRedirect', this.$route.fullPath)
-        window.open(url, '_self')
+        this.$Message.error('登录失败，请重试')
       }
     },
+
     clickAvatar () {
       this.$bus.$emit('click-avatar', this.adminInfo.id)
     },
