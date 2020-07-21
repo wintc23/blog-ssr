@@ -16,8 +16,11 @@ export default {
   methods: {
     login (state) {
       const data = { state, type: 'login-state' }
-      window.opener && window.opener.postMessage(data)
-      window.close()
+      Promise.resolve(() => {
+        window.opener && window.opener.postMessage(data)
+      }).finally(() => {
+        window.close()
+      })
       // if (this.$isPC) {
       //   console.log('hello2', state)
       //   console.log(window.opener, '~~~~~~')
