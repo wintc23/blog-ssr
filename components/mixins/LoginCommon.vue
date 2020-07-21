@@ -16,8 +16,9 @@ export default {
   methods: {
     login (state) {
       const data = { state, type: 'login-state' }
-      Promise.resolve(() => {
+      new Promise((resolve, reject) => {
         window.opener && window.opener.postMessage(data)
+        resolve()
       }).finally(() => {
         window.close()
       })
