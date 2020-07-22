@@ -375,29 +375,12 @@ export default {
       this.openLoginWindow(url)
     },
     openLoginWindow (url) {
-      window.open(url, 'login', 'resizable=yes,scrollbars=yes,status=yes,height=600,width=800')
-      // if (this.$isPC) {
-      //   window._loginCallback = (success) => {
-      //     delete window._loginCallback
-      //     if (success) {
-      //       this.$Message.success('登录成功')
-      //       this.hideLogin()
-      //       let promise = this.getUserInfo()
-      //       promise && promise.then(() => {
-      //         if (this.currentUser.id && !this.currentUser.email) {
-      //           this.$bus.$emit('click-avatar', this.currentUser.id)
-      //           this.$Message.info('请设置邮箱，以便及时收到关于您的消息')
-      //         }
-      //       })
-      //     } else {
-      //       this.$Message.error('登录失败，请重试')
-      //     }
-      //     loginWindow.close()
-      //   }
-      // } else {
-      //   localStorage.setItem('loginRedirect', this.$route.fullPath)
-      //   window.open(url, '_self')
-      // }
+      if (this.$isPC) {
+        window.open(url, 'login', 'resizable=yes,scrollbars=yes,status=yes,height=600,width=800')
+      } else {
+        localStorage.setItem('loginRedirect', this.$route.fullPath)
+        window.open(url, '_self')
+      }
     },
 
     addLoginListener () {

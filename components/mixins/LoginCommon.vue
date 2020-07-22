@@ -15,23 +15,16 @@ export default {
   },
   methods: {
     login (state) {
-      const data = { state, type: 'login-state' }
-      new Promise((resolve, reject) => {
+      if (this.$isPC) {
+        const data = { state, type: 'login-state' }
         window.opener && window.opener.postMessage(data)
-        resolve()
-      }).finally(() => {
         window.close()
-      })
-      // if (this.$isPC) {
-      //   console.log('hello2', state)
-      //   console.log(window.opener, '~~~~~~')
-      //   // window.opener && window.opener._loginCallback && window.opener._loginCallback(state)
-      // } else {
-      //   this.$store.dispatch('userInfo/getUserInfo', { force: true })
-      //   let redirect = localStorage.getItem('loginRedirect') || '/'
-      //   this.$router.replace(redirect)
-      //   localStorage.removeItem('loginRedirect')
-      // }
+      } else {
+        this.$store.dispatch('userInfo/getUserInfo', { force: true })
+        let redirect = localStorage.getItem('loginRedirect') || '/'
+        this.$router.replace(redirect)
+        localStorage.removeItem('loginRedirect')
+      }
     },
     // 由组件实现
     loginWithCode () {},
