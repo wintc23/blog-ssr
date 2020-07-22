@@ -394,15 +394,12 @@ export default {
     loginCallback ({ data: { state, type } }) {
       if (type !== 'login-state') return
       if (state) {
-        this.$Message.success('登录成功')
         this.hideLogin()
         let promise = this.getUserInfo()
         promise && promise.then(() => {
           this.$bus.$emit('click-avatar', this.currentUser.id)
           this.$Message.info('请设置邮箱，以便及时收到关于您的消息')
         })
-      } else {
-        this.$Message.error('登录失败，请重试')
       }
     },
 

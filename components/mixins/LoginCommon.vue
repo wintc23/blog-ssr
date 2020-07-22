@@ -15,6 +15,7 @@ export default {
   },
   methods: {
     login (state) {
+      state ? this.$Message.success('登录成功') : this.$Message.error('登录失败，请重试')
       if (this.$isPC) {
         const data = { state, type: 'login-state' }
         window.opener && window.opener.postMessage(data)
