@@ -9,15 +9,18 @@ import { setToken } from '@/tool'
 
 export default {
   layout: '',
-  mounted () {
-    let promise = this.loginWithCode()
-    promise && promise.then(this.loginCallback).catch(this.loginFail)
+  created () {
+    if (process.client) {
+      let promise = this.loginWithCode()
+      promise && promise.then(this.loginCallback).catch(this.loginFail)
+    }
   },
   methods: {
     login (state) {
       state ? this.$Message.success('登录成功') : this.$Message.error('登录失败，请重试')
       if (this.$isPC) {
         const data = { state, type: 'login-state' }
+        console.log(window.opener)
         window.opener && window.opener.postMessage(data)
         window.close()
       } else {
@@ -40,7 +43,6 @@ export default {
       }
     },
     loginFail () {
-      this.$Message.error('登录失败，请重试')
       this.login(false)
     }
   },
