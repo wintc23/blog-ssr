@@ -13,7 +13,9 @@
             <br>
           </div>
           <div class="site-info">
-            您需要将本站相关信息添加到您的站点（名称和地址是必要的）：
+            <div class="label">
+              您需要将本站相关信息添加到您的站点（名称和地址是必要的）：
+            </div>
             <div class="item">
               <div class="label">名称</div>
               <div class="content">{{ $site.title }}</div>
@@ -357,6 +359,8 @@ export default {
       flex-wrap wrap
       margin-top 10px
       // flex-direction column
+      .label
+        width 100%
       .item
         flex-shrink 0
         padding-right 10px
