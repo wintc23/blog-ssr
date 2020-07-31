@@ -11,11 +11,8 @@ function getCookie (cookie, key) {
 }
 
 export function getToken () {
-  if (process.server) {
-    return getCookie(process.cookie, 'token')
-  } else {
-    return getCookie(document.cookie, 'token')
-  }
+  const cookies = process.server ? process.cookie : document.cookie
+  return getCookie(cookies, 'token')
 }
 
 export function setToken (token) {
