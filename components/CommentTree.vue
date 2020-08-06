@@ -4,7 +4,7 @@
       class="comment"
       v-for="comment of rootList"
       :key="comment.id">
-      <avatar class="avatar" :class="currentUser.admin ? 'admin' : ''" title="站长" :userId="comment.authorId">
+      <avatar class="avatar" :class="currentUser.admin ? 'admin' : ''" :userId="comment.authorId">
         <template v-slot:default="{ userinfo }">
           <img :src="userinfo.avatar" alt="用户头像">
         </template>
@@ -52,7 +52,7 @@
             :ref="`child${child.id}`"
             v-for="(child, idx) of comment.children"
             :key="idx">
-            <avatar class="child-avatar" :class="currentUser.admin ? 'admin' : ''" title="站长" :userId="child.authorId">
+            <avatar class="child-avatar" :class="currentUser.admin ? 'admin' : ''" :userId="child.authorId">
               <template v-slot:default="{ userinfo }">
                 <img :src="userinfo.avatar" alt="用户头像">
               </template>
