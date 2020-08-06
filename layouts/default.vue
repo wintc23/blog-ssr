@@ -21,7 +21,7 @@
           </nuxt-link>
         </nav>
         <client-only>
-          <global-search class="global-search"></global-search>
+          <site-search class="global-search"></site-search>
         </client-only>
       </div>
     </header>
@@ -62,7 +62,7 @@
               <a target="_blank" class="content" href="https://github.com/Lushenggang">github</a>
             </div>
             <div class="city">
-              <Icon type="md-pin" /> 
+              <Icon type="md-pin" />
               <div class="content">云南·昆明</div>
             </div>
             <div class="about-me">
@@ -71,11 +71,24 @@
           </div>
         </div>
         <!-- <div class="module" v-if="topics.length">
-          <div class="module-title">专栏</div>
-        </div>
+          <div class="module-title">专题</div>
+        </div> -->
         <div class="module" v-if="topTen.length">
           <div class="module-title">热门文章</div>
-        </div> -->
+          <div class="module-content">
+            <div class="post-list">
+              <div
+                class="post"
+                v-for="post of topTen"
+                :key="post.id">
+                <nuxt-link class="post-link" :title="post.title" :to="`/article/${post.id}`">{{ post.title }}</nuxt-link>
+                <span class="read-times" :title="`${post.readTimes}次浏览`">
+                  <Icon class="icon" type="md-eye" />{{ post.readTimes }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="module" v-if="tags.length" v-show="!outlineShow">
           <div class="module-title">文章标签</div>
           <div class="module-content">
@@ -197,14 +210,14 @@ import { TAG_LIST, fibonacci, clearToken } from '@/tool'
 import uuidv4 from 'uuid/v4'
 import Userinfo from '@/components/Userinfo'
 import ArticleOutline from '@/components/ArticleOutline'
-import globalSearch from '@/components/globalSearch'
+import SiteSearch from '@/components/SiteSearch'
 
 export default {
   middleware: ['cookie'],
   components: {
     Userinfo,
     ArticleOutline,
-    globalSearch
+    SiteSearch
   },
   data () {
     return {
@@ -306,7 +319,7 @@ export default {
     this.$store.dispatch('userInfo/getUserInfo')
     // this.$store.dispatch('site/getAdminInfo'),
     this.$store.dispatch('site/getTagList'),
-    // this.$store.dispatch('site/getTopTen'),
+    this.$store.dispatch('site/getTopTen'),
     // this.$store.dispatch('site/getTopicList')
     this.$bus.$on('login-show', this.showLogin)
     this.$bus.$on('logout', this.logout)
@@ -537,13 +550,33 @@ export default {
       .outline-module
         position sticky
         transition top .5s
-
+      
+      .post-list
+        .post
+          &+.post
+            margin-top 10px
+          .post-link
+            color #333
+            &:hover
+              color #4791ff
+              text-decoration underline
+          .read-times
+            color #999
+            font-size 14px
+            .icon
+              height 14px
+              width 14px
+              font-size 18px
+              display inline-flex
+              align-items center
+              justify-content center
+              margin-right 5px
       .tag-list
         display flex
         flex-wrap wrap
         justify-content space-around
         .tag
-          width 100px
+          width 120px
           .tag-content
             display flex
             justify-content center
@@ -695,7 +728,7 @@ export default {
       width 100%
       display flex
       .modules
-        width 240px
+        width 280px
         padding 10px 0
         flex-shrink 0
       .nuxt-container
