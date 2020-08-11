@@ -47,8 +47,8 @@ export default {
     },
     search () {
       if (!this.searchIndex) return
-      if (this.keyword.length < 2) {
-        this.$Message.warning('请输入关键词搜索，不少于2字符')
+      if (!this.keyword) {
+        this.$Message.warning('请输入关键词搜索')
         return
       }
       this.dataList = []
