@@ -326,7 +326,7 @@ export default {
     this.$bus.$on('code-highlight', this.highlightCode)
     this.$bus.$on('baidu-push', this.pushPage)
     this.highlightCode()
-
+    this.insertRecord()
   },
   beforeDestroy () {
     document.removeEventListener('scroll', this.handleScroll)
@@ -438,6 +438,23 @@ export default {
       document.body.appendChild(node)
     },
 
+    insertRecord () {
+      if (!IS_DEV) return
+      let node = document.querySelector("script[record]")
+      node && node.parentNode.removeChild(node)
+      node = document.createElement('script')
+      node.setAttribute('record', 1)
+      node.src = 'http://192.168.0.201/jssdk/ob.js'
+      document.head.appendChild(node)
+      const timer = setInterval(() => {
+        console.log('timer', window.CWebRecord)
+        if (window.CWebRecord) {
+          clearInterval(timer)
+          new window.CWebRecord({ appUid: 'OONFV2' })
+          console.log('onload', window.CWebRecord)
+        }
+      }, 1000)
+    }
   }
 }
 </script>

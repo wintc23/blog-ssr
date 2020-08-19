@@ -7167,10 +7167,10 @@ vue-no-ssr@^1.1.1:
   resolved "https://registry.npmjs.org/vue-no-ssr/-/vue-no-ssr-1.1.1.tgz#875f3be6fb0ae41568a837f3ac1a80eaa137b998"
   integrity sha512-ZMjqRpWabMPqPc7gIrG0Nw6vRf1+itwf0Itft7LbMXs2g3Zs/NFmevjZGN1x7K3Q95GmIjWbQZTVerxiBxI+0g==
 
-vue-outline@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npm.taobao.org/vue-outline/download/vue-outline-4.0.0.tgz#f815a451448d57d68e78fe8172fc51277fd84a84"
-  integrity sha1-+BWkUUSNV9aOeP6BcvxRJ3/YSoQ=
+vue-outline@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.npmjs.org/vue-outline/-/vue-outline-4.0.4.tgz#c450815eea9df0b861f059f5b3ccf9484cf43a87"
+  integrity sha512-LZpKlRxB3jC995ZUvcfX5KcIJ1SsDzaE35OO6H7gcGQTLc1Nao7R2YIZTSlK61ttFbK7igf0Kxk+s8+cDyNelQ==
   dependencies:
     vue "^2.5.17"
 
