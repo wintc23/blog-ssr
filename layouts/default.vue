@@ -2,9 +2,6 @@
   <div class="layout">
     <header
       ref='header'
-      :style="{
-        backgroundPosition
-      }"
       class="layout-header"
       :class="headerClass">
       <div class="layout-header-main">
@@ -225,7 +222,6 @@ export default {
       oldScrollTop: 0,
       headerHeight: 0,
       loginShow: false,
-      scrollPercent: 0,
       aliyun: {
         href: 'https://www.aliyun.com/minisite/goods?userCode=h55rc1yh',
         img: 'https://file.wintc.top/lisa/aliyun.jpg',
@@ -265,9 +261,6 @@ export default {
         })
       }
       return list
-    },
-    backgroundPosition () {
-      return `center ${ this.scrollPercent }%`
     },
     currentUser () {
       return this.$store.getters['userInfo/info']
@@ -343,9 +336,6 @@ export default {
         let el = document.scrollingElement || document.documentElement
         let deltaY = el.scrollTop - this.oldScrollTop
         this.oldScrollTop = el.scrollTop
-        let scrollHeight = el.scrollHeight - el.clientHeight
-        scrollHeight = scrollHeight || el.scrollHeight
-        this.scrollPercent = el.scrollTop / scrollHeight * 100
         if (el.scrollTop <= rect.height) {
           this.headerClass = ''
           this.headerHeight = 0
@@ -493,8 +483,8 @@ export default {
     right 0
     top 0
     z-index 2
-    background-color #3361d8
-    background-image url(https://file.wintc.top/amazing/bg.jpg)
+    background-color #000
+    // background-image url(https://file.wintc.top/amazing/bg.jpg)
     background-size 100% auto
     padding-left calc(100vw - 100%)
     &.hide
@@ -646,7 +636,7 @@ export default {
     padding 10px 0 20px
     color #fff
   .background
-    background url(https://file.wintc.top/amazing/sunset.jpeg)
+    // background url(https://file.wintc.top/amazing/sunset.jpeg)
     position fixed
     left 0
     right 0
@@ -768,7 +758,8 @@ h4, h5, h6
   font-size 16px
 
 html
-  background linear-gradient(rgba(0, 135, 252, .3), rgba(0, 135, 252, .1))
+  // background linear-gradient(rgba(0, 135, 252, .3), rgba(0, 135, 252, .1))
+  background #101C2E
 </style>
 
 <style>
