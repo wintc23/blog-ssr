@@ -27,7 +27,10 @@ export default {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: {
+    name: 'circle',
+    color: '#fff'
+  },
   /*
   ** Global CSS
   */

@@ -58,12 +58,17 @@
         </aside>
       </article>
       <div class="pagination" v-if="totalPage > 1">
-        <div class="last">
-          <nuxt-link :to="`${path}?page=${page-1}`" v-if="page > 1">上一页</nuxt-link>
-        </div>
-        <div class="page-no">{{ page }} / {{ totalPage }}</div>
-        <div class="next">
-          <nuxt-link :to="`${path}?page=${page+1}`" v-if="page < totalPage">下一页</nuxt-link>
+        <div class="page-list">
+          <nuxt-link
+            :class="{
+              page: true,
+              current: pageNo == page
+            }"
+            v-for="pageNo in totalPage"
+            :key="pageNo"
+            :to="`${path}?page=${pageNo}`">
+            {{ pageNo }}
+          </nuxt-link>
         </div>
       </div>
     </div>
@@ -146,8 +151,8 @@ export default {
       color rgba(64, 158, 255, 1)
   .post-list
     .post
-      color #333
       background #fff
+      color #333
       &+.post
         margin 10px 0
       .post-abstract
@@ -202,18 +207,25 @@ export default {
               margin 0 5px
 
     .pagination
-      display flex
-      justify-content space-between
-      font-weight bold
-      padding 20px 10px
-      color #333
-      font-size 18px
-      .last, .next
-        text-decoration underline
-        width 4em
-      .next
-        text-align right
-
+      text-align center
+      .page-list
+        display inline-block
+        text-align left
+        .page
+          display inline-block
+          width 36px
+          line-height 36px
+          text-align center
+          background #fff
+          margin 8px
+          color #333
+          border-radius 4px
+          font-weight bold
+          &:hover
+            background #ddd
+          &.current
+            background #fff
+            color rgba(64, 158, 255, 1)
 
 @media screen and (min-width: 600px)
   .page-post-list
@@ -240,7 +252,7 @@ export default {
             flex-shrink 0
             box-shadow 0 0 10px 0 rgba(0, 0, 0, .1)
         &:hover
-          background #fafbfc
+          // background #fafbfc
           .post-abstract-image
             box-shadow 0 0 10px 0 rgba(0, 0, 0, .15)
 
