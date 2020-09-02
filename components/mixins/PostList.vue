@@ -6,7 +6,7 @@
     </div>
     <div class="post-list">
       <article
-        class="post"
+        class="post ws"
         v-for="post of list"
         :key="post.id">
         <div class="post-abstract-main">

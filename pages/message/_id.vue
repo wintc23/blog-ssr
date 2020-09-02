@@ -1,6 +1,6 @@
 <template>
   <div class="message-detail">
-    <div class="msg-tree">
+    <div class="msg-tree ws">
       <comment-tree ref="commentTree" @reply="addMessage" :list="list">
       </comment-tree>
     </div>
@@ -9,7 +9,7 @@
 
 <script>
 import { getMessageDetail, addMessage } from '@/api/messages'
-import CommentTree from '@/components/CommentTree'
+import CommentTree from '@/components/comment-tree'
 
 export default {
   watchQuery: ['refresh'],
@@ -32,11 +32,6 @@ export default {
     currentUser () {
       return this.$store.getters['userInfo/info']
     },
-  },
-  mounted() {
-    if (this.$refs.commentTree && this.list[0]) {
-      this.$refs.commentTree.setExpand(this.list[0].id)
-    }
   },
   methods: {
     addMessage (msg, response, callback) {
@@ -82,7 +77,6 @@ export default {
 .message-detail
   .msg-tree
     border-radius 4px
-    background #fff
     margin 0 10px
     padding 10px
 @media screen and (max-width: 600px)

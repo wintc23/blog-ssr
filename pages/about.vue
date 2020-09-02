@@ -1,6 +1,6 @@
 <template>
   <div class="about-page">
-    <div class="about-me post-body">
+    <div class="about-me ws post-body">
       <div class="content" v-html="aboutMe.bodyHtml">
       </div>
     </div>

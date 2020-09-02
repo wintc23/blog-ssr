@@ -2,7 +2,7 @@
   <div class="layout">
     <header
       ref='header'
-      class="layout-header"
+      class="layout-header ws"
       :class="headerClass">
       <div class="layout-header-main">
         <h1 class="site-title">
@@ -22,9 +22,13 @@
         </client-only>
       </div>
     </header>
-    <main class="layout-main">
-      <aside class="modules">
-        <div class="module" v-if="adminInfo">
+    <main
+      :class="{
+        'layout-main': true,
+        'hide-modules': !showModules
+      }">
+      <aside class="modules" v-show="showModules">
+        <div class="module ws" v-if="adminInfo">
           <div class="module-title">{{ $site.title }}</div>
           <div class="module-content">
             <div class="userinfo">
@@ -70,7 +74,7 @@
         <!-- <div class="module" v-if="topics.length">
           <div class="module-title">专题</div>
         </div> -->
-        <div class="module" v-if="topTen.length">
+        <div class="module ws" v-if="topTen.length">
           <div class="module-title">热门文章</div>
           <div class="module-content">
             <div class="post-list">
@@ -86,7 +90,7 @@
             </div>
           </div>
         </div>
-        <div class="module" v-if="tags.length" v-show="!outlineShow">
+        <div class="module ws" v-if="tags.length" v-show="!outlineShow">
           <div class="module-title">文章标签</div>
           <div class="module-content">
             <div class="tag-list">
@@ -106,7 +110,7 @@
           </div>
         </div>
         
-        <div class="module link-module" v-show="!outlineShow">
+        <div class="module ws link-module" v-show="!outlineShow">
           <div class="module-title">
             友链
             <nuxt-link class="detail" to="/link">[详情]</nuxt-link>
@@ -125,7 +129,7 @@
           </div>
         </div>
         <client-only>
-          <div class="module aliyun-module" v-show="!outlineShow">
+          <div class="module ws aliyun-module" v-show="!outlineShow">
             <div class="module-title">
               {{ aliyun.title }}
               <a class="detail" target="_blank" :href="aliyun.href">[了解详情]</a>
@@ -150,7 +154,7 @@
             :style="{
               top: `${ headerHeight + 5 }px`
             }"
-            class="module outline-module"
+            class="module ws outline-module"
             v-show="outlineShow">
             <div class="module-title">目录</div>
             <div class="module-content">
@@ -262,6 +266,10 @@ export default {
       }
       return list
     },
+    showModules () {
+      const hideList = ['message', 'message-id', 'about']
+      return !hideList.includes(this.$route.name)
+    },
     currentUser () {
       return this.$store.getters['userInfo/info']
     },
@@ -319,7 +327,6 @@ export default {
     this.$bus.$on('code-highlight', this.highlightCode)
     this.$bus.$on('baidu-push', this.pushPage)
     this.highlightCode()
-    this.insertRecord()
   },
   beforeDestroy () {
     document.removeEventListener('scroll', this.handleScroll)
@@ -426,24 +433,6 @@ export default {
         node.src = 'http://push.zhanzhang.baidu.com/push.js'
       }
       document.body.appendChild(node)
-    },
-
-    insertRecord () {
-      if (!IS_DEV) return
-      let node = document.querySelector("script[record]")
-      node && node.parentNode.removeChild(node)
-      node = document.createElement('script')
-      node.setAttribute('record', 1)
-      node.src = 'http://192.168.0.201/jssdk/ob.js'
-      document.head.appendChild(node)
-      const timer = setInterval(() => {
-        console.log('timer', window.CWebRecord)
-        if (window.CWebRecord) {
-          clearInterval(timer)
-          new window.CWebRecord({ appUid: 'OONFV2' })
-          console.log('onload', window.CWebRecord)
-        }
-      }, 1000)
     }
   }
 }
@@ -483,9 +472,7 @@ export default {
     right 0
     top 0
     z-index 2
-    background-color #000
-    // background-image url(https://file.wintc.top/amazing/bg.jpg)
-    background-size 100% auto
+    background-color #fafbfc
     padding-left calc(100vw - 100%)
     &.hide
       transform translateY(-100%)
@@ -497,12 +484,12 @@ export default {
       padding 0 20px
       .site-title
         .title-content
-          color #FAFBFC
+          // color #FAFBFC
           font-weight 400
       .nav-list
         .nav
           font-weight bold
-          color #FAFBFC
+          // color #FAFBFC
           font-size 16px
   .layout-main
     flex auto
@@ -634,15 +621,15 @@ export default {
     text-align center
     font-size 14px
     padding 10px 0 20px
-    color #fff
+
   .background
     // background url(https://file.wintc.top/amazing/sunset.jpeg)
+    background url(https://file.wintc.top/lisa/background.jpg)
     position fixed
     left 0
     right 0
     bottom 0
     top 0
-    background-size cover
     z-index -1
 
 .login-modal
@@ -734,6 +721,8 @@ export default {
       padding 20px 10px
       width 100%
       display flex
+      &.hide-modules
+        max-width 960px
       .modules
         width 280px
         padding 10px 0
@@ -741,7 +730,6 @@ export default {
       .nuxt-container
         overflow hidden
         padding 10px
-        padding-right 0
         flex auto
     .layout-footer
       //
@@ -759,7 +747,12 @@ h4, h5, h6
 
 html
   // background linear-gradient(rgba(0, 135, 252, .3), rgba(0, 135, 252, .1))
-  background #96A0AD
+  background #C0C6CE
+
+.ws
+  background #fff
+  box-shadow 0 0 8px 0 rgba(0, 0, 0, .15)
+
 </style>
 
 <style>
@@ -789,34 +782,5 @@ body {
 *:after {
   box-sizing: border-box;
   margin: 0;
-}
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
 }
 </style>

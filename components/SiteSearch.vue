@@ -9,7 +9,7 @@
       placeholder="输入关键词搜索"
       search
       v-model="keyword" />
-    <div class="search-result" v-if="resultList.length">
+    <div class="search-result ws" v-if="resultList.length">
       <div
         v-for="result of resultList"
         :key="result.id"
@@ -74,17 +74,15 @@ export default {
   .keyword-input
     >>>
       input
-        background transparent
         border-radius 20px
-        color #fff
         padding 0 15px
         width 200px
+        border-color rgba(64, 158, 255, 1)
   .search-result
     position absolute
     background #f5f5f5
     top calc(100% + 5px)
     padding 10px 0
-    box-shadow 0 0 10px 0 rgba(0, 0, 0, .3)
     max-height 60vh
     overflow auto
     width 400px

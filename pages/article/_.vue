@@ -2,7 +2,7 @@
   <div class="article-page">
     <div class="main-content">
       <article
-        class="post-detail"
+        class="post-detail ws"
         v-outline="{
           callback: refreshNavTree,
           selectors: ['h1', 'h2', 'h3,h4']
@@ -50,17 +50,17 @@
             下一篇：{{ post.after.title }}
           </nuxt-link>
         </div>
-        <client-only>
-          <div class="comment-container">
-            <div class="add-comment">
-              <CommentInput placeholder="既然来了，就说几句吧" v-model="comment"></CommentInput>
-              <Button class="comment-button" type="success" size="small" @click.stop="addComment(comment)">确定</Button>
-            </div>
-            <div class="comment-title">评论(<span>{{ post.commentTimes }}</span>)</div>
-          </div>
-          <comment-tree @reply="addComment" :list="post.comments"></comment-tree>
-        </client-only>
       </article>
+      <client-only>
+        <div class="comment-container">
+          <div class="comment-title">评论(<span>{{ post.commentTimes }}</span>)</div>
+          <div class="add-comment">
+            <CommentInput placeholder="既然来了，就说几句吧" v-model="comment"></CommentInput>
+            <Button class="comment-button" type="success" size="small" @click.stop="addComment(comment)">评论</Button>
+          </div>
+        </div>
+        <comment-tree @reply="addComment" :list="post.comments"></comment-tree>
+      </client-only>
     </div>
     <client-only>
       <Modal v-model="reward" footer-hide :width="350">
@@ -79,13 +79,11 @@
 import * as api from '@/api/posts'
 import { addComment } from '@/api/comment'
 import CommentInput from '@/components/CommentInput'
-import tree from '@/components/tree'
-import CommentTree from '@/components/CommentTree'
+import CommentTree from '@/components/comment-tree'
 
 export default {
   components: {
     CommentInput,
-    tree,
     CommentTree
   },
   asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
@@ -170,6 +168,7 @@ export default {
           this.$Message.success(`评论成功，${text}`)
         }
       }).catch(error => {
+        console.log(error)
         this.$Message.error('网络请求失败')
       })
     },
@@ -196,10 +195,9 @@ export default {
 <style lang="stylus" scoped>
 .article-page
   .main-content
-    overflow hidden
     color #333
-    background #fff
     .post-detail
+      background #fff
       .post-body
         >>>
           img
@@ -244,20 +242,23 @@ export default {
         .last, .next
           display block
           margin 5px 10px
-      .comment-container
-        margin 20px 0
-        padding 10px
-        border-top 1px solid #ddd
-        .add-comment
-          overflow hidden
-          .comment-button
-            margin 4px
-            float right
-        .comment-title
-          margin-bottom 10px
-          font-size 18px
-          span
-            color #888
+    .comment-container
+      margin 20px 0
+      .add-comment
+        overflow hidden
+        .comment-button
+          margin 4px
+          font-size 16px
+          width 4em
+          float right
+      .comment-title
+        margin-bottom 10px
+        font-size 18px
+        padding 15px 5px
+        border-bottom 2px solid #ddd
+        font-weight bold
+        // span
+        //   color rgba(64, 158, 255, 1)
 
 .reward-title, .reward-content
   text-align center
@@ -278,8 +279,8 @@ export default {
     .main-content
       max-width 1000px
       margin 0 auto
-      padding 40px
       .post-detail
+        padding 40px
         .post-title
           text-align center
         .post-info
@@ -292,8 +293,8 @@ export default {
 @media screen and (max-width: 600px)
   .article-page
     .main-content
-      padding 20px 10px
       .post-detail
+        padding 20px 10px
         .post-info
           margin 10px 0
           margin-left 10px

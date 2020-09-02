@@ -1,20 +1,28 @@
 <template>
   <div class="message-page">
     <div class="main-content">
+      <!-- <div class="page-title">
+        留言 - 共<span class="count">{{ total }}</span>条留言
+      </div> -->
       <div class="add-msg">
         <CommentInput placeholder="有什么想对我说的，在这里给我留言吧" v-model="msg"></CommentInput>
-        <Button class="msg-btn" type="success" size="small" @click.stop="addMessage(msg)">确定</Button>
+        <Button class="msg-btn" type="success" size="small" @click.stop="addMessage(msg)">留言</Button>
       </div>
       <div class="msg-tree">
         <comment-tree :list="list" @reply="addMessage"></comment-tree>
       </div>
-      <div class="pagination">
-        <div class="last">
-          <nuxt-link :to="`/message?page=${page-1}`" v-if="page > 1">上一页</nuxt-link>
-        </div>
-        <div class="page-no">{{ page }} / {{ totalPage }}</div>
-        <div class="next">
-          <nuxt-link :to="`/message?page=${page+1}`" v-if="page < totalPage">下一页</nuxt-link>
+      <div class="pagination" v-if="totalPage > 1">
+        <div class="page-list">
+          <nuxt-link
+            :class="{
+              page: true,
+              current: pageNo == page
+            }"
+            v-for="pageNo in totalPage"
+            :key="pageNo"
+            :to="`message?page=${pageNo}`">
+            {{ pageNo }}
+          </nuxt-link>
         </div>
       </div>
     </div>
@@ -24,7 +32,7 @@
 <script>
 import { getMessages, addMessage } from '@/api/messages'
 import CommentInput from '@/components/CommentInput'
-import CommentTree from '@/components/CommentTree'
+import CommentTree from '@/components/comment-tree'
 
 export default {
   watchQuery: ['page', 'refresh'],
@@ -100,37 +108,53 @@ export default {
 <style lang="stylus" scoped>
 .message-page
   .main-content
+    .page-title
+      padding 15px 5px
+      margin-bottom 5px
+      margin-bottom 40px
+      font-size 18px
+      font-weight bold
+      border-bottom 4px solid #273A52
+      .count
+        color rgba(64, 158, 255, 1)
     .add-msg
       overflow hidden
-      border-bottom 1px solid #888
       .msg-btn
         float right
+        font-size 16px
         margin 10px
+        width 4em
     .msg-tree
-      background #fff
       border-radius 4px
     .pagination
-      display flex
-      justify-content space-between
-      font-weight bold
-      padding 20px 10px
-      color #333
-      font-size 14px
-      .last, .next
-        text-decoration underline
-        width 4em
-      .next
-        text-align right
+      text-align center
+      .page-list
+        display inline-block
+        text-align left
+        .page
+          display inline-block
+          width 36px
+          line-height 36px
+          text-align center
+          background #fff
+          margin 8px
+          color #333
+          border-radius 4px
+          font-weight bold
+          &:hover
+            background #ddd
+          &.current
+            background #fff
+            color rgba(64, 158, 255, 1)
 
 @media screen and (min-width: 600px)
   .message-page
     .main-content
-      padding-top 40px
+      // padding-top 40px
       .add-msg
-        padding-bottom 20px
+        padding-bottom 10px
       .msg-tree
-        margin 40px 0
-        padding 20px
+        margin-bottom 40px
 
 @media screen and (max-width: 600px)
   .message-page
@@ -138,8 +162,6 @@ export default {
       .add-msg
         // padding 10px 10px 5px
       .msg-tree
-        margin 20px 0
-        padding 20px 10px
-        background #fff
+        margin-bottom 20px
 </style>
 
