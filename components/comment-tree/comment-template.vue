@@ -144,7 +144,7 @@ export default {
       height 36px
 
 .child
-  padding-left 20px
+  padding-left 40px
   .comment-content, .comment-reply
     padding-left 30px
   .userinfo
