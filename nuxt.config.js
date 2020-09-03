@@ -17,12 +17,10 @@ export default {
     script: [
       { src: '/js/prism.js', defer: true },
       { src: 'https://hm.baidu.com/hm.js?f6c6b936d6426488699d7da96706aaad', defer: true },
-      { src: '/js/drift.js', defer: true }
+      // { src: '/js/drift.js', defer: true }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: "/favicon.ico" },
-      { rel: "stylesheet", type: "text/css", href: "/css/prism.css" },
-      { rel: "stylesheet", type: "text/css", href: "/css/github-markdown.css" },
+      { rel: 'icon', type: 'image/x-icon', href: "/favicon.ico" }
     ]
   },
   /*
@@ -35,7 +33,9 @@ export default {
   ** Global CSS
   */
   css: [
-    'iview/dist/styles/iview.css'
+    'iview/dist/styles/iview.css',
+    '@/static/css/github-markdown.css',
+    '@/static/css/prism.css'
   ],
   /*
   ** Plugins to load before mounting the App

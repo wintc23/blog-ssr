@@ -1,9 +1,7 @@
 <template>
-  <avatar
-    :class="['comment', comment.responseId ? 'child' : 'root' ]"
-    :userId="comment.authorId">
-    <template v-slot:default="{ userinfo }">
-      <div class="userinfo">
+  <div :class="['comment', comment.responseId ? 'child' : 'root' ]">
+    <avatar class="userinfo" :userId="comment.authorId">
+      <template v-slot:default="{ userinfo }">
         <img :src="userinfo.avatar" alt="用户头像">
         <div class="username">{{ userinfo.username }}</div>
         <avatar
@@ -14,37 +12,41 @@
             回复<span>{{ user.username }} </span>
           </template>
         </avatar>
+      </template>
+    </avatar>
+    <div class="comment-content">
+      <div class="comment-body">
+        {{ comment.body }}
+        <span class="hide" v-if="comment.hide">[待审核，审核后公开]</span>
       </div>
-      <div class="comment-content">
-        <div class="comment-body">
-          {{ comment.body }}
-          <span class="hide" v-if="comment.hide">[留言审查中，审查后公开]</span>
-        </div>
-        <div class="comment-notice">
-          <span
-            :class="{
-              'reply-btn': true,
-              'reply-editing': comment.replyEdit
-            }"
-            @click.stop="replyComment(comment)">
-            回复
-          </span>
-          <span class="line"></span>
-          <span class="time">{{ comment.timestamp | time }}</span>
-        </div>
+      <div class="comment-notice">
+        <span
+          :class="{
+            'reply-btn': true,
+            'reply-editing': comment.replyEdit
+          }"
+          @click.stop="replyComment(comment)">
+          回复
+        </span>
+        <span class="line"></span>
+        <span class="time">{{ comment.timestamp | time }}</span>
       </div>
-      <div class="comment-reply" v-if="comment.replyEdit">
-        <Input
-          :ref="`reply${comment.id}`"
-          :placeholder="`回复 ${userinfo.username} `"
-          v-model="comment.reply"
-          type="textarea"
-          :autosize="{minRows: 2,maxRows: 6}"/>
-        <Button class="btn" size="small" type="warning" @click.stop="replyCancel(comment)">取消</Button>
-        <Button class="btn" size="small" type="primary" @click.stop="replyConfirm(comment)">确定</Button>
-      </div>
-    </template>
-  </avatar>
+    </div>
+    <div class="comment-reply" v-if="comment.replyEdit">
+      <avatar class="userinfo" :userId="comment.authorId">
+        <template v-slot:default="{ userinfo }">
+          <Input
+            :ref="`reply${comment.id}`"
+            :placeholder="`回复 ${userinfo.username} `"
+            v-model="comment.reply"
+            type="textarea"
+            :autosize="{minRows: 2,maxRows: 6}"/>
+        </template>
+      </avatar>
+      <Button class="btn" size="small" type="primary" @click.stop="replyConfirm(comment)">确定</Button>
+      <Button class="btn" size="small" type="warning" @click.stop="replyCancel(comment)">取消</Button>
+    </div>
+  </div>
 </template>
 
 <script>

@@ -71,5 +71,4 @@ if (process.client) {
       }
     })
   }
-
 }

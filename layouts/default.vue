@@ -748,8 +748,7 @@ h4, h5, h6
   font-size 16px
 
 html
-  // background linear-gradient(rgba(0, 135, 252, .3), rgba(0, 135, 252, .1))
-  background #C0C6CE
+  background #f4f4f4
 
 .ws
   background #fff
