@@ -15,8 +15,9 @@ export default {
       { hid: 'description', name: 'description', content: `沐码小站，分享编程和生活。` }
     ],
     script: [
-      { src: '/js/prism.js' },
-      { src: 'https://hm.baidu.com/hm.js?f6c6b936d6426488699d7da96706aaad' }
+      { src: '/js/prism.js', defer: true },
+      { src: 'https://hm.baidu.com/hm.js?f6c6b936d6426488699d7da96706aaad', defer: true },
+      { src: '/js/drift.js', defer: true }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: "/favicon.ico" },

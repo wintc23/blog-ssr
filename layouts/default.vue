@@ -422,7 +422,6 @@ export default {
 
       //开发环境和管理员看到的特殊页面不推送
       if (this.currentUser.admin || IS_DEV) return
-      
       node = document.createElement('script')
       node.setAttribute('baidu-seo', 1)
       var curProtocol = window.location.protocol.split(':')[0]
@@ -433,6 +432,9 @@ export default {
         node.src = 'http://push.zhanzhang.baidu.com/push.js'
       }
       document.body.appendChild(node)
+    },
+    insertDrift () {
+      // 
     }
   }
 }
