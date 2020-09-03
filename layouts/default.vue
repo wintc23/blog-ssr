@@ -136,7 +136,12 @@
             </div>
             <div class="module-content">
               <a target="_blank" :href="aliyun.href" class="content">
-                <div class="text">{{ aliyun.text }}</div>
+                <div
+                  v-for="(text, idx) of aliyun.text"
+                  :key="idx"
+                  class="text">
+                  {{ text }}
+                </div>
                 <div class="tag-list">
                   <Tag
                     class="tag"
@@ -230,7 +235,10 @@ export default {
         href: 'https://www.aliyun.com/minisite/goods?userCode=h55rc1yh',
         img: 'https://file.wintc.top/lisa/aliyun.jpg',
         title: '阿里云推广',
-        text: '云服务器 精选特惠',
+        text: [
+          '云服务器 精选特惠',
+          '相信我，花100左右买台云服务器练手学习，是稳赚不赔的投资。'
+        ],
         tags: [
           '新用户享好礼',
           '云服务器1折起',
@@ -615,6 +623,9 @@ export default {
             .text
               margin 5px 0 15px
               font-size 15px
+              &:nth-child(2)
+                font-size 14px
+                color #FF2121
         img
           max-width 100%
           vertical-align middle
