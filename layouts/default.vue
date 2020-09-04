@@ -74,6 +74,34 @@
         <!-- <div class="module" v-if="topics.length">
           <div class="module-title">专题</div>
         </div> -->
+        <client-only>
+          <div class="module ws aliyun-module" v-show="!outlineShow">
+            <div class="module-title">
+              {{ aliyun.title }}
+              <a class="detail" target="_blank" :href="aliyun.href">[了解详情]</a>
+            </div>
+            <div class="module-content">
+              <a target="_blank" :href="aliyun.href" class="content">
+                <div
+                  v-for="(text, idx) of aliyun.text"
+                  :key="idx"
+                  class="text">
+                  {{ text }}
+                </div>
+                <div class="tag-list">
+                  <Tag
+                    class="tag"
+                    v-for="(tag, idx) of aliyun.tags"
+                    type="border"
+                    color="geekblue"
+                    :key="idx">
+                    {{ tag }}
+                  </Tag>
+                </div>
+              </a>
+            </div>
+          </div>
+        </client-only>
         <div class="module ws" v-if="topTen.length">
           <div class="module-title">热门文章</div>
           <div class="module-content">
@@ -129,32 +157,6 @@
           </div>
         </div>
         <client-only>
-          <div class="module ws aliyun-module" v-show="!outlineShow">
-            <div class="module-title">
-              {{ aliyun.title }}
-              <a class="detail" target="_blank" :href="aliyun.href">[了解详情]</a>
-            </div>
-            <div class="module-content">
-              <a target="_blank" :href="aliyun.href" class="content">
-                <div
-                  v-for="(text, idx) of aliyun.text"
-                  :key="idx"
-                  class="text">
-                  {{ text }}
-                </div>
-                <div class="tag-list">
-                  <Tag
-                    class="tag"
-                    v-for="(tag, idx) of aliyun.tags"
-                    type="border"
-                    color="error"
-                    :key="idx">
-                    {{ tag }}
-                  </Tag>
-                </div>
-              </a>
-            </div>
-          </div>
           <div
             :style="{
               top: `${ headerHeight + 5 }px`
@@ -237,7 +239,7 @@ export default {
         title: '阿里云推广',
         text: [
           '云服务器 精选特惠',
-          '相信我，花100左右买台云服务器练手学习，是稳赚不赔的投资。'
+          '~.~ 相信我，花100左右买台云服务器练手学习，是稳赚不赔的投资。'
         ],
         tags: [
           '新用户享好礼',
