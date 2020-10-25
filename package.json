@@ -12,6 +12,7 @@
     "push": "sh ./push.sh"
   },
   "dependencies": {
+    "@nuxtjs/robots": "^2.4.2",
     "@nuxtjs/sitemap": "^2.4.0",
     "@tinymce/tinymce-vue": "^3.0.1",
     "algoliasearch": "^4.3.0",

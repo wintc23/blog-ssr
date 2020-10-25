@@ -704,3 +704,8 @@
 .post-body hr {
   border-bottom-color: #eee;
 }
+
+.post-body table {
+  width: 100% !important;
+  height: auto !important;
+}

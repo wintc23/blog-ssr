@@ -53,8 +53,16 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    '@nuxtjs/sitemap'
+    '@nuxtjs/sitemap',
+    '@nuxtjs/robots',
   ],
+  robots: {
+    UserAgent: '*',
+    Disallow: [
+      '/manage',
+      '/manage/**'
+    ]
+  },
   sitemap: {
     hostname: 'https://wintc.top',
     gzip: true,
@@ -69,7 +77,7 @@ export default {
     ],
     routes: function () {
       const routes = []
-      return axios.get('/get-visible-posts/').then(res => {
+      return axios.get('https://wintc.top/api/get-visible-posts/').then(res => {
         if (res.status == 200) {
           const { list } = res.data
           const postRoutes = list.map(id => `/article/${id}`)
