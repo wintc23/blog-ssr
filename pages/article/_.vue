@@ -16,7 +16,7 @@
             {{ typeInfo[post.typeId].name }}
           </span>
           <span class="read info-item">
-            <span>{{ post.readTimes }}</span>1次浏览{{ commentId }}
+            <span>{{ post.readTimes }}</span>次浏览
           </span>
           <client-only>
             <nuxt-link
