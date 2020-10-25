@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default {
   mode: 'universal',
   /*
@@ -26,9 +28,7 @@ export default {
   /*
   ** Customize the progress-bar color
   */
-  loading: {
-    color: '#4791ff'
-  },
+  loading: '@/components/Loading.vue',
   /*
   ** Global CSS
   */
@@ -53,7 +53,33 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    '@nuxtjs/sitemap'
   ],
+  sitemap: {
+    hostname: 'https://wintc.top',
+    gzip: true,
+    defaults: {
+      changefreq: 'daily',
+      priority: 1,
+      lastmod: new Date()
+    },
+    exclude: [
+      '/manage',
+      '/manage/**'
+    ],
+    routes: function () {
+      const routes = []
+      return axios.get('/get-visible-posts/').then(res => {
+        if (res.status == 200) {
+          const { list } = res.data
+          const postRoutes = list.map(id => `/article/${id}`)
+          routes.push(...postRoutes)
+        }
+        return routes
+      })
+    }
+  },
+
   /*
   ** Build configuration
   */
