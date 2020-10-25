@@ -33,6 +33,7 @@
 import { getMessages, addMessage } from '@/api/messages'
 import CommentInput from '@/components/CommentInput'
 import CommentTree from '@/components/comment-tree'
+import { singleClick } from '@/tool'
 
 export default {
   watchQuery: ['page', 'refresh'],
@@ -70,7 +71,7 @@ export default {
     }
   },
   methods: {
-    addMessage (msg, response, callback) {
+    addMessage: singleClick(function (msg, response, callback) {
       if (!msg) {
         this.$Message.info('操作失败，留言不能为空')
         return
@@ -100,7 +101,7 @@ export default {
       }).catch(error => {
         this.$Message.error('网络请求失败')
       })
-    }
+    })
   }
 }
 </script>

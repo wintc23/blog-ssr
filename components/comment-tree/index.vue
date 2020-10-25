@@ -4,12 +4,20 @@
       v-for="comment of rootList"
       class="comment-container ws"
       :key="comment.id">
-      <comment :comment="comment"></comment>
+      <comment
+        :class="{
+          'current-comment': comment.id == current
+        }"
+        :comment="comment">
+      </comment>
       <div
         class="comment-children"
         v-if="comment.children && comment.children.length">
         <comment
-          class="child"
+          :class="{
+            child: true,
+            'current-comment': child.id == current
+          }"
           v-for="child of comment.children"
           :comment="child"
           :rootId="comment.id"
@@ -32,6 +40,9 @@ export default {
     list: {
       type: Array,
       required: true
+    },
+    current: {
+      type: String | Number
     }
   },
   computed: {
@@ -59,6 +70,29 @@ export default {
     currentUser () {
       return this.$store.getters['userInfo/info']
     }
+  },
+  watch: {
+    current: {
+      immediate: true,
+      handler () {
+        this.scrollIntoView()
+      }
+    }
+  },
+  methods: {
+    scrollIntoView () {
+      if (!this.current) return
+      this.$nextTick(() => {
+        if (!this.$el) return
+        const selector = '.current-comment'
+        const node = this.$el.querySelector(selector)
+        node && node.scrollIntoView && node.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "center"
+        })
+      })
+    }
   }
 }
 </script>
@@ -74,4 +108,7 @@ export default {
     margin-top 15px
     .child + .child
       margin-top 15px
+
+.current-comment
+  background #ECF5FD
 </style>

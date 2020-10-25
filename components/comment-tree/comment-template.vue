@@ -1,6 +1,6 @@
 <template>
   <div :class="['comment', comment.responseId ? 'child' : 'root' ]">
-    <avatar class="userinfo" :userId="comment.authorId">
+    <avatar class="userinfo info-container" :userId="comment.authorId">
       <template v-slot:default="{ userinfo }">
         <img :src="userinfo.avatar" alt="用户头像">
         <div class="username">{{ userinfo.username }}</div>
@@ -75,8 +75,9 @@ export default {
         this.$set(comment, 'reply', '')
       }
       this.$nextTick(() => {
-        let refs = this.$refs[`reply${comment.id}`]
-        refs && refs[0] && refs[0].focus()
+        console.log(this.$refs, '~~~~~~~~')
+        let ref = this.$refs[`reply${comment.id}`]
+        ref && ref.focus()
       })
     },
     replyCancel (comment) {
@@ -141,6 +142,8 @@ export default {
   .comment-content, .comment-reply
     padding-left 40px
   .userinfo
+    &.info-container
+      height 36px
     img
       width 36px
       height 36px
@@ -151,6 +154,8 @@ export default {
     padding-left 30px
   .userinfo
     font-size 14px
+    &.info-container
+      height 28px
     img
       width 28px
       height 28px

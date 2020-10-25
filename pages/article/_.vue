@@ -16,7 +16,7 @@
             {{ typeInfo[post.typeId].name }}
           </span>
           <span class="read info-item">
-            <span>{{ post.readTimes }}</span>次浏览
+            <span>{{ post.readTimes }}</span>1次浏览{{ commentId }}
           </span>
           <client-only>
             <nuxt-link
@@ -59,7 +59,7 @@
             <Button class="comment-button" type="success" size="small" @click.stop="addComment(comment)">评论</Button>
           </div>
         </div>
-        <comment-tree @reply="addComment" :list="post.comments"></comment-tree>
+        <comment-tree @reply="addComment" :list="post.comments" :current="commentId"></comment-tree>
       </client-only>
     </div>
     <client-only>
@@ -77,6 +77,7 @@
 
 <script>
 import * as api from '@/api/posts'
+import { singleClick } from '@/tool'
 import { addComment } from '@/api/comment'
 import CommentInput from '@/components/CommentInput'
 import CommentTree from '@/components/comment-tree'
@@ -133,6 +134,9 @@ export default {
     },
     currentUser () {
       return this.$store.getters['userInfo/info']
+    },
+    commentId () {
+      return this.$route.query.commentId
     }
   },
   mounted () {
@@ -143,7 +147,7 @@ export default {
     this.refreshNavTree(null)
   },
   methods: {
-    addComment (comment, response, callback) {
+    addComment: singleClick(function(comment, response, callback) {
       if (!comment) {
         this.$Message.info('操作失败，评论不能为空')
         return
@@ -158,9 +162,10 @@ export default {
         postId: this.post.id,
       }
       response && (params.responseId = response)
-
-      addComment(params).then(res => {
+      this.$Loading.start()
+      return addComment(params).then(res => {
         if (res.status == 200) {
+          this.$Loading.finish()
           this.comment = ''
           Object.assign(this.post, res.data)
           callback && callback()
@@ -169,9 +174,10 @@ export default {
         }
       }).catch(error => {
         console.log(error)
+        this.$Loading.error()
         this.$Message.error('网络请求失败')
       })
-    },
+    }),
     clickLike () {
       if (!this.currentUser.id) {
         this.$bus.$emit('login-show')

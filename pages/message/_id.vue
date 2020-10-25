@@ -1,7 +1,7 @@
 <template>
   <div class="message-detail">
     <div class="msg-tree ws">
-      <comment-tree ref="commentTree" @reply="addMessage" :list="list">
+      <comment-tree ref="commentTree" @reply="addMessage" :list="list" :current="msgId">
       </comment-tree>
     </div>
   </div>
@@ -10,6 +10,7 @@
 <script>
 import { getMessageDetail, addMessage } from '@/api/messages'
 import CommentTree from '@/components/comment-tree'
+import { singleClick } from '@/tool'
 
 export default {
   watchQuery: ['refresh'],
@@ -32,9 +33,12 @@ export default {
     currentUser () {
       return this.$store.getters['userInfo/info']
     },
+    msgId () {
+      return this.$route.query.newId
+    }
   },
   methods: {
-    addMessage (msg, response, callback) {
+    addMessage: singleClick(function (msg, response, callback) {
       if (!msg) {
         this.$Message.info('操作失败，留言不能为空')
         return
@@ -68,7 +72,7 @@ export default {
       }).catch(error => {
         this.$Message.error('网络请求失败')
       })
-    }
+    })
   }
 }
 </script>

@@ -103,3 +103,16 @@ export const TAG_LIST = [
   'blue',
   'volcano'
 ]
+
+export function singleClick (func, manuDone = false) {
+  let lock = false
+  return function (...args) {
+    if (lock) return
+    lock = true
+    let done = () => lock = false
+    if (manuDone) return func.call(this, ...args, done)
+    let promise = func.call(this, ...args)
+    promise ? promise.finally(done) : done()
+    return promise
+  }
+}
