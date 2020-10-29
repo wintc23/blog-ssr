@@ -96,22 +96,13 @@ export default {
     },
     addTopic () {
       topicApi.addTopic({ title: '' }).then(res => {
-        if (res.status === 200) {
-          this.getTopicList()
-        }
-      }).catch(error => {
-        console.log(error)
-        this.$Message.error('网络请求出错')
+        res.status === 200 && this.getTopicList()
       })
     },
     deleteTopic (topic) {
       this.$confirm(`确定删除专题${topic.title}吗？`, () => {
         topicApi.deleteTopic(topic.id).then(res => {
-          if (res.status === 200) {
-            this.getTopicList()
-          }
-        }).catch(error => {
-          this.$Message.error('网络请求出错')
+          res.status === 200 && this.getTopicList()
         })
       })
     },
@@ -121,35 +112,18 @@ export default {
         title: topic.title
       }
       topicApi.updateTopic(params).then(res => {
-        if (res.status === 200) {
-          this.getTopicList()
-          this.$Message.success('更新专题成功')
-        } else {
-          this.$Message.error('更新专题失败')
-        }
-      }).catch(error => {
-        console.log(error)
-        this.$Message.error('网络请求出错')
+        res.status === 200 && this.getTopicList()
       })
     },
     addTag () {
       tagApi.addTag({ title: '' }).then(res => {
-        if (res.status === 200) {
-          this.getTagList()
-        }
-      }).catch(error => {
-        console.log(error)
-        this.$Message.error('网络请求出错')
+        res.status === 200 && this.getTagList()
       })
     },
     deleteTag (tag) {
       this.$confirm(`确定删除标签${tag.title}吗？`, () => {
         tagApi.deleteTag(tag.id).then(res => {
-          if (res.status === 200) {
-            this.getTagList()
-          }
-        }).catch(error => {
-          this.$Message.error('网络请求出错')
+          res.status === 200 && this.getTagList()
         })
       })
     },
@@ -159,12 +133,7 @@ export default {
         title: tag.title
       }
       tagApi.updateTag(params).then(res => {
-        if (res.status === 200) {
-          this.getTagList()
-        }
-      }).catch(error => {
-        console.log(error)
-        this.$Message.error('网络请求出错')
+        res.status === 200 && this.getTagList()
       })
     }
   }

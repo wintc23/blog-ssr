@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { getToken, clearToken, camel, underline } from '@/tool'
-import iView from 'iview'
+import { Message } from 'iview'
 import { BASE_URL } from '@/config'
 
 const beforeRequest = (config) => {
@@ -20,22 +20,17 @@ function requestError (error) {
 function resPreHandle (response) {
   response.data = camel(response.data)
   if (response.data && response.data.notify) {
-    process.client && iView.Message.success(response.data.message)
+    process.client && Message.success(response.data.message)
   }
   return response
 }
 
 function responseError (error) {
-  if (error.response && error.response.data) {
-    error.response.data = camel(error.response.data)
-  }
+  const { response: res } = error
+  if (res && res.data) res.data = camel(res.data)
   if (process.client) {
-    if (error.response.data && error.response.data.notify) {
-      iView.Message.error(error.response.data.message)
-    }
-    if (error.response.status === 401) {
-      clearToken()
-    }
+    res.data && res.data.notify && Message.error(res.data.message)
+    res.status === 401 && clearToken()
   }
   return Promise.reject(error)
 }

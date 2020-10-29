@@ -21,8 +21,9 @@
 
 <script>
 import { getPostsByType, deletePost, addPost } from '@/api/posts'
+import * as tool from '@/tool'
 
-const PER_PAGE = 20
+const PER_PAGE = 50
 
 export default {
   watchQuery: ['page', 'type', 'refresh'],
@@ -51,6 +52,31 @@ export default {
       columns: [{
         title: '标题',
         key: 'title'
+      },
+      {
+        title: '是否公开',
+        width: 150,
+        key: 'hide',
+        render: (h, { row }) => {
+          return h('Tag', {
+            props: {
+              color: row.hide ? 'warning' : 'success'
+            }
+          }, row.hide ? '未发布' : '已发布')
+        }
+      },
+      {
+        title: '创建时间',
+        width: 100,
+        key: 'timestamp',
+        render: (h, { row }) => {
+          return h('div', tool.formatTime(row.timestamp))
+        }
+      },
+      {
+        title: '阅读次数',
+        key: 'readTimes',
+        width: 100,
       },
       {
         title: '操作',

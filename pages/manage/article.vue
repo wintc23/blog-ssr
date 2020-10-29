@@ -102,9 +102,15 @@
 
 <script>
 import { getPost, uploadFile, savePost, getFileUploadToken } from '@/api/posts'
+import * as tool from '@/tool'
 
 export default {
   scrollToTop: true,
+  asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
+    return getPost(query.postId).then(res => {
+      return { postData: res.data || {} }
+    })
+  },
   components: (() => {
     if (process.client) {
       return {
@@ -115,19 +121,6 @@ export default {
   })(),
   data () {
     return {
-      postData: {
-        id: '',
-        title: '',
-        bodyHtml: '',
-        hide: false,
-        abstract: '',
-        abstractImage: '',
-        typeId: '',
-        tags: [],
-        topicId: 0,
-        keywords: '',
-        description: ''
-      },
       showSetting: false,
       timer: 0
     }
@@ -192,13 +185,13 @@ export default {
     clickAbstractImage () {
       this.$refs.abstractImageInput.click()
     },
-    save () {
-      savePost(this.postData).then(res => {
+    save: tool.singleClick(function () {
+      return savePost(this.postData).then(res => {
         if (res.status == 200) {
-          this.$router.push(`/article/${this.$route.query.postId}`)
+          this.$router.push(`/article/${this.postData.id}`)
         }
       })
-    },
+    }),
     savePerMin () {
       savePost(this.postData)
     },

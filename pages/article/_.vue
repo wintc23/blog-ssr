@@ -34,13 +34,21 @@
           <div v-html="post.bodyHtml"></div>
         </div>
         <div class="post-like">
-          <span @click.stop="clickLike" class="like" :title="post.like ? '您赞了该文章' : '赞一下'">
+          <Tooltip
+            @click.native="like"
+            class="like"
+            placement="top"
+            :content="post.like ? '您赞了该文章' : '赞一下'">
             <Icon :type="post.like ? 'md-heart' : 'md-heart-outline'" />
             <span class="like-num" v-if="post.likes">{{ post.likes }}</span>
-          </span>
-          <span class="reward">
-            <span @click.stop="reward=true">¥打赏</span>
-          </span>
+          </Tooltip>
+          <Tooltip
+            @click.native="reward=true"
+            class="reward"
+            content="微信扫码赞赏这小子"
+            placement="top">
+            ¥赞赏
+          </Tooltip>
         </div>
         <div class="related-posts">
           <nuxt-link class="last" v-if="post.before" :to="`/article/${post.before.id}` + (type ? `/${type}` : '')">
@@ -63,13 +71,8 @@
       </client-only>
     </div>
     <client-only>
-      <Modal v-model="reward" footer-hide :width="350">
-        <div class="reward-title" slot="header">
-          打赏给我的女朋友，她开心我就有更多时间写博客~
-        </div>
-        <div class="reward-content">
-          <img src="https://file.wintc.top/reward.png" alt="赞赏码">
-        </div>
+      <Modal :closable="false" v-model="reward" footer-hide class="reward-modal">
+        <img src="https://file.wintc.top/reward.png" alt="赞赏码">
       </Modal>
     </client-only>
   </div>
@@ -178,7 +181,8 @@ export default {
         this.$Message.error('网络请求失败')
       })
     }),
-    clickLike () {
+    like () {
+      console.log('click-like')
       if (!this.currentUser.id) {
         this.$bus.$emit('login-show')
         this.$Message.info('请先登录后再操作')
@@ -266,19 +270,33 @@ export default {
         // span
         //   color rgba(64, 158, 255, 1)
 
-.reward-title, .reward-content
-  text-align center
-.reward-title
-  line-height 1.4
-  color #666
-  font-size 12px
-
-.reward-content
-  margin-bottom 20px
+.reward-modal
   img
     width 300px
+    height 300px
     max-width 80vw
-    height auto
+    max-height 80vw
+    vertical-align middle
+  >>>
+    .ivu-modal-wrap
+      display flex
+    .ivu-modal
+      overflow visible
+      width auto !important
+      top 0
+      display flex
+      flex-direction column
+      &::before, &::after
+        content ''
+      &::before
+        flex-grow 1
+      &::after
+        flex-grow 3
+    .ivu-modal-header
+      display none
+    .ivu-modal-body
+      padding 0
+
 
 @media screen and (min-width: 600px)
   .article-page
