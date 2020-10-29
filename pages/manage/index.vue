@@ -55,7 +55,8 @@ export default {
       },
       {
         title: '是否公开',
-        width: 150,
+        align: 'center',
+        width: 100,
         key: 'hide',
         render: (h, { row }) => {
           return h('Tag', {
@@ -67,7 +68,8 @@ export default {
       },
       {
         title: '创建时间',
-        width: 100,
+        width: 150,
+        align: 'center',
         key: 'timestamp',
         render: (h, { row }) => {
           return h('div', tool.formatTime(row.timestamp))
@@ -76,6 +78,7 @@ export default {
       {
         title: '阅读次数',
         key: 'readTimes',
+        align: 'center',
         width: 100,
       },
       {
