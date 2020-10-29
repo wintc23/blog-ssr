@@ -280,12 +280,14 @@ export default {
   >>>
     .ivu-modal-wrap
       display flex
+      justify-content center
     .ivu-modal
       overflow visible
       width auto !important
       top 0
       display flex
       flex-direction column
+      align-items center
       &::before, &::after
         content ''
       &::before
