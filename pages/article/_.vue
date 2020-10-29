@@ -71,7 +71,7 @@
       </client-only>
     </div>
     <client-only>
-      <Modal :closable="false" v-model="reward" footer-hide class="reward-modal">
+      <Modal :closable="false" v-model="reward" footer-hide transfer class="reward-modal">
         <img src="https://file.wintc.top/reward.png" alt="赞赏码">
       </Modal>
     </client-only>
@@ -140,6 +140,18 @@ export default {
     },
     commentId () {
       return this.$route.query.commentId
+    }
+  },
+  watch: {
+    reward: {
+      immediate: true,
+      handler () {
+        if (!this.reward) return
+        this.$nextTick(() => {
+          var event = new Event('touchstart')
+          document.body.dispatchEvent(event)
+        })
+      }
     }
   },
   mounted () {
@@ -280,20 +292,20 @@ export default {
   >>>
     .ivu-modal-wrap
       display flex
-      justify-content center
-    .ivu-modal
-      overflow visible
-      width auto !important
-      top 0
-      display flex
       flex-direction column
+      justify-content center
       align-items center
+      z-index 99999 !important
       &::before, &::after
         content ''
       &::before
         flex-grow 1
       &::after
         flex-grow 3
+
+    .ivu-modal
+      width auto !important
+      top 0
     .ivu-modal-header
       display none
     .ivu-modal-body

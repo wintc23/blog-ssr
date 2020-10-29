@@ -29,7 +29,7 @@ function responseError (error) {
   const { response: res } = error
   if (res && res.data) res.data = camel(res.data)
   if (process.client) {
-    res.data && res.data.notify && Message.error(res.data.message)
+    res && res.data && res.data.notify && Message.error(res.data.message)
     res.status === 401 && clearToken()
   }
   return Promise.reject(error)
