@@ -13,7 +13,7 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: "width=device-width, initial-scale=1, user-scalable=no" },
-      { hid: 'keywords', name: 'keywords', content: `沐码小站,编程,JS,HTML,CSS,Python` },
+      { hid: 'keywords', name: 'keywords', content: `沐码小站,编程,JS,HTML,CSS,Python,木马啊,技术博客,wintc` },
       { hid: 'description', name: 'description', content: `沐码小站，分享编程和生活。` }
     ],
     script: [
