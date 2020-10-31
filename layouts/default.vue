@@ -781,7 +781,7 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
-  word-break: break-all;
+  /* word-break: break-all; */
 }
 
 body {
