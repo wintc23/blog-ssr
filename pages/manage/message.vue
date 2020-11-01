@@ -28,7 +28,7 @@ export default {
       currentPage: 1,
       tableHeight: 0,
       columns:[{
-        title: '评论内容',
+        title: '留言内容',
         key: 'body'
       },
       {
@@ -36,17 +36,26 @@ export default {
         title: '用户',
         key: 'author',
         align: 'center',
-        render: (h, params) => {
-          let message = this.messageList[params.index]
-          let userId = message ? message.authorId : ''
+        render: (h, { row: { authorId: userId } }) => {
           return h('avatar', {
-            props: {
-              userId: params.row.authorId
-            },
+            props: { userId },
             scopedSlots: {
               default: props => h('div', props.userinfo.username)
             }
           })
+        }
+      },
+      {
+        title: '链接',
+        render: (h, { row: { rootResponseId, id: newId } }) => {
+          const to = {
+            path: `/message/${rootResponseId || newId}`,
+            query: { newId }
+          }
+          const { href } = this.$router.resolve(to)
+          return h('nuxt-link', {
+            props: { to }
+          }, href)
         }
       },
       {

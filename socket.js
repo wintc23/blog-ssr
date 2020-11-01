@@ -55,6 +55,7 @@ class Socket {
       this.init()
     })
     this.socket.on('close', () => {
+      console.log('des')
       this.destroy()
     })
   }
