@@ -17,7 +17,17 @@
     <div class="comment-content">
       <div class="comment-body">
         {{ comment.body }}
-        <span class="hide" v-if="comment.hide">[待审核，审核后公开]</span>
+        <span class="hide" v-if="comment.hide">
+          <span class="hide-notice">[待审核，审核后公开]</span>
+          <Button
+            v-if="currentUser.admin"
+            @click.stop="setVisibility(comment)"
+            class="set-pass"
+            size="small"
+            type="dashed">
+            通过
+          </Button>
+        </span>
       </div>
       <div class="comment-notice">
         <span
@@ -68,6 +78,11 @@ export default {
       type: Number
     }
   },
+  computed: {
+    currentUser () {
+      return this.$store.getters['userInfo/info']
+    },
+  },
   methods: {
     replyComment (comment) {
       this.$set(comment, 'replyEdit', true)
@@ -87,6 +102,11 @@ export default {
       this.$parent.$emit('reply', comment.reply, comment.id, () => {
         this.$set(comment, 'reply', '')
         this.$set(comment, 'replyEdit', false)
+      })
+    },
+    setVisibility (comment) {
+      this.$parent.$emit('set-visibility', comment, () => {
+        this.$set(comment, 'hide', false)
       })
     }
   }
@@ -115,8 +135,11 @@ export default {
     .comment-body
       padding 4px 0
       .hide
-        color #FF4949
         font-size 12px
+        .hide-notice
+          color #FF4949
+        .set-pass
+          padding 2px 10px
         // 
     .comment-notice
       font-size 14px

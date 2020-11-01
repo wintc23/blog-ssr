@@ -51,7 +51,7 @@
                   赞了文章
                 </template>
                 <template v-else-if="activity.type == 2">
-                  发表了留言
+                  在留言板留言
                 </template>
                 <template v-else-if="activity.type == 3">
                   评论了文章

@@ -4,6 +4,7 @@ import Avatar from '@/components/Avatar'
 import { Modal } from 'iview'
 import { formatTime, SITE } from '@/tool'
 import '@/directives'
+import '@/socket.js'
 import outline from 'vue-outline'
 Vue.use(outline)
 

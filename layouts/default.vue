@@ -283,6 +283,9 @@ export default {
     currentUser () {
       return this.$store.getters['userInfo/info']
     },
+    userId () {
+      return this.currentUser.id
+    },
     adminInfo () {
       return this.$store.getters['site/adminInfo']
     },
@@ -321,6 +324,14 @@ export default {
         if (process.server) return
         this.removeLoginListener()
         this.loginShow && this.addLoginListener()
+      }
+    },
+    userId: {
+      immediate: true,
+      handler () {
+        if (process.server) return
+        this.$socket.destroy()
+        this.userId && this.$socket.init()
       }
     }
   },

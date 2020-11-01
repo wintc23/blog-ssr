@@ -67,12 +67,17 @@
             <Button class="comment-button" type="success" size="small" @click.stop="addComment(comment)">评论</Button>
           </div>
         </div>
-        <comment-tree @reply="addComment" :list="post.comments" :current="commentId"></comment-tree>
+        <comment-tree
+          @reply="addComment"
+          @set-visibility="setVisibility"
+          :list="post.comments"
+          :current="commentId">
+        </comment-tree>
       </client-only>
     </div>
     <client-only>
       <Modal :closable="false" v-model="reward" footer-hide transfer class="reward-modal">
-        <img src="https://file.wintc.top/reward.png" alt="赞赏码">
+        <img src="https://file.wintc.top/reward.png?v=1" alt="赞赏码">
       </Modal>
     </client-only>
   </div>
@@ -81,7 +86,7 @@
 <script>
 import * as api from '@/api/posts'
 import { singleClick } from '@/tool'
-import { addComment } from '@/api/comment'
+import { addComment, setCommentShow } from '@/api/comment'
 import CommentInput from '@/components/CommentInput'
 import CommentTree from '@/components/comment-tree'
 
@@ -209,6 +214,9 @@ export default {
     },
     refreshNavTree (treeData) {
       this.$store.commit('outline/setNavList', treeData)
+    },
+    setVisibility (comment, callback) {
+      setCommentShow(comment.id).then(res => res.status === 200 && callback())
     }
   }
 }

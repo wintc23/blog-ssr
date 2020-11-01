@@ -9,7 +9,7 @@
         <Button class="msg-btn" type="success" size="small" @click.stop="addMessage(msg)">留言</Button>
       </div>
       <div class="msg-tree">
-        <comment-tree :list="list" @reply="addMessage"></comment-tree>
+        <comment-tree @set-visibility="setVisibility" :list="list" @reply="addMessage"></comment-tree>
       </div>
       <div class="pagination" v-if="totalPage > 1">
         <div class="page-list">
@@ -30,18 +30,16 @@
 </template>
 
 <script>
-import { getMessages, addMessage } from '@/api/messages'
+import { getMessages, addMessage, setMessageShow } from '@/api/messages'
 import CommentInput from '@/components/CommentInput'
 import CommentTree from '@/components/comment-tree'
 import { singleClick } from '@/tool'
 
 export default {
-  watchQuery: ['page', 'refresh'],
+  watchQuery: ['page'],
   asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
     let { page = 1 } = query
-    let data = {
-      page: +page
-    }
+    let data = { page: +page }
     return getMessages(data).then(res => {
       if (res.status == 200) {
         let { list, total, page, perPage }  = res.data
@@ -85,7 +83,7 @@ export default {
         body: msg,
       }
       response && (params.responseId = response)
-      addMessage(params).then(res => {
+      return addMessage(params).then(res => {
         if (res.status == 200) {
           if (response) {
             this.list.push(res.data)
@@ -101,7 +99,10 @@ export default {
       }).catch(error => {
         this.$Message.error('网络请求失败')
       })
-    })
+    }),
+    setVisibility (msg, callback) {
+      setMessageShow(msg.id).then(res => res.status === 200 && callback())
+    }
   }
 }
 </script>

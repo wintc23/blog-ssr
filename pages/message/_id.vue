@@ -1,14 +1,19 @@
 <template>
   <div class="message-detail">
-    <div class="msg-tree ws">
-      <comment-tree ref="commentTree" @reply="addMessage" :list="list" :current="msgId">
+    <div class="msg-tree">
+      <comment-tree
+        ref="commentTree"
+        @reply="addMessage"
+        @set-visibility="setVisibility"
+        :list="list"
+        :current="msgId">
       </comment-tree>
     </div>
   </div>
 </template>
 
 <script>
-import { getMessageDetail, addMessage } from '@/api/messages'
+import { getMessageDetail, addMessage, setMessageShow } from '@/api/messages'
 import CommentTree from '@/components/comment-tree'
 import { singleClick } from '@/tool'
 
@@ -72,7 +77,10 @@ export default {
       }).catch(error => {
         this.$Message.error('网络请求失败')
       })
-    })
+    }),
+    setVisibility (msg, callback) {
+      setMessageShow(msg.id).then(res => res.status === 200 && callback())
+    }
   }
 }
 </script>
@@ -82,7 +90,6 @@ export default {
   .msg-tree
     border-radius 4px
     margin 0 10px
-    padding 10px
 @media screen and (max-width: 600px)
   .message-detail
     .msg-tree

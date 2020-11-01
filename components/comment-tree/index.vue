@@ -85,11 +85,13 @@ export default {
       this.$nextTick(() => {
         if (!this.$el) return
         const selector = '.current-comment'
-        const node = this.$el.querySelector(selector)
-        node && node.scrollIntoView && node.scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-          inline: "center"
+        window.requestAnimationFrame(() => {
+          const node = this.$el.querySelector(selector)
+          node && node.scrollIntoView && node.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "center"
+          })
         })
       })
     }

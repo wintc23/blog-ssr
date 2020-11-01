@@ -26,76 +26,93 @@ export default {
       commentList: [],
       commentTotal: 0,
       currentPage: 1,
-      columns:[{
-        title: '评论内容',
-        key: 'body'
-      },
-      {
-        width: 150,
-        title: '用户',
-        key: 'author',
-        align: 'center',
-        render: (h, params) => {
-          let comment = this.commentList[params.index]
-          let userId = comment ? comment.authorId : ''
-          return h('avatar', {
-            props: {
-              userId
-            },
-            scopedSlots: {
-              default: props => h('div', props.userinfo.username)
-            }
-          })
-        }
-      },
-      {
-        title: '评论时间',
-        key: 'time',
-        align: 'center',
-        width: 150,
-        render: (h, params) => {
-          return h('div', this.$formatTime(params.row.timestamp))
-        }
-      },
-      {
-        title: '操作',
-        key: 'action',
-        align: 'center',
-        width: 150,
-        render: (h, params) => {
-          let passButton = h('Button', {
-            props: {
-              type: 'primary',
-              size: 'small'
-            },
-            style: {
-              marginRight: '5px'
-            },
-            on: {
-              click: () => {
-                this.setCommentShow(params.row)
+      columns:[
+        {
+          title: '评论文章',
+          key: 'postTitle'
+        },
+        {
+          title: '评论内容',
+          key: 'body'
+        },
+        {
+          width: 150,
+          title: '用户',
+          key: 'author',
+          align: 'center',
+          render: (h, { row: { authorId: userId } }) => {
+            return h('avatar', {
+              props: {
+                userId
+              },
+              scopedSlots: {
+                default: props => h('div', props.userinfo.username)
               }
-            }
-          }, '通过')
-
-          let deleteButton = h('Button', {
-            props: {
-              type: 'error',
-              size: 'small'
-            },
-            on: {
-              click: () => {
-                this.deleteComment(params.row)
-              }
-            }
-          }, '删除')
-          let buttonList = [deleteButton]
-          if (this.commentList[params.index].hide) {
-            buttonList.unshift(passButton)
+            })
           }
-          return h('div', buttonList)
+        },
+        {
+          title: '链接',
+          render: (h, { row: { id: commentId, postId: id } }) => {
+            const to = {
+              path: `/article/${id}`,
+              query: { commentId }
+            }
+            const { href } = this.$router.resolve(to)
+            return h('nuxt-link', {
+              props: { to }
+            }, href)
+          }
+        },
+        {
+          title: '评论时间',
+          key: 'time',
+          align: 'center',
+          width: 150,
+          render: (h, { row: { timestamp } }) => {
+            return h('div', this.$formatTime(timestamp))
+          }
+        },
+        {
+          title: '操作',
+          key: 'action',
+          align: 'center',
+          width: 150,
+          render: (h, { row }) => {
+            let passButton = h('Button', {
+              props: {
+                type: 'primary',
+                size: 'small'
+              },
+              style: {
+                marginRight: '5px'
+              },
+              on: {
+                click: () => {
+                  this.setCommentShow(row)
+                }
+              }
+            }, '通过')
+
+            let deleteButton = h('Button', {
+              props: {
+                type: 'error',
+                size: 'small'
+              },
+              on: {
+                click: () => {
+                  this.deleteComment(row)
+                }
+              }
+            }, '删除')
+            let buttonList = [deleteButton]
+            if (row.hide) {
+              buttonList.unshift(passButton)
+            }
+            return h('div', buttonList)
+          }
         }
-      }]
+      ]
     }
   },
   mounted () {

@@ -34,6 +34,7 @@ export default {
   */
   css: [
     'iview/dist/styles/iview.css',
+    '@/static/css/global.css',
     '@/static/css/github-markdown.css',
     '@/static/css/prism.css'
   ],
