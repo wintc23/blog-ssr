@@ -2,7 +2,7 @@ git add .
 git commit -m push
 git pull origin master
 git push
-ssh root@wintc.top << autoscript
+ssh root@8.129.22.92 << autoscript
 cd /home/lushg/blog-ssr
 git clean -df
 git pull origin master

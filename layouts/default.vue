@@ -347,6 +347,7 @@ export default {
     this.$bus.$on('logout', this.logout)
     this.$bus.$on('code-highlight', this.highlightCode)
     this.$bus.$on('baidu-push', this.pushPage)
+    this.$bus.$on('get-current-user', this.getCurrentUser)
     this.highlightCode()
   },
   beforeDestroy () {
@@ -355,6 +356,7 @@ export default {
     this.$bus.$off('logout', this.logout)
     this.$bus.$off('code-highlight', this.highlightCode)
     this.$bus.$off('baidu-push', this.pushPage)
+    this.$bus.$off('get-current-user', this.getCurrentUser)
     this.removeLoginListener()
   },
   methods: {
@@ -456,6 +458,9 @@ export default {
     },
     insertDrift () {
       // 
+    },
+    getCurrentUser (callback) {
+      callback(this.currentUser)
     }
   }
 }

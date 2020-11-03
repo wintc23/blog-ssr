@@ -31,8 +31,8 @@
               </div>
             </div>
             <div class="content">
-              <Button @click="setEmail" type="success" v-if="detail.email">更改邮箱</Button>
-              <Button @click="setEmail" type="success" v-else>设置邮箱</Button>
+              <Button @click="setEmail" type="success" size="small" v-if="detail.email">更改邮箱</Button>
+              <Button @click="setEmail" type="success" size="small" v-else>设置邮箱</Button>
             </div>
           </template>
         </div>

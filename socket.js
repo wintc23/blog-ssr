@@ -12,24 +12,74 @@ import { getToken, camel } from '@/tool'
 import { BASE_URL } from '@/config'
 
 function notify ({ type, username, postTitle, url, content }) {
-  let title = '', desc = ''
-  const user = `<span style="color: #FFA710">${username}</span>`
-  const post = `<span style="color: #2d8cf0">《${postTitle}》</span>`
-  if (type == NOTIFY_COMMENT) {
-    title = '新增评论'
-    desc = `<a href="${url}" class="notify-link">${user}评论了文章${post}: ${content}</a>`
-  } else if (type == NOTIFY_COMMENT_REPLY) {
-    title = '评论回复'
-    desc = `<a href="${url}" class="notify-link">${user}在${post}回复了你: ${content}</a>`
-  } else if (type == NOTIFY_MESSAGE) {
-    title = '新增留言',
-    desc = `<a href="${url}" class="notify-link">${user}在留言板留言: ${content}</a>`
-  } else if (type == NOTIFY_MESSAGE_REPLY) {
-    title = '留言回复'
-    desc = `<a href="${url}" class="notify-link">${user}回复了你的留言: ${content}</a>`
-  }
-  new Notification(title)
-  Vue.prototype.$Notice.info({ title, desc, duration: 0 })
+  const { $bus: bus, $Notice: notice } = Vue.prototype
+  bus.$emit('get-current-user', (userinfo) => {
+    const titleInfo = {
+      [NOTIFY_COMMENT]: '新增评论',
+      [NOTIFY_COMMENT_REPLY]: '评论回复',
+      [NOTIFY_MESSAGE]: '新增留言',
+      [NOTIFY_MESSAGE_REPLY]: '留言回复'
+    }
+    notice.info({
+      title: titleInfo[type],
+      duration: 0,
+      render (h) {
+        console.log(this, this.$store)
+        const user = h('span', {
+          style: { color: '#FFA710' },
+        }, username)
+        const post = postTitle ? h('span', {
+          style: { color: '#2d8cf0' }
+        }, `《${postTitle}》`) : ''
+        const info = {
+          [NOTIFY_COMMENT]: ['评论了文章', post],
+          [NOTIFY_COMMENT_REPLY]: ['在', post, '回复了你' ],
+          [NOTIFY_MESSAGE]: [`在留言板留言`],
+          [NOTIFY_MESSAGE_REPLY]: [`恢复了你的留言`]
+        }
+        let email = userinfo.email ? '' : h('div', {
+          style: {
+            marginTop: '15px',
+            fontSize: `12px`,
+            color: `#888`,
+          }
+        }, [
+          '设置邮箱可以及时收到离线回复，',
+          h('span', {
+            props: {
+              type: 'primary',
+              plain: true,
+            },
+            style: {
+              color: '#FFA710',
+              cursor: 'pointer',
+              userSelect: 'none',
+              textDecoration: 'underline'
+            },
+            on: {
+              click () {
+                bus.$emit('click-avatar', userinfo.id)
+              }
+            }
+          }, '现在设置')
+        ])
+        return h('div', {}, [
+          h('div', [
+            user,
+            ...info[type],
+            ": ",
+            content,
+            h('a', {
+              props: {
+                href: url
+              }
+            }, '查看详情')
+          ]),
+          email
+        ])
+      }
+    })
+  })
 }
 
 class Socket {

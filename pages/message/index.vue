@@ -93,8 +93,7 @@ export default {
             this.$router.push(`/message${page}`)
           }
           callback && callback()
-          let text = this.currentUser.email ? '留言回复将会通过邮件通知您' : '点击头像设置邮箱，以便及时收到回复'
-          this.$Message.success(`留言成功，${text}`)
+          this.$Message.success(`留言成功`)
         }
       }).catch(error => {
         this.$Message.error('网络请求失败')

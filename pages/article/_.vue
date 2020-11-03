@@ -189,8 +189,7 @@ export default {
           this.comment = ''
           Object.assign(this.post, res.data)
           callback && callback()
-          let text = this.currentUser.email ? '评论回复将会通过邮件通知您' : '点击头像设置邮箱，以便及时收到回复'
-          this.$Message.success(`评论成功，${text}`)
+          this.$Message.success(`评论成功`)
         }
       }).catch(error => {
         console.log(error)
