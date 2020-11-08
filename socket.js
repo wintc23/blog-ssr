@@ -35,7 +35,7 @@ function notify ({ type, username, postTitle, url, content }) {
           [NOTIFY_COMMENT]: ['评论了文章', post],
           [NOTIFY_COMMENT_REPLY]: ['在', post, '回复了你' ],
           [NOTIFY_MESSAGE]: [`在留言板留言`],
-          [NOTIFY_MESSAGE_REPLY]: [`恢复了你的留言`]
+          [NOTIFY_MESSAGE_REPLY]: [`回复了你的留言`]
         }
         let email = userinfo.email ? '' : h('div', {
           style: {
