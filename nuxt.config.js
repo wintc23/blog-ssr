@@ -35,7 +35,8 @@ export default {
   css: [
     'iview/dist/styles/iview.css',
     '@/static/css/github-markdown.css',
-    '@/static/css/prism.css'
+    '@/static/css/prism.css',
+    '@/static/css/common.css',
   ],
   /*
   ** Plugins to load before mounting the App

@@ -63,17 +63,32 @@ function notify ({ type, username, postTitle, url, content }) {
             }
           }, '现在设置')
         ])
-        return h('div', {}, [
-          h('div', [
+        return h('div', {
+          style: {
+            fontSize: '14px',
+            lineHeight: 1.5
+          }
+        }, [
+          h('div', {},
+          [
             user,
             ...info[type],
             ": ",
-            content,
-            h('a', {
-              props: {
-                href: url
+            h('span', {
+              style: {
+                marginRight: '4px',
+                color: '#000',
+                fontWeight: 'bold'
               }
-            }, '查看详情')
+            }, content),
+            h('a', {
+              attrs: {
+                href: url
+              },
+              style: {
+                textDecoration: 'underline'
+              }
+            }, '点击查看')
           ]),
           email
         ])
@@ -87,6 +102,9 @@ class Socket {
     this.socket = null
   }
   init () {
+    if (this.socket) {
+      this.socket.close()
+    }
     this.socket = io(BASE_URL, { path: '/api/socket.io' })
     this.socket.on('connect', () => {
       console.log('connetc')
@@ -100,17 +118,15 @@ class Socket {
       }
     })
     this.socket.on('error', (err) => {
-      console.log('error', err)
-      this.socket.close()
       this.init()
     })
     this.socket.on('close', () => {
-      console.log('des')
-      this.destroy()
+      this.init()
     })
   }
 
   destroy () {
+    this.socket && this.socket.close()
     this.socket = null
   }
 }

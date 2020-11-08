@@ -22,9 +22,8 @@ export function setToken (token) {
 }
 
 export function clearToken () {
-  let date = new Date()
-  date.setSeconds(date.getSeconds() - 1)
-  document.cookie = `token='';expires=${date.toGMTString()}`
+  document.cookie = `token=;expires=${new Date(0).toGMTString()}`
+  console.log('clearToken', getToken())
 }
 
 export function formatTime (timestamp, format = 'yyyy-MM-dd HH:mm') {
