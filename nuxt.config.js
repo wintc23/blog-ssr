@@ -61,7 +61,9 @@ export default {
     UserAgent: '*',
     Disallow: [
       '/manage',
-      '/manage/**'
+      '/manage/**',
+      '/qqtoken',
+      '/login'
     ]
   },
   sitemap: {
@@ -74,17 +76,19 @@ export default {
     },
     exclude: [
       '/manage',
-      '/manage/**'
+      '/manage/**',
+      '/qqtoken',
+      '/login'
     ],
-    routes: function () {
-      const routes = []
-      return axios.get('https://wintc.top/api/get-visible-posts/').then(res => {
+    routes: function (callback) {
+      axios.get('https://wintc.top/api/get-visible-posts/').then(res => {
+        const routes = []
         if (res.status == 200) {
-          const { list } = res.data
+          const { list = [] } = res.data
           const postRoutes = list.map(id => `/article/${id}`)
           routes.push(...postRoutes)
         }
-        return routes
+        callback(null, routes)
       })
     }
   },
