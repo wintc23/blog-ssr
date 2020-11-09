@@ -118,10 +118,8 @@ class Socket {
       }
     })
     this.socket.on('error', (err) => {
-      this.init()
-    })
-    this.socket.on('close', () => {
-      this.init()
+      console.log(err)
+      this.socket.init()
     })
   }
 
