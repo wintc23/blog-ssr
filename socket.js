@@ -107,19 +107,13 @@ class Socket {
     }
     this.socket = io(BASE_URL, { path: '/api/socket.io' })
     this.socket.on('connect', () => {
-      console.log('connetc')
       this.socket.emit('bind-user', { token: getToken() })
     })
     this.socket.on('message', ({ type, data }) => {
-      console.log('onmessage', type, data)
       data = camel(data)
       if (type == 'notify') {
         notify(data)
       }
-    })
-    this.socket.on('error', (err) => {
-      console.log(err)
-      this.socket.init()
     })
   }
 
