@@ -116,7 +116,8 @@ class Socket {
         notify(data)
       }
     })
-    this.socket.on('error', () => {
+    this.socket.on('error', (err) => {
+      console.log('socket error', err)
       this.timer = setTimeout(() => {
         this.init()
       }, 2000)
