@@ -118,9 +118,6 @@ class Socket {
     })
     this.socket.on('error', (err) => {
       console.log('socket error', err)
-      this.timer = setTimeout(() => {
-        this.init()
-      }, 2000)
     })
   }
 
