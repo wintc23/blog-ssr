@@ -102,9 +102,7 @@ class Socket {
     this.socket = null
   }
   init () {
-    if (this.socket) {
-      this.socket.close()
-    }
+    this.socket && this.socket.close()
     this.socket = io(BASE_URL, { path: '/api/socket.io' })
     this.socket.on('connect', () => {
       this.socket.emit('bind-user', { token: getToken() })
