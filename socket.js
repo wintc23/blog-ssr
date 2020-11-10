@@ -100,10 +100,13 @@ function notify ({ type, username, postTitle, url, content }) {
 class Socket {
   constructor () {
     this.socket = null
+    this.timer = 0
   }
   init () {
+    this.timer && clearTimeout(this.timer)
+    this.timer = 0
     this.socket && this.socket.close()
-    this.socket = io(BASE_URL, { path: '/api/socket.io' })
+    this.socket = io(BASE_URL)
     this.socket.on('connect', () => {
       this.socket.emit('bind-user', { token: getToken() })
     })
@@ -113,10 +116,16 @@ class Socket {
         notify(data)
       }
     })
+    this.socket.on('error', () => {
+      this.timer = setTimeout(() => {
+        this.init()
+      }, 2000)
+    })
   }
 
   destroy () {
     this.socket && this.socket.close()
+    this.timer && clearTimeout(this.timer)
     this.socket = null
   }
 }

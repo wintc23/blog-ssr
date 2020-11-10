@@ -36,7 +36,7 @@ function responseError (error) {
 }
 
 const instance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: `${BASE_URL}`,
   timeout: 60 * 1000,
 })
 
