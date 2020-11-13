@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { BASE_URL } from './config'
 
 export default {
   mode: 'universal',
@@ -19,7 +20,6 @@ export default {
     script: [
       { src: '/js/prism.js', defer: true },
       { src: 'https://hm.baidu.com/hm.js?f6c6b936d6426488699d7da96706aaad', defer: true },
-      // { src: '/js/drift.js', defer: true }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: "/favicon.ico" }
@@ -81,12 +81,19 @@ export default {
       '/login'
     ],
     routes: function (callback) {
-      axios.get('https://wintc.top/api/get-visible-posts/').then(res => {
-        const routes = []
+      axios.get('/get-sitemap-info/', { baseURL: BASE_URL }).then(res => {
+        const routes = [
+          '/',
+          '/about',
+          '/link',
+          '/message'
+        ]
         if (res.status == 200) {
-          const { list = [] } = res.data
-          const postRoutes = list.map(id => `/article/${id}`)
-          routes.push(...postRoutes)
+          const { posts, tags } = res.data
+          console.log(res.data, 'get-sitemap')
+          const postRoutes = posts.map(id => `/article/${id}`)
+          const tagRoutes = tags.map(id => `/tag/${id}`)
+          routes.push(...postRoutes, ...tagRoutes)
         }
         callback(null, routes)
       })

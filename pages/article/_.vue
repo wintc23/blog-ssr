@@ -51,12 +51,12 @@
           </Tooltip>
         </div>
         <div class="related-posts">
-          <nuxt-link class="last" v-if="post.before" :to="`/article/${post.before.id}` + (type ? `/${type}` : '')">
-            上一篇：{{ post.before.title }}
-          </nuxt-link>
-          <nuxt-link class="next" v-if="post.after" :to="`/article/${post.after.id}` + (type ? `/${type}` : '')">
-            下一篇：{{ post.after.title }}
-          </nuxt-link>
+          <div class="last" v-if="post.before">
+            <nuxt-link  :to="post.before.id | postUrl(type)">上一篇：{{ post.before.title }}</nuxt-link>
+          </div>
+          <div class="next" v-if="post.after">
+            <nuxt-link :to="post.after.id | postUrl(type)">下一篇：{{ post.after.title }}</nuxt-link>
+          </div>
         </div>
       </article>
       <client-only>
@@ -94,6 +94,12 @@ export default {
   components: {
     CommentInput,
     CommentTree
+  },
+  filters: {
+    postUrl (id, type) {
+      const postFix = type ? `/${type}` : ''
+      return `/article/${id}${postFix}`
+    }
   },
   asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
     let path = params.pathMatch || ''
@@ -271,6 +277,8 @@ export default {
         .last, .next
           display block
           margin 5px 10px
+          a:hover
+            text-decoration underline
     .comment-container
       margin 20px 0
       .add-comment
