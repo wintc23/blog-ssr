@@ -100,11 +100,8 @@ function notify ({ type, username, postTitle, url, content }) {
 class Socket {
   constructor () {
     this.socket = null
-    this.timer = 0
   }
   init () {
-    this.timer && clearTimeout(this.timer)
-    this.timer = 0
     this.socket && this.socket.close()
     this.socket = io(BASE_URL)
     this.socket.on('connect', () => {
@@ -123,8 +120,6 @@ class Socket {
 
   destroy () {
     this.socket && this.socket.close()
-    this.timer && clearTimeout(this.timer)
-    this.socket = null
   }
 }
 

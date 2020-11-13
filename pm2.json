@@ -1,0 +1,8 @@
+{
+  "apps": [{
+    "name": "blog-ssr",
+    "script": "yarn start",
+    "instances": 1,
+    "log_date_format":"YYYY-MM-DD HH:mm Z"
+  }]
+}

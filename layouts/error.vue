@@ -1,7 +1,20 @@
 <template>
   <div>
-    <div class="notice">抱歉，您访问的页面已经不存在</div>
-    <nuxt-link to="/">返回首页</nuxt-link>
+    <div class="error-container">
+      <div class="notice">抱歉，访问出错了~</div>
+      <nuxt-link class="link" :to="`/?r=${Math.random()}`">返回首页</nuxt-link>
+    </div>
   </div>
 </template>
+
+<style lang="stylus" scoped>
+.error-container
+  text-align center
+  padding-top 5vh
+  font-size 18px
+  .notice
+    margin-bottom 15px
+  .link
+    text-decoration underline
+</style>
 
