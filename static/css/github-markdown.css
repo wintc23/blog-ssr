@@ -201,7 +201,7 @@
 
 .post-body * {
   box-sizing: border-box;
-  /* word-break: normal; */
+  word-break: break-all;
 }
 
 .post-body input {
