@@ -59,6 +59,7 @@ export default {
   ],
   robots: {
     UserAgent: '*',
+    Sitemap: 'https://wintc.top/sitemap.xml',
     Disallow: [
       '/manage',
       '/manage/**',
