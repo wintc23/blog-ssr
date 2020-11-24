@@ -162,6 +162,7 @@ export default {
             text-decoration underline
         .post-abstract-content
           color #777
+          text-indent 2em
         .post-info-common
           padding .5em 0 1em
           .post-type

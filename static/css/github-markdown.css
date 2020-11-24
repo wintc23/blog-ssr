@@ -295,7 +295,8 @@
 
 .post-body p {
   margin-top: 0;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  text-indent: 2em;
 }
 
 .post-body blockquote {
@@ -412,7 +413,7 @@
 .post-body table,
 .post-body pre {
   margin-top: 0;
-  margin-bottom: 16px;
+  margin-bottom: 5px;
 }
 
 .post-body hr {
@@ -458,9 +459,9 @@
 .post-body h5,
 .post-body h6 {
   margin-top: 24px;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.2;
 }
 
 .post-body h1 .octicon-link,
