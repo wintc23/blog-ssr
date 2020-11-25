@@ -214,7 +214,7 @@
 
 <script>
 import { GITHUB_CLIENT_ID, QQ_CLIENT_ID, IS_DEV } from '@/config'
-import { TAG_LIST, fibonacci, clearToken } from '@/tool'
+import { TAG_LIST, random, clearToken } from '@/tool'
 import uuidv4 from 'uuid/v4'
 import Userinfo from '@/components/Userinfo'
 import ArticleOutline from '@/components/ArticleOutline'
@@ -306,9 +306,9 @@ export default {
     tagTypeList () {
       let tagLength = TAG_LIST.length
       let list = []
-      for (let typeIdx of fibonacci(this.tags.length)) {
-        let idx = typeIdx % tagLength
-        list.push(TAG_LIST[idx])
+      const randomIterator = random(this.tags.length, TAG_LIST.length)
+      for (let ranIdx of randomIterator) {
+        list.push(TAG_LIST[ranIdx])
       }
       return list
     },

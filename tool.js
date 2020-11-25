@@ -84,11 +84,11 @@ export const SITE = {
   description: '沐码小站，分享编程和生活。'
 }
 
-export function* fibonacci (n) {
-  let a = 1, b = 1
+export function* random (n, x) {
+  let seed = 99
   for (let i = 0; i < n; i++) {
-    [a, b] = [b, a + b]
-    yield a
+    let sin = Math.sin(seed++)
+    yield Math.floor(Math.abs(sin) * x)
   }
 }
 
