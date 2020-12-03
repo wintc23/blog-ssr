@@ -299,6 +299,10 @@
   text-indent: 2em;
 }
 
+.post-body p img {
+  max-width: calc(100% - 4em) !important;
+}
+
 .post-body blockquote {
   margin: 0;
 }
