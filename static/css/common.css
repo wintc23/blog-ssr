@@ -1,3 +1,35 @@
 .ivu-notice {
   max-width: calc(100% - 24px * 2);
 }
+
+.flex, .flex-c {
+  display: flex;
+}
+
+.flex-c {
+  flex-direction: column;
+}
+
+.flex-a {
+  flex: auto;
+}
+
+.flex-s {
+  flex-shrink: 0;
+}
+
+.j-a {
+  justify-content: space-around;
+}
+
+.j-b {
+  justify-content: space-between;
+}
+
+.j-c {
+  justify-content: center;
+}
+
+.a-c {
+  align-items: center;
+}
