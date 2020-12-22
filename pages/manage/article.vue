@@ -59,15 +59,15 @@
           </div>
           <div class="post-abstract">
             <div class="title">关键词</div>
-            <Input :maxlength="64" v-model="postData.keywords" ></Input>
+            <keywords v-model="postData.keywords"></keywords>
           </div>
           <div class="post-abstract">
             <div class="title">描述</div>
-            <Input :maxlength="128" v-model="postData.description" type="textarea" autosize></Input>
+            <Input :maxlength="128" v-model="postData.description" type="textarea" autosize />
           </div>
           <div class="post-abstract">
             <div class="title">摘要</div>
-            <Input v-model="postData.abstract" type="textarea" autosize></Input>
+            <Input v-model="postData.abstract" type="textarea" autosize />
           </div>
           <div class="post-type">
             <div class="title">文章分类</div>
@@ -114,7 +114,8 @@ export default {
   components: (() => {
     if (process.client) {
       return {
-        Editor: require('@/components/Editor').default
+        Editor: require('@/components/Editor').default,
+        Keywords: require('@/components/Keywords').default
       }
     }
     return {}
@@ -141,6 +142,15 @@ export default {
     watermark () {
       if (process.server) return ''
       return `${window.origin}/article/${this.postData.id}`
+    },
+    keywords: {
+      get () {
+        if (!this.postData.keywords) return []
+        return this.postData.keywords.split(',')
+      },
+      set (list) {
+        this.postData.keywords = list.join(',')
+      }
     }
   },
   watch: {
