@@ -33,7 +33,7 @@
             <div class="item logo">
               <div class="label">logo</div>
               <div class="content">
-                <img src="https://file.wintc.top/logo-aboy.jpeg">
+                <img src="https://file.wintc.top/logo.jpeg">
               </div>
             </div>
           </div>

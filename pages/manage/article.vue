@@ -142,15 +142,6 @@ export default {
     watermark () {
       if (process.server) return ''
       return `${window.origin}/article/${this.postData.id}`
-    },
-    keywords: {
-      get () {
-        if (!this.postData.keywords) return []
-        return this.postData.keywords.split(',')
-      },
-      set (list) {
-        this.postData.keywords = list.join(',')
-      }
     }
   },
   watch: {
