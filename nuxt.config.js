@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { BASE_URL } from './config'
+import { BASE_URL, SITE_NAME, SITE_DESCRIPTION, SITE_KEYWORDS, SITE_SLOGON } from './config'
 
 export default {
   mode: 'universal',
@@ -7,15 +7,15 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: `沐码小站 - 分享编程与生活`,
+    title: `${SITE_NAME} - ${SITE_SLOGON}`,
     htmlAttrs: {
       lang: 'zh-CN',
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: "width=device-width, initial-scale=1, user-scalable=no" },
-      { hid: 'keywords', name: 'keywords', content: `沐码小站,编程,JS,HTML,CSS,Python,木马啊,技术博客,wintc` },
-      { hid: 'description', name: 'description', content: `沐码小站，分享编程和生活。` }
+      { hid: 'keywords', name: 'keywords', content: `${SITE_KEYWORDS}` },
+      { hid: 'description', name: 'description', content: `${SITE_DESCRIPTION}` }
     ],
     script: [
       { src: '/js/prism.js', defer: true },

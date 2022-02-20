@@ -14,11 +14,13 @@ export const state = () => ({
 
 export const actions = {
   getAdminInfo ({ commit }) {
-    return getAdminInfo().then(res => {
-      if (res.status === 200) {
-        commit('setAdmin', res.data)
-        return true
-      }
+    return new Promise((resolve) => {
+      getAdminInfo().then(res => {
+        if (res.status === 200) {
+          commit('setAdmin', res.data)
+        }
+      })
+      resolve(true);
     })
   },
   getTagList ({ commit }) {

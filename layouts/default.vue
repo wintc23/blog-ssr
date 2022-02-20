@@ -32,7 +32,7 @@
           <div class="module-title">{{ $site.title }}</div>
           <div class="module-content">
             <div class="userinfo">
-              <img @click="clickAvatar" :src="adminInfo.avatar" alt="木马啊">
+              <img @click="clickAvatar" :src="adminInfo.avatar" :alt="adminInfo.username">
               <div class="username">{{ adminInfo.username }}</div>
               <div class="post-count">
                 <template>
@@ -60,11 +60,11 @@
             </div> -->
             <div class="github">
               <Icon type="logo-github" />
-              <a target="_blank" class="content" href="https://github.com/Lushenggang">github</a>
+              <a target="_blank" class="content" :href="$site.githubHomePage">github</a>
             </div>
             <div class="city">
               <Icon type="md-pin" />
-              <div class="content">云南·昆明</div>
+              <div class="content">{{ $site.location }}</div>
             </div>
             <div class="about-me">
               {{ adminInfo.aboutMe }}
@@ -173,7 +173,7 @@
       <nuxt class="nuxt-container" />
     </main>
     <footer class="layout-footer">
-      Copyright © 2019-2020 Lushenggang
+      {$site.copyright}
       <br>
       <a href="http://beian.miit.gov.cn" target="_blank" rel="nofollow">滇ICP备18002180号</a>
     </footer>

@@ -146,7 +146,7 @@ export default {
               ctx.font = `${fontSize}px`
               ctx.fillStyle = '#FFC82C'
               ctx.textAlign = 'right'
-              ctx.fillText('作者:木马啊', canvas.width - 10, canvas.height - fontSize - 10, canvas.width - 20)
+              ctx.fillText(`${this.$site.title}`, canvas.width - 10, canvas.height - fontSize - 10, canvas.width - 20)
               ctx.fillText(this.watermark, canvas.width - 10, canvas.height - 10, canvas.width - 20)
               canvas.toBlob(upload)
             }

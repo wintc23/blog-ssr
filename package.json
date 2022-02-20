@@ -2,7 +2,7 @@
   "name": "blog-ssr",
   "version": "1.0.0",
   "description": "My supreme Nuxt.js project",
-  "author": "Lushenggang",
+  "author": "lushg",
   "private": true,
   "scripts": {
     "dev": "nuxt",
