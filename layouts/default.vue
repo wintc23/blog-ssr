@@ -173,7 +173,7 @@
       <nuxt class="nuxt-container" />
     </main>
     <footer class="layout-footer">
-      {$site.copyright}
+      {{ $site.copyright }}
       <br>
       <a href="http://beian.miit.gov.cn" target="_blank" rel="nofollow">滇ICP备18002180号</a>
     </footer>
