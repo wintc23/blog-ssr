@@ -126,7 +126,7 @@ export default {
         margin 10px
         width 4em
     .msg-tree
-      border-radius 4px
+      border-radius 2px
     .pagination
       text-align center
       .page-list

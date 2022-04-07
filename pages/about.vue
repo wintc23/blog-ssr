@@ -35,7 +35,7 @@ export default {
 .about-me
   color #333
   background #fff
-  border-radius 4px
+  border-radius 2px
   .content
     padding 2rem
     font-size 1rem

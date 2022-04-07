@@ -87,7 +87,7 @@ export default {
 <style lang="stylus" scoped>
 .message-detail
   .msg-tree
-    border-radius 4px
+    border-radius 2px
     margin 0 10px
 @media screen and (max-width: 600px)
   .message-detail

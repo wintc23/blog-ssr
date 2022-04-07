@@ -2,7 +2,7 @@
   <div class="layout">
     <header
       ref='header'
-      class="layout-header ws"
+      class="layout-header"
       :class="headerClass">
       <div class="layout-header-main">
         <h1 class="site-title">
@@ -501,6 +501,7 @@ export default {
     top 0
     z-index 2
     background-color #fafbfc
+    box-shadow 0 0 8px 0 rgba(0, 0, 0, .1)
     padding-left calc(100vw - 100%)
     &.hide
       transform translateY(-100%)
@@ -524,6 +525,7 @@ export default {
     .modules
       .module
         background #fff
+        border-radius 2px
         &+.module
           margin-top 10px
         .module-title
@@ -781,7 +783,7 @@ html
 
 .ws
   background #fff
-  box-shadow 0 0 8px 0 rgba(0, 0, 0, .15)
+  box-shadow 0 0 8px 0 rgba(0, 0, 0, .08)
 
 </style>
 

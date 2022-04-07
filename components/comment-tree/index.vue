@@ -102,7 +102,7 @@ export default {
 <style lang="stylus" scoped>
 .comment-container
   background #fff
-  border-radius 4px
+  border-radius 2px
   padding 10px
   &+.comment-container
     margin-top 10px

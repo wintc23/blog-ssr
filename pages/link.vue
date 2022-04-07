@@ -425,7 +425,6 @@ export default {
           font-size 13px
           // padding 10px 8px
           // background #eee
-          border-radius 4px
           margin 4px 0
       .menu-list
         float right
