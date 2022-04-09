@@ -10,7 +10,7 @@ export const SITE_RECOMMENDATION = {
     },
     {
       title: '团队内推',
-      description: '和我成为同事',
+      description: '一起欢乐写代码吧',
       href: 'https://job.toutiao.com/s/NtLBC4y',
       introduce: '成功需要努力，更需要好机会。团队当前处于急招状态，面试通过机会较大。',
       updateTime: '2022/04/09',
