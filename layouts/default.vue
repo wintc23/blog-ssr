@@ -75,30 +75,13 @@
           <div class="module-title">专题</div>
         </div> -->
         <client-only>
-          <div class="module ws aliyun-module" v-show="!outlineShow">
+          <div class="module ws recommendation-module" v-show="!outlineShow">
             <div class="module-title">
-              {{ aliyun.title }}
-              <a class="detail" target="_blank" :href="aliyun.href">[了解详情]</a>
+              {{ recommendationTitle }}
+              <!-- <nuxt-link class="detail" to="/recommendation">[了解详情]</nuxt-link> -->
             </div>
             <div class="module-content">
-              <a target="_blank" :href="aliyun.href" class="content">
-                <div
-                  v-for="(text, idx) of aliyun.text"
-                  :key="idx"
-                  class="text">
-                  {{ text }}
-                </div>
-                <div class="tag-list">
-                  <Tag
-                    class="tag"
-                    v-for="(tag, idx) of aliyun.tags"
-                    type="border"
-                    color="geekblue"
-                    :key="idx">
-                    {{ tag }}
-                  </Tag>
-                </div>
-              </a>
+              <recommendation></recommendation>
             </div>
           </div>
         </client-only>
@@ -213,19 +196,21 @@
 </template>
 
 <script>
-import { GITHUB_CLIENT_ID, QQ_CLIENT_ID, IS_DEV } from '@/config'
+import { GITHUB_CLIENT_ID, QQ_CLIENT_ID, IS_DEV, RECOMMENDATION_TITLE } from '@/config'
 import { TAG_LIST, random, clearToken } from '@/tool'
 import uuidv4 from 'uuid/v4'
 import Userinfo from '@/components/Userinfo'
 import ArticleOutline from '@/components/ArticleOutline'
 import SiteSearch from '@/components/SiteSearch'
+import Recommendation from '@/components/recommendations/module'
 
 export default {
   middleware: ['cookie'],
   components: {
     Userinfo,
     ArticleOutline,
-    SiteSearch
+    SiteSearch,
+    Recommendation
   },
   data () {
     return {
@@ -233,19 +218,7 @@ export default {
       oldScrollTop: 0,
       headerHeight: 0,
       loginShow: false,
-      aliyun: {
-        href: 'https://www.aliyun.com/minisite/goods?userCode=h55rc1yh',
-        img: 'https://file.wintc.top/lisa/aliyun.jpg',
-        title: '阿里云推广',
-        text: [
-          '云服务器 精选特惠',
-          '花100块买台云服务器练手学习，是稳赚不赔的投资！'
-        ],
-        tags: [
-          '新用户享好礼',
-          '云服务器1折起',
-        ]
-      }
+      recommendationTitle: RECOMMENDATION_TITLE,
     }
   },
   computed: {
@@ -315,7 +288,7 @@ export default {
     outlineShow () {
       const navList = this.$store.getters['outline/list']
       return navList && navList.length
-    }
+    },
   },
   watch: {
     loginShow: {
@@ -630,7 +603,7 @@ export default {
           .blank
             flex auto
             max-width 10px
-      .aliyun-module
+      .recommendation-module
         .module-title
           .detail
             float right
@@ -784,6 +757,13 @@ html
 .ws
   background #fff
   box-shadow 0 0 8px 0 rgba(0, 0, 0, .08)
+
+.sub-page-header
+  background #fff
+  padding 15px 20px
+  margin-bottom 5px
+  color #666
+  border-radius 2px
 
 </style>
 

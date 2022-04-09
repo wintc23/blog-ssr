@@ -1,6 +1,6 @@
 <template>
   <div class="page-post-list">
-    <div class="page-post-header ws" v-if="tag">
+    <div class="sub-page-header ws" v-if="tag">
       当前标签：<span class="tag-title">{{ tag.title }}</span>，
       共<span class="tag-count">{{ tag.postCount }}</span>篇文章
     </div>
@@ -142,11 +142,7 @@ export default {
 
 <style lang="stylus" scoped>
 .page-post-list
-  .page-post-header
-    padding 15px 20px
-    margin-bottom 5px
-    color #666
-    border-radius 2px
+  .sub-page-header
     .tag-title, .tag-count
       color rgba(64, 158, 255, 1)
   .post-list

@@ -1,6 +1,6 @@
 <template>
   <div class="page-link-list">
-    <div class="page-link-header">
+    <div class="sub-page-header ws">
       友情链接
       <Button class="swap-link" type="primary" size="small" ghost @click.stop="showNotice=!showNotice">友链交换</Button>
     </div>
@@ -327,11 +327,6 @@ export default {
 
 <style lang="stylus" scoped>
 .page-link-list
-  .page-link-header
-    background #fff
-    padding 15px 20px
-    margin-bottom 5px
-    color #666
   .upload-link
     background #fff
     padding 10px 15px 10px 20px
