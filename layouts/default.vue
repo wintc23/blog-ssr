@@ -75,13 +75,26 @@
           <div class="module-title">专题</div>
         </div> -->
         <client-only>
-          <div class="module ws recommendation-module" v-show="!outlineShow">
+          <div class="module ws recommendation-module">
             <div class="module-title">
               {{ recommendationTitle }}
               <nuxt-link class="detail" to="/recommendation">[了解详情]</nuxt-link>
             </div>
             <div class="module-content">
               <recommendation></recommendation>
+            </div>
+          </div>
+        </client-only>
+        <client-only>
+          <div
+            :style="{
+              top: `${ headerHeight + 5 }px`
+            }"
+            class="module ws outline-module"
+            v-show="outlineShow">
+            <div class="module-title">目录</div>
+            <div class="module-content">
+              <article-outline></article-outline>
             </div>
           </div>
         </client-only>
@@ -139,19 +152,6 @@
             </div>
           </div>
         </div>
-        <client-only>
-          <div
-            :style="{
-              top: `${ headerHeight + 5 }px`
-            }"
-            class="module ws outline-module"
-            v-show="outlineShow">
-            <div class="module-title">目录</div>
-            <div class="module-content">
-              <article-outline></article-outline>
-            </div>
-          </div>
-        </client-only>
       </aside>
       <nuxt class="nuxt-container" />
     </main>
