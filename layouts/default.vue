@@ -85,7 +85,7 @@
             </div>
           </div>
         </client-only>
-        <div class="module ws" v-if="topTen.length">
+        <div class="module ws" v-if="topTen.length && !outlineShow">
           <div class="module-title">热门文章</div>
           <div class="module-content">
             <div class="post-list">
