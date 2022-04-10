@@ -85,19 +85,6 @@
             </div>
           </div>
         </client-only>
-        <client-only>
-          <div
-            :style="{
-              top: `${ headerHeight + 5 }px`
-            }"
-            class="module ws outline-module"
-            v-show="outlineShow">
-            <div class="module-title">目录</div>
-            <div class="module-content">
-              <article-outline></article-outline>
-            </div>
-          </div>
-        </client-only>
         <div class="module ws" v-if="topTen.length">
           <div class="module-title">热门文章</div>
           <div class="module-content">
@@ -152,6 +139,19 @@
             </div>
           </div>
         </div>
+        <client-only>
+          <div
+            :style="{
+              top: `${ headerHeight + 5 }px`
+            }"
+            class="module ws outline-module"
+            v-show="outlineShow">
+            <div class="module-title">目录</div>
+            <div class="module-content">
+              <article-outline></article-outline>
+            </div>
+          </div>
+        </client-only>
       </aside>
       <nuxt class="nuxt-container" />
     </main>
