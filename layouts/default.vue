@@ -327,7 +327,8 @@ export default {
       handler () {
         if (process.server) return
         const { fullPath } = this.$route
-        statEvent('visitPage', { fullPath })
+        const from = document.referrer
+        statEvent('visitPage', { fullPath, from })
       }
     }
   },
