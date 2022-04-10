@@ -2,39 +2,33 @@
   <div class="page-link-list">
     <div class="sub-page-header ws">
       友情链接
-      <Button class="swap-link" type="primary" size="small" ghost @click.stop="showNotice=!showNotice">友链交换</Button>
     </div>
     <client-only>
       <transition name="link">
         <div class="upload-link" v-show="showNotice">
           <div class="notice">
-            您可以提交您的站点信息与本站交换友链，您的链接将会在本站首页侧边栏和本页展示。
-            <span class="btn" @click.stop="createLink">提交友链</span>
-            <br>
+            <span
+              class="submit-btn"
+              @click.stop="createLink">
+              提交链接</span>可在本站添加友链，同时期待您将本站链接添加到您的站点。本站友链将在首页侧边栏和本页展示。
+          </div>
+          <div class="info-label">本站信息
+            <Tooltip :content="`一键复制本站信息（json格式）`" placement="top" transfer>
+              <Icon
+                v-click-copy="{
+                  text: siteinfoJsonString,
+                  notifyText: `已复制站点信息json文本`,
+                }"
+                type="md-copy"
+                class="icon"
+              />
+            </Tooltip>
+            <div class="placeholder"></div>
           </div>
           <div class="site-info">
-            <div class="info-label">
-              您需要将本站相关信息添加到您的站点（名称和地址是必要的）：
-            </div>
-            <div class="item">
-              <div class="label">名称</div>
-              <div class="content">{{ $site.title }}</div>
-            </div>
-            <div class="item">
-              <div class="label">地址</div>
-              <div class="content">
-                <a href="https://wintc.top" target="_blank">https://wintc.top</a>
-              </div>
-            </div>
-            <div class="item">
-              <div class="label">简介</div>
-              <div class="content">想把代码写成诗的未知名作家</div>
-            </div>
-            <div class="item logo">
-              <div class="label">logo</div>
-              <div class="content">
-                <img src="https://file.wintc.top/logo.jpeg">
-              </div>
+            <div class="item" v-for="info of siteinfoList" :key="info.key">
+              <div class="label">{{ info.name }}</div>
+              <div class="content">{{ info.value }}</div>
             </div>
           </div>
         </div>
@@ -59,7 +53,7 @@
             class="icon delete"
             v-if="currentUser.admin"
             title="删除"
-            type="ios-trash"/>
+            type="ios-trash" />
         </div>
         <div
           :class="{
@@ -139,8 +133,8 @@
           </div>
         </div>
         <div class="menu" slot="footer">
-          <Button type="primary" @click.stop="saveLink">保存</Button>
           <Button type="text" @click.stop="hideEdit">取消</Button>
+          <Button type="primary" @click.stop="saveLink">保存</Button>
         </div>
       </Modal>
     </client-only>
@@ -194,7 +188,6 @@ export default {
       loading: false,
       userList: [],
       timer: 0,
-
       showNotice: false
     }
   },
@@ -208,10 +201,46 @@ export default {
     },
     currentUser () {
       return this.$store.getters['userInfo/info']
+    },
+    siteinfoList () {
+      return [
+        {
+          name: '名称',
+          key: 'name',
+          value: this.$site.title,
+        },
+        {
+          name: '简介',
+          key: 'slogon',
+          value: this.$site.slogon,
+        },
+        {
+          name: '地址',
+          key: 'url',
+          value: this.$site.url,
+        },
+        {
+          name: '图标',
+          key: 'icon',
+          value: this.$site.icon,
+        },
+      ];
+    },
+    siteinfoJsonString () {
+      const json = {};
+      this.siteinfoList.forEach(({ key, value }) => {
+        json[key] = value
+      })
+      
+      console.log(JSON.stringify(json, null, 4), 'wtttt')
+      return JSON.stringify(json, null, 4)
     }
   },
   mounted () {
     this.$bus.$emit('baidu-push')
+    this.$nextTick(() => {
+      this.showNotice = true
+    })
   },
   methods: {
     showEdit () {
@@ -333,7 +362,6 @@ export default {
     margin-bottom 10px
     color #333
     position relative
-    font-size 14px
     &::before
       content ''
       background #19be6b
@@ -342,36 +370,52 @@ export default {
       left 0
       top 0
       bottom 0
+    .info-label
+      display flex
+      align-items center
+      font-weight bold
+      margin 10px 0 5px 0
+      color #333
+      .icon
+        margin-left 4px
+        font-size 18px
+        color #666
+        padding 4px
+        display flex
+        align-items center
+        justify-content center
+        cursor pointer
+        border-radius 4px
+        animation background .2s ease-out
+        &:hover
+          background rgba(0, 0, 0, .1)
+        &:active
+          background rgba(0, 0, 0, .15)
     .notice
-      line-height 1.5
-      .btn
+      line-height 1.6
+      .submit-btn
         color rgba(64, 158, 255, 1)
         text-decoration underline
         cursor pointer
         user-select none
     .site-info
-      display flex
-      flex-wrap wrap
-      margin-top 10px
-      // flex-direction column
-      .info-label
-        width 100%
-        flex-shrink 0
+      font-size 14px
       .item
-        flex-shrink 0
-        padding-right 10px
-        width 50%
-        min-width 12em
         display flex
         .label
-          color #000
-          font-weight bold
-          margin-right 10px
+          color #333
+          margin-right .5em
+          line-height 1.6
           flex-shrink 0
+          user-select none
+
         .content
-          img
-            width 50px
-            height 50px
+          font-weight bold
+          flex auto
+          color #333
+          overflow hidden
+          text-overflow ellipsis
+          white-space nowrap
     .menu
       line-height 2.5
       border-top 1px solid #ddd
@@ -473,13 +517,11 @@ export default {
           flex-shrink 0
           
 .link-enter-active, .link-leave-active
-  transition all .6s ease-out
+  transition all .8s ease .2s
 .link-enter, .link-leave-to
   opacity 0
   transform translateY(-10%)
-  // max-height 0
 .link-enter-to, .link-leave
   opacity 1
   transform translateY(0)
-  // max-height 12em
 </style>

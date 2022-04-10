@@ -204,7 +204,6 @@ export default {
       })
     }),
     like () {
-      console.log('click-like')
       if (!this.currentUser.id) {
         this.$bus.$emit('login-show')
         this.$Message.info('请先登录后再操作')

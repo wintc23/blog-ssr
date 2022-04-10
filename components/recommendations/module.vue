@@ -4,7 +4,12 @@
       v-for="(item, idx) of recommendation.list"
       class="recommendation-item"
       :key="idx">
-      <Tooltip :content="item.tip" :disabled="!item.tip" placement="bottom">
+      <Tooltip
+        :content="item.tip"
+        :disabled="!item.tip"
+        :max-width="250"
+        placement="bottom"
+        transfer>
         <a
           class="recommendation-item-container"
           target="_blank"
@@ -17,6 +22,7 @@
         </a>
       </Tooltip>
     </div>
+    <div class="blank"></div>
   </div>
 </template>
 
@@ -35,11 +41,17 @@ export default {
 <style lang="stylus" scoped>
 .recommendation-list
   display flex
+  flex-wrap wrap
+  align-items stretch
+  .recommendation-item, .blank
+    flex auto
+    width 40%
+    &:nth-child(2n-1)
+      margin-right 6px
+    &:not(:first-child):not(:nth-child(2))
+      margin-top 6px
   .recommendation-item
     cursor pointer
-    width 0
-    flex auto
-    margin-right 10px
     >>>
       .ivu-tooltip, .ivu-tooltip-rel
         display block
@@ -56,11 +68,13 @@ export default {
         top -2px
         background rgba(64, 158, 255, .1)
     .item-title
-      font-size 12px
+      font-size 14px
       color #333
       font-weight bold
+      white-space nowrap
     .item-description
       font-size 12px
       color #666
+      white-space nowrap
 
 </style>

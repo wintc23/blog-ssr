@@ -13,6 +13,8 @@ export const SITE_DESCRIPTION = `${SITE_NAME}，${SITE_SLOGON}。`
 export const SITE = {
   title: SITE_NAME,
   slogon: SITE_SLOGON,
+  icon: 'https://file.wintc.top/logo.jpeg',
+  url: 'https://wintc.top',
   keywords: SITE_KEYWORDS,
   description: SITE_KEYWORDS,
   copyright: 'Copyright © 2019-2022 lushg',

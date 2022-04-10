@@ -78,7 +78,7 @@
           <div class="module ws recommendation-module" v-show="!outlineShow">
             <div class="module-title">
               {{ recommendationTitle }}
-              <!-- <nuxt-link class="detail" to="/recommendation">[了解详情]</nuxt-link> -->
+              <nuxt-link class="detail" to="/recommendation">[了解详情]</nuxt-link>
             </div>
             <div class="module-content">
               <recommendation></recommendation>
@@ -503,7 +503,7 @@ export default {
           margin-top 10px
         .module-title
           color #666
-          padding 10px 15px
+          padding 8px 15px
           border-bottom 1px solid #eee
         .module-content
           padding 10px 15px 20px

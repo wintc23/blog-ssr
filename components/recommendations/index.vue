@@ -1,32 +1,30 @@
 <template>
   <div class="recommendation-list">
-    <div>开发中，开发中，开发中</div>
-    <!-- <recommendation-aliyun class="recommendation ws"></recommendation-aliyun>
-    <recommendation-lark class="recommendation ws"></recommendation-lark> -->
+    <recommendation-card
+      v-for="(recommendation, idx) of recommendations"
+      :config="recommendation"
+      :key="idx">
+    </recommendation-card>
   </div>
 </template>
 
 <script>
-import RecommendationAliyun from './aliyun';
-import RecommendationLark from './lark';
+import { SITE_RECOMMENDATION } from './data'
+import RecommendationCard from './card'
+
 export default {
   components: {
-    RecommendationAliyun,
-    RecommendationLark,
+    RecommendationCard,
   },
   data () {
-    return {}
+    return {
+      recommendations: SITE_RECOMMENDATION.list,
+    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
 .recommendation-list
-  display flex
-  .recommendation
-    height 200px
-    margin-top 10px;
-    width 280px
-    &.recommendation
-      // 
+  padding-bottom 300px
 </style>
