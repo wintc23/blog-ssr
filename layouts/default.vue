@@ -250,7 +250,7 @@ export default {
       return list
     },
     showModules () {
-      const hideList = ['message', 'message-id', 'about']
+      const hideList = ['message', 'message-id', 'about', 'recommendation']
       return !hideList.includes(this.$route.name)
     },
     currentUser () {
