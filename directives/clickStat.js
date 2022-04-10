@@ -1,13 +1,8 @@
-import { getVisitorId } from '@/tool'
-import { statEvents } from '@/api/stat'
+import { statEvent } from '@/stat'
 
 function bind (el, binding, vNode) {
   el.__clickStatHandler = function (e) {
-    const event = {
-      visitorId: getVisitorId(),
-      name: binding.value,
-    }
-    statEvents([event])
+    statEvent(...binding.value)
   }
   el.addEventListener('click', el.__clickStatHandler)
 }

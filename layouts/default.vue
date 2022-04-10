@@ -80,7 +80,9 @@
               {{ recommendationTitle }}
               <nuxt-link
                 class="detail"
-                v-click-stat="'recommendation.detail'"
+                v-click-stat="['recommendation', {
+                  pos: 'detail',
+                }]"
                 to="/recommendation">
                 [了解详情]
               </nuxt-link>
@@ -131,7 +133,9 @@
             友链
             <nuxt-link
               class="detail"
-              v-click-stat="'friendLink.detail'"
+              v-click-stat="['friendLink', {
+                pos: 'detail'
+              }]"
               to="/link">
               [详情]
             </nuxt-link>
@@ -213,6 +217,7 @@ import Userinfo from '@/components/Userinfo'
 import ArticleOutline from '@/components/ArticleOutline'
 import SiteSearch from '@/components/SiteSearch'
 import Recommendation from '@/components/recommendations/module'
+import { statEvent } from '@/stat'
 
 export default {
   middleware: ['cookie'],
@@ -315,6 +320,14 @@ export default {
         if (process.server) return
         this.$socket.destroy()
         this.userId && this.$socket.init()
+      }
+    },
+    $route: {
+      immediate: true,
+      handler () {
+        if (process.server) return
+        const { fullPath } = this.$route
+        statEvent('visitPage', { fullPath })
       }
     }
   },

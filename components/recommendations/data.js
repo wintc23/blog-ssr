@@ -3,7 +3,7 @@ export const SITE_RECOMMENDATION = {
   list: [
     {
       title: '团队内推',
-      stat: 'recommendation.lark',
+      stat: 'lark',
       description: '一起快乐写代码吧',
       href: 'https://job.toutiao.com/s/NtLBC4y',
       linkText: '查看职位详情',
@@ -30,7 +30,7 @@ export const SITE_RECOMMENDATION = {
     },
     {
       title: '云服务器',
-      stat: 'recommendation.aliyun',
+      stat: 'aliyun',
       description: '阿里云精选特惠',
       href: 'https://www.aliyun.com/minisite/goods?userCode=h55rc1yh',
       linkText: '了解一下',

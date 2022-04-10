@@ -22,7 +22,10 @@
         </div>
         <a
           class="link"
-          v-click-stat="`${config.stat}_card_link`"
+          v-click-stat="['recommendation', {
+            type: config.stat,
+            pos: 'card_link',
+          }]"
           :href="config.href"
           target="_blank">
           <Button class="link-btn" type="primary">{{ config.linkText }}</Button>
@@ -35,7 +38,11 @@
             target="_blank"
             :href="item.href"
             class="more-item"
-            v-click-stat="`${item.stat}_card_more_${item.stat}`"
+            v-click-stat="['recommendation', {
+              type: config.stat,
+              pos: 'card_more',
+              itemType: item.stat,
+            }]"
             :key="idx">
             {{ item.title }}
           </a>
