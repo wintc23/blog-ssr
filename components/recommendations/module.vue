@@ -13,6 +13,7 @@
         <a
           class="recommendation-item-container"
           target="_blank"
+          v-click-stat="`${item.stat}_module`"
           :href="item.href"
           >
           <div class="recommendation-item-inner">

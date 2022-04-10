@@ -78,7 +78,12 @@
           <div class="module ws recommendation-module">
             <div class="module-title">
               {{ recommendationTitle }}
-              <nuxt-link class="detail" to="/recommendation">[了解详情]</nuxt-link>
+              <nuxt-link
+                class="detail"
+                v-click-stat="'recommendation.detail'"
+                to="/recommendation">
+                [了解详情]
+              </nuxt-link>
             </div>
             <div class="module-content">
               <recommendation></recommendation>
@@ -124,7 +129,12 @@
         <div class="module ws link-module" v-show="!outlineShow">
           <div class="module-title">
             友链
-            <nuxt-link class="detail" to="/link">[详情]</nuxt-link>
+            <nuxt-link
+              class="detail"
+              v-click-stat="'friendLink.detail'"
+              to="/link">
+              [详情]
+            </nuxt-link>
           </div>
           <div class="module-content">
             <div class="link-list">

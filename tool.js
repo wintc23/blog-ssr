@@ -1,4 +1,6 @@
 
+import uuidv4 from 'uuid/v4'
+
 function getCookie (cookie, key) {
   if (!cookie) return ''
   let cookieList = cookie.split('; ')
@@ -107,4 +109,15 @@ export function singleClick (func, manuDone = false) {
     promise ? promise.finally(done) : done()
     return promise
   }
+}
+
+export function getVisitorId() {
+  const key = 'event_stat_visitor_id'
+  let visitorId = localStorage.getItem(key)
+  const uuidLength = 32
+  if (!visitorId || visitorId.length != uuidLength) {
+    visitorId = uuidv4().replace(/-/g, '')
+    localStorage.setItem(key, visitorId)
+  }
+  return visitorId
 }
