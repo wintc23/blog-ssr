@@ -10,6 +10,7 @@
       <div class="header">
         <div class="title">{{ config.title }}</div>
         <div class="description">{{ config.description }}</div>
+        <div class="update-time" v-if="config.updateTime"></div>
       </div>
       <div class="content">
         <div class="introduce">
@@ -119,16 +120,17 @@ export default {
           &+.introduce-item
             margin-top var(--introduce-item-margin)
       .link
-        margin-top 1em
+        margin-top .5em
         display inline-block
         .link-btn
           min-width 100px
-          font-size var(--link-btn-fz)
+          font-size var(--btn-fz)
     .footer
-      padding 10px var(--padding)
+      padding 5px var(--padding) 10px
       flex-shrink 0
       .more-list
         display flex
+        font-size var(--btn-fz)
         &::before
           content ''
           width 4px
@@ -170,7 +172,7 @@ export default {
     --content-fz 16px
     --introduce-item-padding 10px
     --introduce-item-margin 10px
-    --link-btn-fz 14px
+    --btn-fz 14px
 
 @media screen and (max-width: 600px)
   .recommendation-card
@@ -179,6 +181,6 @@ export default {
     --des-fz 12px
     --content-fz 14px
     --introduce-item-padding 4px
-    --introduce-item-margin 5px
-    --link-btn-fz 14px
+    --introduce-item-margin 4px
+    --btn-fz 14px
 </style>

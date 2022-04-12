@@ -247,11 +247,11 @@ export default {
             max-height 200px
             max-width 300px
             flex-shrink 0
-            box-shadow 0 0 10px 0 rgba(0, 0, 0, .1)
+            box-shadow 0 0 10px 0 rgba(0, 0, 0, .06)
         &:hover
           // background #fafbfc
           .post-abstract-image
-            box-shadow 0 0 10px 0 rgba(0, 0, 0, .15)
+            box-shadow 0 0 10px 0 rgba(0, 0, 0, .1)
 
 @media screen and (max-width: 600px)
   .page-post-list
