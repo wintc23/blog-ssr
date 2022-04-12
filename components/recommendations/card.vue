@@ -10,7 +10,6 @@
       <div class="header">
         <div class="title">{{ config.title }}</div>
         <div class="description">{{ config.description }}</div>
-        <div class="update-time" v-if="config.updateTime"></div>
       </div>
       <div class="content">
         <div class="introduce">
