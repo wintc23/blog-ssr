@@ -16,7 +16,7 @@ export const SITE = {
   icon: 'https://file.wintc.top/logo.jpeg',
   url: 'https://wintc.top',
   keywords: SITE_KEYWORDS,
-  description: SITE_KEYWORDS,
+  description: `${SITE_NAME},${SITE_SLOGON}。`,
   copyright: 'Copyright © 2019-2022 lushg',
   githubHomePage: 'https://github.com/wintc23',
   location: '深圳',
