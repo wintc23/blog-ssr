@@ -12,8 +12,15 @@ function getCookie (cookie, key) {
   return keyInfo[key] || ''
 }
 
+export const serverCookieCache = {
+  cookie: '',
+  set (value) {
+    serverCookieCache.cookie = value
+  }
+}
+
 export function getToken () {
-  const cookies = process.server ? process.cookie : document.cookie
+  const cookies = process.server ? serverCookieCache.cookie : document.cookie
   return getCookie(cookies, 'token')
 }
 
@@ -25,7 +32,6 @@ export function setToken (token) {
 
 export function clearToken () {
   document.cookie = `token=;expires=${new Date(0).toGMTString()}`
-  console.log('clearToken', getToken())
 }
 
 export function formatTime (timestamp, format = 'yyyy-MM-dd HH:mm') {

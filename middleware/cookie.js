@@ -1,6 +1,9 @@
 
+
+import { serverCookieCache } from '@/tool'
+
 export default function ({ req }) {
   if (process.server) {
-    process.cookie = req.headers.cookie || ''
+    serverCookieCache.set(req.headers.cookie || '')
   }
 }
