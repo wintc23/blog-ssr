@@ -75,20 +75,38 @@
           <div class="module-title">专题</div>
         </div> -->
         <client-only>
-          <div class="module ws recommendation-module">
+          <div class="module ws aliyun-module">
             <div class="module-title">
-              {{ recommendationTitle }}
-              <nuxt-link
-                class="detail"
-                v-click-stat="['recommendation', {
-                  pos: 'detail',
-                }]"
-                to="/recommendation">
-                [了解详情]
-              </nuxt-link>
+              {{ aliyun.title }}
+              <a class="detail" v-click-stat="[
+              'recommendation', {
+                type: 'aliyun',
+                pos: 'module-detail',
+              }]" target="_blank" :href="aliyun.href">[了解详情]</a>
             </div>
             <div class="module-content">
-              <recommendation></recommendation>
+              <a target="_blank" :href="aliyun.href" class="content" v-click-stat="[
+              'recommendation', {
+                type: 'aliyun',
+                pos: 'module-content',
+              }]">
+                <div
+                  v-for="(text, idx) of aliyun.text"
+                  :key="idx"
+                  class="text">
+                  {{ text }}
+                </div>
+                <div class="tag-list">
+                  <Tag
+                    class="tag"
+                    v-for="(tag, idx) of aliyun.tags"
+                    type="border"
+                    color="geekblue"
+                    :key="idx">
+                    {{ tag }}
+                  </Tag>
+                </div>
+              </a>
             </div>
           </div>
         </client-only>
@@ -233,7 +251,19 @@ export default {
       oldScrollTop: 0,
       headerHeight: 0,
       loginShow: false,
-      recommendationTitle: RECOMMENDATION_TITLE,
+      aliyun: {
+        href: 'https://www.aliyun.com/minisite/goods?userCode=h55rc1yh',
+        img: 'https://file.wintc.top/lisa/aliyun.jpg',
+        title: '阿里云推广',
+        text: [
+          '云服务器 精选特惠',
+          '花100块买台云服务器练手学习，是稳赚不赔的投资！'
+        ],
+        tags: [
+          '新用户享好礼',
+          '云服务器1折起',
+        ]
+      }
     }
   },
   computed: {
@@ -627,7 +657,7 @@ export default {
           .blank
             flex auto
             max-width 10px
-      .recommendation-module
+      .aliyun-module
         .module-title
           .detail
             float right
@@ -781,6 +811,10 @@ html
 .ws
   background #fff
   box-shadow 0 0 8px 0 rgba(0, 0, 0, .08)
+
+// float-panel
+.fp
+  box-shadow 0 0 8px 0 rgba(0, 0, 0, .24)
 
 .sub-page-header
   background #fff

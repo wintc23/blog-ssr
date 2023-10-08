@@ -9,7 +9,7 @@
       placeholder="输入关键词搜索"
       search
       v-model="keyword" />
-    <div class="search-result ws" v-if="showResult">
+    <div class="search-result fp" v-if="showResult">
       <template v-if="loading">
         <div class="loading">
           <div class="balls">
