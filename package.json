@@ -24,6 +24,7 @@
     "vue-outline": "^4.0.4"
   },
   "devDependencies": {
+    "@babel/preset-env": "7.12.17",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2"
   }
