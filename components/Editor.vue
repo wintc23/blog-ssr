@@ -25,6 +25,7 @@ import 'tinymce/plugins/fullscreen'
 import 'tinymce/plugins/codesample'
 import 'tinymce/plugins/advlist'
 import 'tinymce/plugins/link'
+import 'tinymce/icons/default'
 
 let watermarkApi
 tinymce.PluginManager.add('watermark', function (editor) {
