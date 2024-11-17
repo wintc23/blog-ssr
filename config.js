@@ -17,7 +17,7 @@ export const SITE = {
   url: 'https://wintc.top',
   keywords: SITE_KEYWORDS,
   description: `${SITE_NAME},${SITE_SLOGON}。`,
-  copyright: 'Copyright © 2019-2022 lushg',
+  copyright: `Copyright © 2019-${new Date().getUTCFullYear()} 牛书书`,
   githubHomePage: 'https://github.com/wintc23',
   location: '深圳',
 }
