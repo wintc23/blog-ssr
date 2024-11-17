@@ -43,7 +43,7 @@ export default {
   */
   plugins: [
     '@/plugins/iview',
-    '@/plugins/common'
+    '@/plugins/common',
   ],
   /*
   ** Nuxt.js dev-modules
@@ -111,6 +111,12 @@ export default {
     cache: true,
     parallel: true,
     extend (config, ctx) {
+    },
+    babel: {
+      plugins: [
+        ["@babel/plugin-transform-private-methods", { "loose": true }],
+        ["@babel/plugin-transform-private-property-in-object", { "loose": true }]
+      ]
     }
   },
   server: {
