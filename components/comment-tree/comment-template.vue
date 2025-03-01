@@ -115,6 +115,7 @@ export default {
 
 <style lang="stylus" scoped>
 .comment
+  word-break break-all
   .userinfo
     display flex
     flex-wrap wrap
