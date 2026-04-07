@@ -29,7 +29,15 @@
       }">
       <aside class="modules" v-show="showModules">
         <div class="module ws" v-if="adminInfo">
-          <div class="module-title">{{ $site.title }}</div>
+          <div class="module-title site-module-title">
+            <span>{{ $site.title }}</span>
+            <Tooltip
+              transfer
+              placement="top"
+              :content="visitCountTooltip">
+              <span class="visit-count" v-if="siteStatSummary">访问 {{ siteStatSummary.visitCount }}</span>
+            </Tooltip>
+          </div>
           <div class="module-content">
             <div class="userinfo">
               <img @click="clickAvatar" :src="adminInfo.avatar" :alt="adminInfo.username">
@@ -307,6 +315,13 @@ export default {
     adminInfo () {
       return this.$store.getters['site/adminInfo']
     },
+    siteStatSummary () {
+      return this.$store.getters['site/siteStatSummary']
+    },
+    visitCountTooltip () {
+      if (!this.siteStatSummary) return ''
+      return this.siteStatSummary.visitStartDate
+    },
     tags () {
       let list = this.$store.getters['site/tags'] || []
       return list.filter(tag => !!tag.postCount).sort((a, b) => b.postCount - a.postCount)
@@ -349,7 +364,7 @@ export default {
       handler () {
         if (process.server) return
         this.$socket.destroy()
-        this.userId && this.$socket.init()
+        this.$socket.init()
       }
     },
     $route: {
@@ -375,6 +390,8 @@ export default {
     this.$bus.$on('code-highlight', this.highlightCode)
     this.$bus.$on('baidu-push', this.pushPage)
     this.$bus.$on('get-current-user', this.getCurrentUser)
+    this.$bus.$on('site-stat-summary', this.handleSiteStatSummary)
+    this.$bus.$on('socket-connected', this.refreshSiteStatSummary)
     this.highlightCode()
   },
   beforeDestroy () {
@@ -384,6 +401,8 @@ export default {
     this.$bus.$off('code-highlight', this.highlightCode)
     this.$bus.$off('baidu-push', this.pushPage)
     this.$bus.$off('get-current-user', this.getCurrentUser)
+    this.$bus.$off('site-stat-summary', this.handleSiteStatSummary)
+    this.$bus.$off('socket-connected', this.refreshSiteStatSummary)
     this.removeLoginListener()
   },
   methods: {
@@ -488,6 +507,13 @@ export default {
     },
     getCurrentUser (callback) {
       callback(this.currentUser)
+    },
+    handleSiteStatSummary (data) {
+      if (!data || data.visitCount === undefined) return
+      this.$store.commit('site/updateSiteVisitCount', data.visitCount)
+    },
+    refreshSiteStatSummary () {
+      this.$store.dispatch('site/getSiteStatSummary')
     }
   }
 }
@@ -559,6 +585,16 @@ export default {
           color #666
           padding 8px 15px
           border-bottom 1px solid #eee
+        .site-module-title
+          display flex
+          align-items center
+          justify-content space-between
+          .visit-count
+            color #3361d8
+            font-size 12px
+            cursor pointer
+            margin-left 10px
+            flex-shrink 0
         .module-content
           padding 10px 15px 20px
       .userinfo

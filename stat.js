@@ -8,10 +8,14 @@ class StatManager {
   }
 
   statEvent(event) {
-    this.eventList.push({
+    const payload = {
       ...event,
       visitorId: getVisitorId(),
-    })
+    }
+    if (event.name === 'visitPage') {
+      return statEvents([payload])
+    }
+    this.eventList.push(payload)
     if (this.timer) return
     this.timer = setTimeout(() => {
       this.sendEvents()
@@ -19,11 +23,15 @@ class StatManager {
   }
 
   sendEvents() {
+    if (!this.eventList.length) {
+      this.timer = 0
+      return
+    }
+    const eventList = this.eventList.slice()
     this.timer = 0
-    statEvents(this.eventList)
     this.eventList = []
+    statEvents(eventList)
   }
-
 }
 
 const instance = new StatManager()

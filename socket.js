@@ -105,12 +105,17 @@ class Socket {
     this.socket && this.socket.close()
     this.socket = io(BASE_URL)
     this.socket.on('connect', () => {
-      this.socket.emit('bind-user', { token: getToken() })
+      const token = getToken()
+      token && this.socket.emit('bind-user', { token })
+      Vue.prototype.$bus.$emit('socket-connected')
     })
     this.socket.on('message', ({ type, data }) => {
       data = camel(data)
       if (type == 'notify') {
         notify(data)
+      }
+      if (type == 'site-stat-summary') {
+        Vue.prototype.$bus.$emit('site-stat-summary', data)
       }
     })
     this.socket.on('error', (err) => {

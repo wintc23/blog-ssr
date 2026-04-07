@@ -51,6 +51,12 @@ export default {
         name: 'manage-message',
         icon: "ios-chatboxes-outline",
         value: 'message'
+      },
+      {
+        title: '访问统计',
+        name: 'manage-stat',
+        icon: 'ios-stats',
+        value: 'stat'
       }]
     }
   },

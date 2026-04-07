@@ -3,9 +3,11 @@ import { getAdminInfo } from '@/api/user'
 import { getTagList } from '@/api/tag'
 import { getTopicList } from '@/api/topic'
 import { getBasicLinkList } from '@/api/link'
+import { getSiteStatSummary } from '@/api/stat'
 
 export const state = () => ({
   admin: null,
+  siteStatSummary: null,
   topTen: null,
   tagList: null,
   topicList: null,
@@ -21,6 +23,14 @@ export const actions = {
         }
       })
       resolve(true);
+    })
+  },
+  getSiteStatSummary ({ commit }) {
+    return getSiteStatSummary().then(res => {
+      if (res.status === 200) {
+        commit('setSiteStatSummary', res.data)
+        return true
+      }
     })
   },
   getTagList ({ commit }) {
@@ -59,6 +69,21 @@ export const mutations = {
   setAdmin (state, data) {
     state.admin = data
   },
+  setSiteStatSummary (state, data) {
+    state.siteStatSummary = data
+  },
+  updateSiteVisitCount (state, visitCount) {
+    if (!state.siteStatSummary) {
+      state.siteStatSummary = {
+        visitCount,
+        visitStartDate: ''
+      }
+      return
+    }
+    state.siteStatSummary = Object.assign({}, state.siteStatSummary, {
+      visitCount
+    })
+  },
   setTagList (state, list) {
     state.tagList = list
   },
@@ -76,6 +101,9 @@ export const mutations = {
 export const getters = {
   adminInfo (state) {
     return state.admin
+  },
+  siteStatSummary (state) {
+    return state.siteStatSummary
   },
   tags (state) {
     return state.tagList
