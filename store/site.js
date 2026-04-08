@@ -72,17 +72,12 @@ export const mutations = {
   setSiteStatSummary (state, data) {
     state.siteStatSummary = data
   },
-  updateSiteVisitCount (state, visitCount) {
+  updateSiteStatSummary (state, data) {
     if (!state.siteStatSummary) {
-      state.siteStatSummary = {
-        visitCount,
-        visitStartDate: ''
-      }
+      state.siteStatSummary = data
       return
     }
-    state.siteStatSummary = Object.assign({}, state.siteStatSummary, {
-      visitCount
-    })
+    state.siteStatSummary = Object.assign({}, state.siteStatSummary, data)
   },
   setTagList (state, list) {
     state.tagList = list

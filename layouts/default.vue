@@ -34,8 +34,19 @@
             <Tooltip
               transfer
               placement="top"
-              :content="visitCountTooltip">
-              <span class="visit-count" v-if="siteStatSummary">访问 {{ siteStatSummary.visitCount }}</span>
+              max-width="260">
+              <div class="visit-summary" v-if="siteStatSummary">
+                <span class="visit-summary-item">
+                  <span class="label">访问</span>
+                  <span class="value">{{ siteStatSummary.visitCount }}</span>
+                </span>
+                <span class="visit-summary-divider"></span>
+                <span class="visit-summary-item">
+                  <span class="label">人数</span>
+                  <span class="value">{{ siteStatSummary.visitorCount || 0 }}</span>
+                </span>
+              </div>
+              <div slot="content" class="visit-count-tooltip">{{ visitCountTooltip }}</div>
             </Tooltip>
           </div>
           <div class="module-content">
@@ -320,7 +331,7 @@ export default {
     },
     visitCountTooltip () {
       if (!this.siteStatSummary) return ''
-      return this.siteStatSummary.visitStartDate
+      return `自 ${this.siteStatSummary.visitStartDate} 起累计访问 ${this.siteStatSummary.visitCount} 次，累计访问人数 ${this.siteStatSummary.visitorCount || 0} 人`
     },
     tags () {
       let list = this.$store.getters['site/tags'] || []
@@ -510,7 +521,7 @@ export default {
     },
     handleSiteStatSummary (data) {
       if (!data || data.visitCount === undefined) return
-      this.$store.commit('site/updateSiteVisitCount', data.visitCount)
+      this.$store.commit('site/updateSiteStatSummary', data)
     },
     refreshSiteStatSummary () {
       this.$store.dispatch('site/getSiteStatSummary')
@@ -589,12 +600,35 @@ export default {
           display flex
           align-items center
           justify-content space-between
-          .visit-count
-            color #3361d8
-            font-size 12px
-            cursor pointer
+          .visit-summary
+            display inline-flex
+            align-items center
+            padding 2px 10px
             margin-left 10px
+            border-radius 999px
+            background rgba(51, 97, 216, .08)
+            color #3361d8
+            cursor pointer
             flex-shrink 0
+            font-size 12px
+            line-height 1.4
+            .visit-summary-item
+              display inline-flex
+              align-items baseline
+            .label
+              color #7f8aa3
+              margin-right 4px
+            .value
+              font-size 13px
+              font-weight bold
+            .visit-summary-divider
+              width 1px
+              height 12px
+              margin 0 8px
+              background rgba(51, 97, 216, .18)
+          .visit-count-tooltip
+            white-space normal
+            line-height 1.6
         .module-content
           padding 10px 15px 20px
       .userinfo
