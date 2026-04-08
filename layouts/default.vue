@@ -42,7 +42,7 @@
                 </span>
                 <span class="visit-summary-divider"></span>
                 <span class="visit-summary-item">
-                  <span class="label">人数</span>
+                  <span class="label">访客</span>
                   <span class="value">{{ visitorCountText }}</span>
                 </span>
               </div>
@@ -331,7 +331,7 @@ export default {
     },
     visitCountTooltip () {
       if (!this.siteStatSummary) return ''
-      return `自 ${this.siteStatSummary.visitStartDate} 起累计访问 ${this.siteStatSummary.visitCount} 次，累计访问人数 ${this.siteStatSummary.visitorCount || 0} 人`
+      return `自 ${this.siteStatSummary.visitStartDate} 起累计访问 ${this.siteStatSummary.visitCount} 次，累计访客 ${this.siteStatSummary.visitorCount || 0} 人`
     },
     visitCountText () {
       return this.formatSummaryCount(this.siteStatSummary && this.siteStatSummary.visitCount)
