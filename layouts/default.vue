@@ -38,7 +38,12 @@
               <div class="visit-summary" v-if="siteStatSummary">
                 <span class="visit-summary-item">
                   <span class="label">访问</span>
-                  <span class="value">{{ siteStatSummary.visitCount }}</span>
+                  <span class="value">{{ visitCountText }}</span>
+                </span>
+                <span class="visit-summary-divider"></span>
+                <span class="visit-summary-item">
+                  <span class="label">人数</span>
+                  <span class="value">{{ visitorCountText }}</span>
                 </span>
               </div>
               <div slot="content" class="visit-count-tooltip">{{ visitCountTooltip }}</div>
@@ -326,7 +331,13 @@ export default {
     },
     visitCountTooltip () {
       if (!this.siteStatSummary) return ''
-      return `自 ${this.siteStatSummary.visitStartDate} 起累计访问 ${this.siteStatSummary.visitCount} 次`
+      return `自 ${this.siteStatSummary.visitStartDate} 起累计访问 ${this.siteStatSummary.visitCount} 次，累计访问人数 ${this.siteStatSummary.visitorCount || 0} 人`
+    },
+    visitCountText () {
+      return this.formatSummaryCount(this.siteStatSummary && this.siteStatSummary.visitCount)
+    },
+    visitorCountText () {
+      return this.formatSummaryCount(this.siteStatSummary && this.siteStatSummary.visitorCount)
     },
     tags () {
       let list = this.$store.getters['site/tags'] || []
@@ -514,6 +525,11 @@ export default {
     getCurrentUser (callback) {
       callback(this.currentUser)
     },
+    formatSummaryCount (value) {
+      value = Number(value) || 0
+      if (value < 10000) return String(value)
+      return `${(value / 10000).toFixed(1).replace(/\.0$/, '')}w`
+    },
     handleSiteStatSummary (data) {
       if (!data || data.visitCount === undefined) return
       this.$store.commit('site/updateSiteStatSummary', data)
@@ -615,7 +631,13 @@ export default {
               margin-right 4px
             .value
               font-size 13px
-              font-weight bold
+              font-weight 600
+              font-variant-numeric tabular-nums
+            .visit-summary-divider
+              width 1px
+              height 12px
+              margin 0 8px
+              background rgba(51, 97, 216, .18)
           .visit-count-tooltip
             white-space normal
             line-height 1.6
